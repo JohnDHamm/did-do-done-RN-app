@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { EventScreen, RecurringScreen, SearchScreen } from './screens';
+import { EventScreen, RecurringScreen, SearchScreen } from './src/screens';
 
 declare global {
   type RootStackParamList = {
