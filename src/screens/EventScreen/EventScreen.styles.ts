@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { COLORS } from '../../styles';
+import { COLORS, FONTS } from '../../styles';
 
 export const Container = styled.View`
   flex: 1;
@@ -9,6 +9,7 @@ export const Container = styled.View`
 `;
 
 export const StyledText = styled.Text`
+  font-family: ${FONTS.PRIMARY};
   color: white;
   font-size: 30px;
 `;

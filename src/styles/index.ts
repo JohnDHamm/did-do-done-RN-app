@@ -8,3 +8,7 @@ export const COLORS = {
   TODAY_GREEN: '#237b59',
   WHITE: '#fff',
 };
+
+export const FONTS = {
+  PRIMARY: 'Lobster-Regular',
+};
