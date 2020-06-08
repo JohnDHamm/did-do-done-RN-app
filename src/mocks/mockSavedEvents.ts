@@ -14,7 +14,7 @@ export const mockSavedEvents: Array<SavedEvent> = [
       days: null,
       weeks: null,
       months: 3,
-      nextDate: 1599349015000,
+      nextdate: 1599349015000,
     },
   },
 ];

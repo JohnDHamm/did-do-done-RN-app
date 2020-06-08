@@ -15,12 +15,11 @@ const Row = styled.View`
   flex-direction: row;
   width: 100%;
   align-items: center;
+  flex-wrap: wrap;
 `;
 
 export const TopRow = styled(Row)`
   justify-content: space-between;
-  /* border-width: 1px; */
-  /* border-color: #ddd; */
 `;
 
 export const Name = styled.Text`
@@ -36,7 +35,6 @@ export const Date = styled.Text`
 
 export const RecurRow = styled(Row)`
   padding-top: 6px;
-  /* padding-bottom: 6px; */
 `;
 
 export const Icon = styled.Image`
@@ -60,7 +58,6 @@ export const Notes = styled.Text`
   font-size: 14px;
   color: ${COLORS.BLACK};
   padding-top: 6px;
-  /* padding-bottom: 6px; */
 `;
 
 export const TagsRow = styled(Row)`
