@@ -1,3 +1,4 @@
+import EventCard from './EventCard/EventCard';
 import Tag from './Tag/Tag';
 
-export { Tag };
+export { EventCard, Tag };
