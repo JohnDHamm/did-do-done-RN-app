@@ -2,7 +2,7 @@ type RecurringInfo = {
   days: number | null;
   weeks: number | null;
   months: number | null;
-  nextDate: number;
+  nextdate: number;
 };
 
 type SavedEvent = {
