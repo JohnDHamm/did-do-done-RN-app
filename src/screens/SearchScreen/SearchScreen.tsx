@@ -2,7 +2,8 @@ import React from 'react';
 import { Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Container, StyledText } from './SearchScreen.styles';
-import { EventCard, Tag } from '../../components';
+import { EventCard, SectionHeader, Tag } from '../../components';
+import { COLORS } from '../../styles';
 import { mockSavedTags } from '../../mocks/mockSavedTags';
 
 const SearchScreen: React.FC = () => {
@@ -23,6 +24,12 @@ const SearchScreen: React.FC = () => {
       <Button
         title="recurring events"
         onPress={() => navigation.navigate('Recurring')}
+      />
+      <SectionHeader text="looking back..." />
+      <SectionHeader
+        text="missed"
+        color={COLORS.MISSED_RED}
+        textColor={COLORS.WHITE}
       />
       <EventCard id={123456789} name="A/C filter change" date={1550185200000} />
       <EventCard
