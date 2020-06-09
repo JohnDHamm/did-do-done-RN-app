@@ -1,9 +1,10 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Container, StyledText } from './SearchScreen.styles';
+import { AddIcon, Container, StyledText } from './SearchScreen.styles';
 import { Button, EventCard, SectionHeader, Tag } from '../../components';
 import { COLORS } from '../../styles';
+import IMAGES from '../../../assets/images';
 import { mockSavedTags } from '../../mocks/mockSavedTags';
 
 const SearchScreen: React.FC = () => {
@@ -20,8 +21,9 @@ const SearchScreen: React.FC = () => {
       <StyledText>Did? Do. Done!</StyledText>
       <Tag label="car" color="navy" selected={false} />
       {/* {renderTags(mockSavedTags)} */}
+      <Button label="see all events" />
       <TouchableOpacity onPress={() => navigation.navigate('Event')}>
-        <Button label="see all events" />
+        <AddIcon source={IMAGES.ADD_EVENT_ICON} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Recurring')}>
         <Button label="recurring events" type="alt" />
