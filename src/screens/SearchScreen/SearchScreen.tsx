@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {
   AddIcon,
@@ -7,7 +7,13 @@ import {
   StyledText,
   TagsBlock,
 } from './SearchScreen.styles';
-import { Button, EventCard, SectionHeader, Tag } from '../../components';
+import {
+  Button,
+  EventCard,
+  RecurNumberBadge,
+  SectionHeader,
+  Tag,
+} from '../../components';
 import { COLORS } from '../../styles';
 import IMAGES from '../../../assets/images';
 import { mockSavedTags } from '../../mocks/mockSavedTags';
@@ -58,8 +64,12 @@ const SearchScreen: React.FC = () => {
       <TouchableOpacity onPress={() => navigation.navigate('Recurring')}>
         <Button label="recurring events" type="alt" />
       </TouchableOpacity>
-      <SectionHeader text="looking back..." />
-      <EventCard id={123456789} name="A/C filter change" date={1550185200000} />
+      <Text>do again</Text>
+      <RecurNumberBadge type="missed" total={3} />
+      <RecurNumberBadge type="thisweek" total={1} />
+      <RecurNumberBadge type="next30" total={15} />
+      {/* <SectionHeader text="looking back..." /> */}
+      {/* <EventCard id={123456789} name="A/C filter change" date={1550185200000} />
       <EventCard
         id={123456789}
         name="A/C filter change"
@@ -76,7 +86,7 @@ const SearchScreen: React.FC = () => {
           { name: 'clean', color: 'darkgoldenrod' },
         ]}
         recurs={{ days: null, weeks: null, months: 3, nextdate: 1599349015000 }}
-      />
+      /> */}
     </Container>
   );
 };
