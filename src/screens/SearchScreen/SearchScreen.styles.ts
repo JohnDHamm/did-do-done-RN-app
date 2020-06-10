@@ -14,6 +14,15 @@ export const StyledText = styled.Text`
   font-size: 40px;
 `;
 
+export const TagsBlock = styled.View`
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  border-width: 1px;
+  border-color: ${COLORS.LIGHT_GRAY};
+  padding: 5px 0;
+`;
+
 export const AddIcon = styled.Image`
   margin: 10px 0;
   width: 36px;

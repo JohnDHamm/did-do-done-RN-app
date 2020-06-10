@@ -1,7 +1,12 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { AddIcon, Container, StyledText } from './SearchScreen.styles';
+import {
+  AddIcon,
+  Container,
+  StyledText,
+  TagsBlock,
+} from './SearchScreen.styles';
 import { Button, EventCard, SectionHeader, Tag } from '../../components';
 import { COLORS } from '../../styles';
 import IMAGES from '../../../assets/images';
@@ -9,18 +14,43 @@ import { mockSavedTags } from '../../mocks/mockSavedTags';
 
 const SearchScreen: React.FC = () => {
   const navigation = useNavigation();
+  const [savedTags] = React.useState<Tag[]>(mockSavedTags);
+  const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
+
+  const toggleTag = (tagName: string): void => {
+    const newSelectedTags = Array.from(selectedTags);
+    if (selectedTags.includes(tagName)) {
+      setSelectedTags(newSelectedTags.filter((tag) => tag !== tagName));
+    } else {
+      newSelectedTags.push(tagName);
+      setSelectedTags(newSelectedTags);
+    }
+  };
 
   const renderTags = (tags: Tag[]) => {
+    const extraStyles = {
+      marginTop: 3,
+      marginBottom: 3,
+      marginRight: 3,
+      marginLeft: 3,
+    };
     return tags.map((tag) => (
-      <Tag key={tag.name} label={tag.name} color={tag.color} selected={true} />
+      <TouchableOpacity key={tag.name} onPress={() => toggleTag(tag.name)}>
+        <Tag
+          key={tag.name}
+          label={tag.name}
+          color={tag.color}
+          selected={selectedTags.includes(tag.name)}
+          extraStyles={extraStyles}
+        />
+      </TouchableOpacity>
     ));
   };
 
   return (
     <Container>
       <StyledText>Did? Do. Done!</StyledText>
-      <Tag label="car" color="navy" selected={false} />
-      {/* {renderTags(mockSavedTags)} */}
+      <TagsBlock>{renderTags(savedTags)}</TagsBlock>
       <Button label="see all events" />
       <TouchableOpacity onPress={() => navigation.navigate('Event')}>
         <AddIcon source={IMAGES.ADD_EVENT_ICON} />
