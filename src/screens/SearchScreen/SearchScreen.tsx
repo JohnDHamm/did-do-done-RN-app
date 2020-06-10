@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {
   AddIcon,
@@ -11,7 +11,7 @@ import {
   Button,
   EventCard,
   RecurEventsBlock,
-  RecurNumberBadge,
+  SearchBar,
   SectionHeader,
   Tag,
 } from '../../components';
@@ -31,6 +31,12 @@ const SearchScreen: React.FC = () => {
   const [savedTags] = React.useState<Tag[]>(mockSavedTags);
   const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
   const [isSearching, setIsSearching] = React.useState<boolean>(true);
+  const [searchText, setSearchText] = React.useState<string>('');
+
+  const getSearchResults = () => {
+    console.log('search selectedTags:', selectedTags);
+    console.log('search searchText:', searchText);
+  };
 
   const toggleTag = (tagName: string): void => {
     const newSelectedTags = Array.from(selectedTags);
@@ -40,6 +46,16 @@ const SearchScreen: React.FC = () => {
       newSelectedTags.push(tagName);
       setSelectedTags(newSelectedTags);
     }
+  };
+
+  const handleSearchSubmit = (searchText: string) => {
+    setSearchText(searchText);
+  };
+
+  const handleSearchAll = () => {
+    setIsSearching(true);
+    const allTagNames = savedTags.map((tag) => tag.name);
+    setSelectedTags(allTagNames);
   };
 
   const renderTags = (tags: Tag[]) => {
@@ -63,43 +79,68 @@ const SearchScreen: React.FC = () => {
   };
 
   React.useEffect(() => {
-    console.log('selectedTags', selectedTags);
-    selectedTags.length ? setIsSearching(true) : setIsSearching(false);
-  }, [selectedTags]);
+    selectedTags.length || searchText
+      ? setIsSearching(true)
+      : setIsSearching(false);
+    getSearchResults();
+  }, [selectedTags, searchText]);
 
   return (
     <Container>
       <StyledText>Did? Do. Done!</StyledText>
+      <SearchBar
+        onClear={() => console.log('clear search text')}
+        onSubmit={(searchText) => handleSearchSubmit(searchText)}
+      />
       <TagsBlock>{renderTags(savedTags)}</TagsBlock>
-      <Button label="see all events" />
-      <TouchableOpacity onPress={() => navigation.navigate('Event')}>
-        <AddIcon source={IMAGES.ADD_EVENT_ICON} />
-      </TouchableOpacity>
+      {!isSearching && (
+        <TouchableOpacity onPress={() => handleSearchAll()}>
+          <Button label="see all events" />
+        </TouchableOpacity>
+      )}
+      {!isSearching && (
+        <TouchableOpacity onPress={() => navigation.navigate('Event')}>
+          <AddIcon source={IMAGES.ADD_EVENT_ICON} />
+        </TouchableOpacity>
+      )}
+      {isSearching && (
+        <>
+          <SectionHeader text="looking back..." />
+          <EventCard
+            id={123456789}
+            name="A/C filter change"
+            date={1550185200000}
+          />
+          <EventCard
+            id={123456789}
+            name="A/C filter change"
+            date={1591382049879}
+            tags={[{ name: 'home', color: 'darkolivegreen' }]}
+          />
+          <EventCard
+            id={123456789}
+            name="A/C filter change"
+            date={1591382049879}
+            notes="Try a better filter (HEPA-9) next time for comparison"
+            tags={[
+              { name: 'home', color: 'darkolivegreen' },
+              { name: 'clean', color: 'darkgoldenrod' },
+            ]}
+            recurs={{
+              days: null,
+              weeks: null,
+              months: 3,
+              nextdate: 1599349015000,
+            }}
+          />
+        </>
+      )}
       <TouchableOpacity onPress={() => navigation.navigate('Recurring')}>
         <RecurEventsBlock
           recurTotals={mockRecurTotals}
           minimized={isSearching}
         />
       </TouchableOpacity>
-      {/* <SectionHeader text="looking back..." /> */}
-      {/* <EventCard id={123456789} name="A/C filter change" date={1550185200000} />
-      <EventCard
-        id={123456789}
-        name="A/C filter change"
-        date={1591382049879}
-        tags={[{ name: 'home', color: 'darkolivegreen' }]}
-      />
-      <EventCard
-        id={123456789}
-        name="A/C filter change"
-        date={1591382049879}
-        notes="Try a better filter (HEPA-9) next time for comparison"
-        tags={[
-          { name: 'home', color: 'darkolivegreen' },
-          { name: 'clean', color: 'darkgoldenrod' },
-        ]}
-        recurs={{ days: null, weeks: null, months: 3, nextdate: 1599349015000 }}
-      /> */}
     </Container>
   );
 };
