@@ -3,6 +3,7 @@ import { FONTS } from '../../styles';
 
 export const Container = styled.View<{ color: string; border: string }>`
   padding: 3px 36px;
+  align-items: center;
   background-color: ${(props) => props.color};
   border-color: ${(props) => props.border};
   border-radius: 5px;

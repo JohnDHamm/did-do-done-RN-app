@@ -6,10 +6,7 @@ interface RecurNumberBadgeProps {
   total: number;
   type: RecurType;
 }
-const RecurNumberBadge: React.FC<RecurNumberBadgeProps> = ({
-  total,
-  type,
-}: RecurNumberBadgeProps) => {
+const RecurNumberBadge: React.FC<RecurNumberBadgeProps> = ({ total, type }) => {
   let color = '';
 
   switch (type) {
