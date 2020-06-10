@@ -10,6 +10,7 @@ import {
 import {
   Button,
   EventCard,
+  RecurEventsBlock,
   RecurNumberBadge,
   SectionHeader,
   Tag,
@@ -18,10 +19,18 @@ import { COLORS } from '../../styles';
 import IMAGES from '../../../assets/images';
 import { mockSavedTags } from '../../mocks/mockSavedTags';
 
+const mockRecurTotals: RecurTotals = {
+  missed: 3,
+  today: 1,
+  thisweek: 2,
+  next30: 12,
+};
+
 const SearchScreen: React.FC = () => {
   const navigation = useNavigation();
   const [savedTags] = React.useState<Tag[]>(mockSavedTags);
   const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
+  const [isSearching, setIsSearching] = React.useState<boolean>(true);
 
   const toggleTag = (tagName: string): void => {
     const newSelectedTags = Array.from(selectedTags);
@@ -53,6 +62,11 @@ const SearchScreen: React.FC = () => {
     ));
   };
 
+  React.useEffect(() => {
+    console.log('selectedTags', selectedTags);
+    selectedTags.length ? setIsSearching(true) : setIsSearching(false);
+  }, [selectedTags]);
+
   return (
     <Container>
       <StyledText>Did? Do. Done!</StyledText>
@@ -62,12 +76,11 @@ const SearchScreen: React.FC = () => {
         <AddIcon source={IMAGES.ADD_EVENT_ICON} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Recurring')}>
-        <Button label="recurring events" type="alt" />
+        <RecurEventsBlock
+          recurTotals={mockRecurTotals}
+          minimized={isSearching}
+        />
       </TouchableOpacity>
-      <Text>do again</Text>
-      <RecurNumberBadge type="missed" total={3} />
-      <RecurNumberBadge type="thisweek" total={1} />
-      <RecurNumberBadge type="next30" total={15} />
       {/* <SectionHeader text="looking back..." /> */}
       {/* <EventCard id={123456789} name="A/C filter change" date={1550185200000} />
       <EventCard

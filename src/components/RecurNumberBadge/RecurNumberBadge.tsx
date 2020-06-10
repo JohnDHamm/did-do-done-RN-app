@@ -4,7 +4,7 @@ import { Badge, BadgeNumber } from './RecurNumberBadge.styles';
 
 interface RecurNumberBadgeProps {
   total: number;
-  type: 'missed' | 'today' | 'thisweek' | 'next30';
+  type: RecurType;
 }
 const RecurNumberBadge: React.FC<RecurNumberBadgeProps> = ({
   total,
