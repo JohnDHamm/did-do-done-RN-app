@@ -19,7 +19,9 @@ import {
   Tag,
 } from '../../components';
 import IMAGES from '../../../assets/images';
+import { mockSavedEvents } from '../../mocks/mockSavedEvents';
 import { mockSavedTags } from '../../mocks/mockSavedTags';
+import moment from 'moment';
 
 const mockRecurTotals: RecurTotals = {
   missed: 3,
@@ -30,6 +32,7 @@ const mockRecurTotals: RecurTotals = {
 
 const SearchScreen: React.FC = () => {
   const navigation = useNavigation();
+  const [savedEvents] = React.useState<SavedEvent[]>(mockSavedEvents);
   const [savedTags] = React.useState<Tag[]>(mockSavedTags);
   const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
   const [isSearching, setIsSearching] = React.useState<boolean>(true);
@@ -80,12 +83,34 @@ const SearchScreen: React.FC = () => {
     ));
   };
 
+  const renderEventCards = (events: SavedEvent[]) => {
+    return events.map((event) => {
+      const { id, name, date, notes, tags, recurs } = event;
+      return (
+        <TouchableOpacity key={id} onPress={() => navigation.navigate('Event')}>
+          <EventCard
+            id={id}
+            name={name}
+            date={date}
+            notes={notes}
+            tags={tags}
+            recurs={recurs}
+          />
+        </TouchableOpacity>
+      );
+    });
+  };
+
   React.useEffect(() => {
     selectedTags.length || searchText
       ? setIsSearching(true)
       : setIsSearching(false);
     getSearchResults();
   }, [selectedTags, searchText]);
+
+  React.useEffect(() => {
+    // console.log('Date.now()', Date.now());
+  }, []);
 
   return (
     <Container isSearching={isSearching}>
@@ -108,99 +133,7 @@ const SearchScreen: React.FC = () => {
       {isSearching && (
         <ResultsBlock>
           <SectionHeader text="looking back..." />
-          <ResultsView>
-            <EventCard
-              id={123456789}
-              name="A/C filter change"
-              date={1550185200000}
-            />
-            <EventCard
-              id={123456789}
-              name="A/C filter change"
-              date={1591382049879}
-              tags={[{ name: 'home', color: 'darkolivegreen' }]}
-            />
-            <EventCard
-              id={123456789}
-              name="A/C filter change"
-              date={1591382049879}
-              notes="Try a better filter (HEPA-9) next time for comparison"
-              tags={[
-                { name: 'home', color: 'darkolivegreen' },
-                { name: 'clean', color: 'darkgoldenrod' },
-              ]}
-              recurs={{
-                days: null,
-                weeks: null,
-                months: 3,
-                nextdate: 1599349015000,
-              }}
-            />
-            <EventCard
-              id={123456789}
-              name="A/C filter change"
-              date={1591382049879}
-              notes="Try a better filter (HEPA-9) next time for comparison"
-              tags={[
-                { name: 'home', color: 'darkolivegreen' },
-                { name: 'clean', color: 'darkgoldenrod' },
-              ]}
-              recurs={{
-                days: null,
-                weeks: null,
-                months: 3,
-                nextdate: 1599349015000,
-              }}
-            />
-            <EventCard
-              id={123456789}
-              name="A/C filter change"
-              date={1591382049879}
-              notes="Try a better filter (HEPA-9) next time for comparison"
-              tags={[
-                { name: 'home', color: 'darkolivegreen' },
-                { name: 'clean', color: 'darkgoldenrod' },
-              ]}
-              recurs={{
-                days: null,
-                weeks: null,
-                months: 3,
-                nextdate: 1599349015000,
-              }}
-            />
-            <EventCard
-              id={123456789}
-              name="A/C filter change"
-              date={1591382049879}
-              notes="Try a better filter (HEPA-9) next time for comparison"
-              tags={[
-                { name: 'home', color: 'darkolivegreen' },
-                { name: 'clean', color: 'darkgoldenrod' },
-              ]}
-              recurs={{
-                days: null,
-                weeks: null,
-                months: 3,
-                nextdate: 1599349015000,
-              }}
-            />
-            <EventCard
-              id={123456789}
-              name="A/C filter change"
-              date={1591382049879}
-              notes="Try a better filter (HEPA-9) next time for comparison"
-              tags={[
-                { name: 'home', color: 'darkolivegreen' },
-                { name: 'clean', color: 'darkgoldenrod' },
-              ]}
-              recurs={{
-                days: null,
-                weeks: null,
-                months: 3,
-                nextdate: 1599349015000,
-              }}
-            />
-          </ResultsView>
+          <ResultsView>{renderEventCards(savedEvents)}</ResultsView>
         </ResultsBlock>
       )}
       <TouchableOpacity onPress={() => navigation.navigate('Recurring')}>
