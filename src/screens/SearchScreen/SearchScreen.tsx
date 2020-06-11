@@ -21,18 +21,17 @@ import {
 import IMAGES from '../../../assets/images';
 import { mockSavedEvents } from '../../mocks/mockSavedEvents';
 import { mockSavedTags } from '../../mocks/mockSavedTags';
-import moment from 'moment';
-
-const mockRecurTotals: RecurTotals = {
-  missed: 3,
-  today: 1,
-  thisweek: 2,
-  next30: 12,
-};
+import { getRecurTotals } from '../../functions';
 
 const SearchScreen: React.FC = () => {
   const navigation = useNavigation();
   const [savedEvents] = React.useState<SavedEvent[]>(mockSavedEvents);
+  const [recurTotals, setRecurTotals] = React.useState<RecurTotals>({
+    missed: 0,
+    today: 0,
+    thisweek: 0,
+    next30: 0,
+  });
   const [savedTags] = React.useState<Tag[]>(mockSavedTags);
   const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
   const [isSearching, setIsSearching] = React.useState<boolean>(true);
@@ -109,8 +108,8 @@ const SearchScreen: React.FC = () => {
   }, [selectedTags, searchText]);
 
   React.useEffect(() => {
-    // console.log('Date.now()', Date.now());
-  }, []);
+    setRecurTotals(getRecurTotals(savedEvents));
+  }, [savedEvents]);
 
   return (
     <Container isSearching={isSearching}>
@@ -137,10 +136,7 @@ const SearchScreen: React.FC = () => {
         </ResultsBlock>
       )}
       <TouchableOpacity onPress={() => navigation.navigate('Recurring')}>
-        <RecurEventsBlock
-          recurTotals={mockRecurTotals}
-          minimized={isSearching}
-        />
+        <RecurEventsBlock recurTotals={recurTotals} minimized={isSearching} />
       </TouchableOpacity>
     </Container>
   );
