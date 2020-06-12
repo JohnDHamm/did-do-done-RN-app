@@ -22,6 +22,7 @@ import IMAGES from '../../../assets/images';
 import { mockSavedEvents } from '../../mocks/mockSavedEvents';
 import { mockSavedTags } from '../../mocks/mockSavedTags';
 import { getRecurTotals } from '../../functions';
+import uniqby from 'lodash.uniqby';
 
 const SearchScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -36,10 +37,35 @@ const SearchScreen: React.FC = () => {
   const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
   const [isSearching, setIsSearching] = React.useState<boolean>(true);
   const [searchText, setSearchText] = React.useState<string>('');
+  const [searchResults, setSearchResults] = React.useState<SavedEvent[]>([]);
 
   const getSearchResults = () => {
-    console.log('search selectedTags:', selectedTags);
-    console.log('search searchText:', searchText);
+    //filter by tags
+    const tagFilteredEvents: Array<SavedEvent> = [];
+    if (selectedTags.length > 0) {
+      savedEvents.forEach((event) => {
+        if (event.tags) {
+          const eventTags = event.tags.map((tag) => tag.name);
+          eventTags.forEach((tag) => {
+            if (selectedTags.includes(tag)) {
+              tagFilteredEvents.push(event);
+              return;
+            }
+          });
+        }
+      });
+    }
+    //TODO: filter by searchText
+    const textFilteredEvents: Array<SavedEvent> = [];
+    if (searchText) {
+      console.log('search searchText:', searchText);
+    }
+    //TODO: concat tag + text  - remove duplicates (multiple tags)
+    const filteredEvents = tagFilteredEvents.concat(textFilteredEvents);
+    const uniqueEvents = uniqby(filteredEvents, 'id');
+    //TODO: sort by date (newest -> oldest)
+    uniqueEvents.sort((a, b) => b.id - a.id);
+    setSearchResults(uniqueEvents);
   };
 
   const toggleTag = (tagName: string): void => {
@@ -132,7 +158,7 @@ const SearchScreen: React.FC = () => {
       {isSearching && (
         <ResultsBlock>
           <SectionHeader text="looking back..." />
-          <ResultsView>{renderEventCards(savedEvents)}</ResultsView>
+          <ResultsView>{renderEventCards(searchResults)}</ResultsView>
         </ResultsBlock>
       )}
       <TouchableOpacity onPress={() => navigation.navigate('Recurring')}>
