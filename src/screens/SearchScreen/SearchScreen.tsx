@@ -1,12 +1,11 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {
   AddIcon,
   Container,
   EmptyMessage,
   ResultsBlock,
-  ResultsView,
   SearchBlock,
   StyledText,
   TagsBlock,
@@ -49,7 +48,9 @@ const SearchScreen: React.FC = () => {
   const [isSearching, setIsSearching] = React.useState<boolean>(true);
   const [searchText, setSearchText] = React.useState<string>('');
   const [searchResults, setSearchResults] = React.useState<SavedEvent[]>([]);
-  const [showEmptyMessage, setShowEmptyMessage] = React.useState<boolean>('');
+  const [showEmptyMessage, setShowEmptyMessage] = React.useState<boolean>(
+    false
+  );
 
   const getSearchResults = () => {
     //filter by tags
@@ -134,22 +135,20 @@ const SearchScreen: React.FC = () => {
     ));
   };
 
-  const renderEventCards = (events: SavedEvent[]) => {
-    return events.map((event) => {
-      const { id, name, date, notes, tags, recurs } = event;
-      return (
-        <TouchableOpacity key={id} onPress={() => navigation.navigate('Event')}>
-          <EventCard
-            id={id}
-            name={name}
-            date={date}
-            notes={notes}
-            tags={tags}
-            recurs={recurs}
-          />
-        </TouchableOpacity>
-      );
-    });
+  const ListItem = (event: SavedEvent) => {
+    const { id, name, date, notes, tags, recurs } = event;
+    return (
+      <TouchableOpacity onPress={() => navigation.navigate('Event')}>
+        <EventCard
+          id={id}
+          name={name}
+          date={date}
+          notes={notes}
+          tags={tags}
+          recurs={recurs}
+        />
+      </TouchableOpacity>
+    );
   };
 
   React.useEffect(() => {
@@ -194,12 +193,23 @@ const SearchScreen: React.FC = () => {
       {isSearching && (
         <ResultsBlock>
           <SectionHeader text="looking back..." />
-          <ResultsView>
-            {renderEventCards(searchResults)}
-            {showEmptyMessage && (
-              <EmptyMessage>no matching results found...</EmptyMessage>
+          {showEmptyMessage && (
+            <EmptyMessage>no matching results found...</EmptyMessage>
+          )}
+          <FlatList
+            data={searchResults}
+            renderItem={({ item }) => (
+              <ListItem
+                id={item.id}
+                name={item.name}
+                date={item.date}
+                notes={item.notes}
+                tags={item.tags}
+                recurs={item.recurs}
+              />
             )}
-          </ResultsView>
+            keyExtractor={(item) => item.id.toString()}
+          />
         </ResultsBlock>
       )}
       <TouchableOpacity onPress={() => navigation.navigate('Recurring')}>
