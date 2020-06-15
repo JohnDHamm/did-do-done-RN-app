@@ -19,12 +19,7 @@ const RecurEventsBlock: React.FC<BlockProps> = ({
   minimized = false,
 }) => {
   const renderMinRecurBadges = () => {
-    const badgeTypes: Array<RecurType> = [
-      'missed',
-      'today',
-      'thisweek',
-      'next30',
-    ];
+    const badgeTypes: Array<RecurType> = ['missed', 'today', 'thisweek'];
     return badgeTypes.map((badgeType) => {
       if (recurTotals[badgeType] > 0)
         return (
@@ -56,17 +51,18 @@ const RecurEventsBlock: React.FC<BlockProps> = ({
           <BadgeLabel color={COLORS.THIS_WEEK_YELLOW}>this week</BadgeLabel>
         </MinRow>
       )}
-      {recurTotals.next30 > 0 && (
-        <MinRow>
-          <RecurNumberBadge type="next30" total={recurTotals.next30} />
-          <BadgeLabel color={COLORS.PRIMARY_GRAY}>next 30 days</BadgeLabel>
-        </MinRow>
-      )}
+      <MinRow>
+        <RecurNumberBadge type="next30" total={recurTotals.next30} />
+        <BadgeLabel color={COLORS.PRIMARY_GRAY}>next 30 days</BadgeLabel>
+      </MinRow>
     </Block>
   ) : (
     <MinRow>
       <Header>do again:</Header>
       {renderMinRecurBadges()}
+      <BadgeContainer key={'next30'}>
+        <RecurNumberBadge type={'next30'} total={recurTotals.next30} />
+      </BadgeContainer>
     </MinRow>
   );
 };
