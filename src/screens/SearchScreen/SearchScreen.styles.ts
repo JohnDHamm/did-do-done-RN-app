@@ -42,4 +42,9 @@ export const ResultsBlock = styled.View`
   justify-content: flex-start;
 `;
 
-export const ResultsView = styled.ScrollView``;
+export const EmptyMessage = styled.Text`
+  padding: 10px;
+  color: ${COLORS.PRIMARY_GRAY};
+  font-size: 16px;
+  text-align: center;
+`;
