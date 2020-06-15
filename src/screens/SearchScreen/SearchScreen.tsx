@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import {
   AddIcon,
   Container,
+  EmptyMessage,
   ResultsBlock,
   ResultsView,
   SearchBlock,
@@ -48,6 +49,7 @@ const SearchScreen: React.FC = () => {
   const [isSearching, setIsSearching] = React.useState<boolean>(true);
   const [searchText, setSearchText] = React.useState<string>('');
   const [searchResults, setSearchResults] = React.useState<SavedEvent[]>([]);
+  const [showEmptyMessage, setShowEmptyMessage] = React.useState<boolean>('');
 
   const getSearchResults = () => {
     //filter by tags
@@ -83,6 +85,7 @@ const SearchScreen: React.FC = () => {
     const uniqueEvents = uniqby(filteredEvents, 'id');
     uniqueEvents.sort((a, b) => b.id - a.id);
     setSearchResults(uniqueEvents);
+    setShowEmptyMessage(uniqueEvents.length === 0);
   };
 
   const toggleTag = (tagName: string): void => {
@@ -191,7 +194,12 @@ const SearchScreen: React.FC = () => {
       {isSearching && (
         <ResultsBlock>
           <SectionHeader text="looking back..." />
-          <ResultsView>{renderEventCards(searchResults)}</ResultsView>
+          <ResultsView>
+            {renderEventCards(searchResults)}
+            {showEmptyMessage && (
+              <EmptyMessage>no matching results found...</EmptyMessage>
+            )}
+          </ResultsView>
         </ResultsBlock>
       )}
       <TouchableOpacity onPress={() => navigation.navigate('Recurring')}>
