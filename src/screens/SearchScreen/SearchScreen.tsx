@@ -69,15 +69,18 @@ const SearchScreen: React.FC = () => {
         }
       });
     }
-    //TODO: filter by searchText
-    const textFilteredEvents: Array<SavedEvent> = [];
-    if (searchText) {
-      console.log('search searchText:', searchText);
-    }
-    //TODO: concat tag + text  - remove duplicates (multiple tags)
-    const filteredEvents = tagFilteredEvents.concat(textFilteredEvents);
+    //filter by searchText
+    const textFilteredEvents: Array<SavedEvent> = searchText
+      ? tagFilteredEvents.filter((event) =>
+          event.name.toLowerCase().includes(searchText.toLowerCase())
+        )
+      : [];
+
+    const filteredEvents: SavedEvent[] = searchText
+      ? textFilteredEvents
+      : tagFilteredEvents;
+
     const uniqueEvents = uniqby(filteredEvents, 'id');
-    //TODO: sort by date (newest -> oldest)
     uniqueEvents.sort((a, b) => b.id - a.id);
     setSearchResults(uniqueEvents);
   };
@@ -92,15 +95,26 @@ const SearchScreen: React.FC = () => {
     }
   };
 
+  const setAllTagsActve = (): void => {
+    const allTagNames = savedTags.map((tag) => tag.name);
+    allTagNames.push(NO_TAG_LABEL);
+    setSelectedTags(allTagNames);
+  };
+
   const handleSearchSubmit = (searchText: string) => {
+    if (searchText && selectedTags.length === 0) {
+      setAllTagsActve();
+    }
     setSearchText(searchText);
+  };
+
+  const onSearchTextClear = (): void => {
+    setSearchText('');
   };
 
   const handleSearchAll = () => {
     setIsSearching(true);
-    const allTagNames = savedTags.map((tag) => tag.name);
-    allTagNames.push(NO_TAG_LABEL);
-    setSelectedTags(allTagNames);
+    setAllTagsActve();
   };
 
   const renderTags = (tags: Tag[]) => {
@@ -151,7 +165,7 @@ const SearchScreen: React.FC = () => {
       {!isSearching && <StyledText>Did? Do. Done!</StyledText>}
       <SearchBlock>
         <SearchBar
-          onClear={() => console.log('clear search text')}
+          onClear={() => onSearchTextClear()}
           onSubmit={(searchText) => handleSearchSubmit(searchText)}
         />
         <TagsBlock>
