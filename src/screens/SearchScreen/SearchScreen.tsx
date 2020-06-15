@@ -22,6 +22,17 @@ import IMAGES from '../../../assets/images';
 import { mockSavedEvents } from '../../mocks/mockSavedEvents';
 import { mockSavedTags } from '../../mocks/mockSavedTags';
 import { getRecurTotals } from '../../functions';
+import uniqby from 'lodash.uniqby';
+import { COLORS } from '../../styles';
+
+const tagExtraStyles = {
+  marginTop: 3,
+  marginBottom: 3,
+  marginRight: 3,
+  marginLeft: 3,
+};
+
+const NO_TAG_LABEL = 'no tag';
 
 const SearchScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -36,10 +47,42 @@ const SearchScreen: React.FC = () => {
   const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
   const [isSearching, setIsSearching] = React.useState<boolean>(true);
   const [searchText, setSearchText] = React.useState<string>('');
+  const [searchResults, setSearchResults] = React.useState<SavedEvent[]>([]);
 
   const getSearchResults = () => {
-    console.log('search selectedTags:', selectedTags);
-    console.log('search searchText:', searchText);
+    //filter by tags
+    const tagFilteredEvents: Array<SavedEvent> = [];
+    if (selectedTags.length > 0) {
+      savedEvents.forEach((event) => {
+        if (event.tags) {
+          const eventTags = event.tags.map((tag) => tag.name);
+          eventTags.forEach((tag) => {
+            if (selectedTags.includes(tag)) {
+              tagFilteredEvents.push(event);
+              return;
+            }
+          });
+        } else {
+          if (selectedTags.includes('no tag')) {
+            tagFilteredEvents.push(event);
+          }
+        }
+      });
+    }
+    //filter by searchText
+    const textFilteredEvents: Array<SavedEvent> = searchText
+      ? tagFilteredEvents.filter((event) =>
+          event.name.toLowerCase().includes(searchText.toLowerCase())
+        )
+      : [];
+
+    const filteredEvents: SavedEvent[] = searchText
+      ? textFilteredEvents
+      : tagFilteredEvents;
+
+    const uniqueEvents = uniqby(filteredEvents, 'id');
+    uniqueEvents.sort((a, b) => b.id - a.id);
+    setSearchResults(uniqueEvents);
   };
 
   const toggleTag = (tagName: string): void => {
@@ -52,23 +95,29 @@ const SearchScreen: React.FC = () => {
     }
   };
 
+  const setAllTagsActve = (): void => {
+    const allTagNames = savedTags.map((tag) => tag.name);
+    allTagNames.push(NO_TAG_LABEL);
+    setSelectedTags(allTagNames);
+  };
+
   const handleSearchSubmit = (searchText: string) => {
+    if (searchText && selectedTags.length === 0) {
+      setAllTagsActve();
+    }
     setSearchText(searchText);
+  };
+
+  const onSearchTextClear = (): void => {
+    setSearchText('');
   };
 
   const handleSearchAll = () => {
     setIsSearching(true);
-    const allTagNames = savedTags.map((tag) => tag.name);
-    setSelectedTags(allTagNames);
+    setAllTagsActve();
   };
 
   const renderTags = (tags: Tag[]) => {
-    const extraStyles = {
-      marginTop: 3,
-      marginBottom: 3,
-      marginRight: 3,
-      marginLeft: 3,
-    };
     return tags.map((tag) => (
       <TouchableOpacity key={tag.name} onPress={() => toggleTag(tag.name)}>
         <Tag
@@ -76,7 +125,7 @@ const SearchScreen: React.FC = () => {
           label={tag.name}
           color={tag.color}
           selected={selectedTags.includes(tag.name)}
-          extraStyles={extraStyles}
+          extraStyles={tagExtraStyles}
         />
       </TouchableOpacity>
     ));
@@ -116,10 +165,20 @@ const SearchScreen: React.FC = () => {
       {!isSearching && <StyledText>Did? Do. Done!</StyledText>}
       <SearchBlock>
         <SearchBar
-          onClear={() => console.log('clear search text')}
+          onClear={() => onSearchTextClear()}
           onSubmit={(searchText) => handleSearchSubmit(searchText)}
         />
-        <TagsBlock>{renderTags(savedTags)}</TagsBlock>
+        <TagsBlock>
+          {renderTags(savedTags)}
+          <TouchableOpacity onPress={() => toggleTag(NO_TAG_LABEL)}>
+            <Tag
+              label={NO_TAG_LABEL}
+              color={COLORS.PRIMARY_GRAY}
+              selected={selectedTags.includes(NO_TAG_LABEL)}
+              extraStyles={tagExtraStyles}
+            />
+          </TouchableOpacity>
+        </TagsBlock>
         <TouchableOpacity onPress={() => handleSearchAll()}>
           <Button label="see all events" />
         </TouchableOpacity>
@@ -132,7 +191,7 @@ const SearchScreen: React.FC = () => {
       {isSearching && (
         <ResultsBlock>
           <SectionHeader text="looking back..." />
-          <ResultsView>{renderEventCards(savedEvents)}</ResultsView>
+          <ResultsView>{renderEventCards(searchResults)}</ResultsView>
         </ResultsBlock>
       )}
       <TouchableOpacity onPress={() => navigation.navigate('Recurring')}>

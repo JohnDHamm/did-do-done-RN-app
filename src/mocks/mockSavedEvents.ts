@@ -142,6 +142,10 @@ export const mockSavedEvents: Array<SavedEvent> = [
         name: 'clean',
         color: 'darkgoldenrod',
       },
+      {
+        name: 'home',
+        color: 'darkolivegreen',
+      },
     ],
     recurs: {
       days: null,
