@@ -23,8 +23,15 @@ const RecurEventCard: React.FC<SavedEvent> = ({
 }) => {
   const getDisplayDate = (): string => {
     const nextdateYear = moment(recurs?.nextdate).year();
-
-    let displayDate = moment(recurs?.nextdate).format('MMM D');
+    const startThisWeek = moment().add(1, 'day').startOf('day');
+    const endThisWeek = moment().add(7, 'day').endOf('day');
+    const isThisWeek = moment(recurs?.nextdate).isBetween(
+      startThisWeek,
+      endThisWeek
+    );
+    let displayDate = isThisWeek
+      ? moment(recurs?.nextdate).format('dddd, MMM D')
+      : moment(recurs?.nextdate).format('MMM D');
     if (nextdateYear !== moment().year()) {
       displayDate = displayDate + `, '${nextdateYear.toString().slice(2, 4)}`;
     }
