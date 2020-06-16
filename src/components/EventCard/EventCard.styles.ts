@@ -5,10 +5,6 @@ export const Container = styled.View`
   width: 100%;
   align-items: flex-start;
   padding: 8px 16px;
-  border-top-width: 1px;
-  border-top-color: ${COLORS.LIGHT_GRAY};
-  border-bottom-width: 1px;
-  border-bottom-color: ${COLORS.LIGHT_GRAY};
 `;
 
 const Row = styled.View`
