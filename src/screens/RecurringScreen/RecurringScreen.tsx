@@ -5,37 +5,11 @@ import { Container, ListSeparator } from './RecurringScreen.styles';
 import { mockSavedEvents } from '../../mocks/mockSavedEvents';
 import { RecurEventCard, SectionHeader } from '../../components';
 import { COLORS } from '../../styles';
-
-interface SectionData {
-  title: RecurSectionHeader;
-  data: Array<SavedEvent>;
-}
-
-const mockSectionData: SectionData[] = [
-  {
-    title: 'missed',
-    data: [mockSavedEvents[4]],
-  },
-  {
-    title: 'today',
-    data: [mockSavedEvents[3]],
-  },
-  {
-    title: 'this week',
-    data: [mockSavedEvents[2], mockSavedEvents[6]],
-  },
-  {
-    title: 'next 30 days',
-    data: [mockSavedEvents[0], mockSavedEvents[5], mockSavedEvents[7]],
-  },
-  {
-    title: 'later',
-    data: [mockSavedEvents[1], mockSavedEvents[8]],
-  },
-];
+import { composeRecurData } from '../../functions';
 
 const RecurringScreen: React.FC = () => {
   const navigation = useNavigation();
+  const [sectionData, setSectionData] = React.useState<RecurSectionData[]>([]);
 
   const ListItem = (event: SavedEvent) => {
     const { id, name, date, notes, tags, recurs } = event;
@@ -76,10 +50,17 @@ const RecurringScreen: React.FC = () => {
     return <SectionHeader text={title} color={bgColor} textColor={textColor} />;
   };
 
+  React.useEffect(() => {
+    const recurData = composeRecurData(
+      mockSavedEvents.filter((event) => event.recurs)
+    );
+    setSectionData(recurData);
+  }, []);
+
   return (
     <Container>
       <SectionList
-        sections={mockSectionData}
+        sections={sectionData}
         renderSectionHeader={({ section: { title } }) =>
           renderSectionHeader(title)
         }

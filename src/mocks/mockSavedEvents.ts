@@ -78,6 +78,24 @@ export const mockSavedEvents: Array<SavedEvent> = [
       nextdate: moment(today).valueOf(),
     },
   },
+  /// 100 days ago, today
+  {
+    id: moment(today).subtract(100, 'days').valueOf(),
+    name: 'aaa',
+    date: moment(today).subtract(100, 'days').valueOf(),
+    tags: [
+      {
+        name: 'home',
+        color: 'darkolivegreen',
+      },
+    ],
+    recurs: {
+      days: 100,
+      weeks: null,
+      months: null,
+      nextdate: moment(today).valueOf(),
+    },
+  },
   /// 13 weeks ago, last week
   {
     id: moment(today).subtract(13, 'weeks').valueOf(),
@@ -94,6 +112,24 @@ export const mockSavedEvents: Array<SavedEvent> = [
       weeks: 12,
       months: null,
       nextdate: moment(today).subtract(13, 'weeks').add(12, 'weeks').valueOf(),
+    },
+  },
+  /// 14 weeks ago, 3 weeks
+  {
+    id: moment(today).subtract(14, 'weeks').valueOf(),
+    name: 'something',
+    date: moment(today).subtract(14, 'weeks').valueOf(),
+    tags: [
+      {
+        name: 'home',
+        color: 'darkolivegreen',
+      },
+    ],
+    recurs: {
+      days: null,
+      weeks: 12,
+      months: null,
+      nextdate: moment(today).subtract(14, 'weeks').add(11, 'weeks').valueOf(),
     },
   },
   /// 4+ weeks ago, in 8 days (next30)

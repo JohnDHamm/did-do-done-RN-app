@@ -10,3 +10,8 @@ type RecurSectionHeader =
   | 'this week'
   | 'next 30 days'
   | 'later';
+
+type RecurSectionData = {
+  title: RecurSectionHeader;
+  data: Array<SavedEvent>;
+};
