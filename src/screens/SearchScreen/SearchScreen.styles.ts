@@ -57,3 +57,9 @@ export const ListSeparator = styled.View`
   width: 100%;
   background-color: ${COLORS.LIGHT_GRAY};
 `;
+
+export const HeaderAddIcon = styled.Image`
+  margin-right: 16px;
+  width: 24px;
+  height: 24px;
+`;

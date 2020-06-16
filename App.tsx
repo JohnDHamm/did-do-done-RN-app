@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { EventScreen, RecurringScreen, SearchScreen } from './src/screens';
 import { useFonts } from '@use-expo/font';
+import { FONTS, COLORS } from './src/styles';
 
 declare global {
   type RootStackParamList = {
@@ -29,21 +30,30 @@ const App = (): JSX.Element => {
   } else {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Search">
+        <Stack.Navigator
+          initialRouteName="Search"
+          screenOptions={{
+            headerTitleStyle: {
+              fontFamily: FONTS.PRIMARY,
+              fontSize: 24,
+            },
+            headerTintColor: COLORS.PRIMARY_PURPLE,
+          }}
+        >
           <Stack.Screen
             name="Search"
             component={SearchScreen}
-            options={{ title: 'Did? Do. Done!' }}
+            options={{ title: '' }}
           />
           <Stack.Screen
             name="Event"
             component={EventScreen}
-            options={{ title: 'event' }}
+            options={{ title: 'Event', headerBackTitle: 'Back' }}
           />
           <Stack.Screen
             name="Recurring"
             component={RecurringScreen}
-            options={{ title: 'recurring events', headerBackTitle: 'search' }}
+            options={{ title: 'Do again', headerBackTitle: 'Search' }}
           />
         </Stack.Navigator>
       </NavigationContainer>

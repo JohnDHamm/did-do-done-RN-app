@@ -1,10 +1,11 @@
 import React from 'react';
-import { FlatList, TouchableOpacity, View } from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {
   AddIcon,
   Container,
   EmptyMessage,
+  HeaderAddIcon,
   ListSeparator,
   ResultsBlock,
   SearchBlock,
@@ -148,6 +149,20 @@ const SearchScreen: React.FC = () => {
       </TouchableOpacity>
     );
   };
+
+  const HeaderRightButton: JSX.Element = (
+    <TouchableOpacity onPress={() => navigation.navigate('Event')}>
+      <HeaderAddIcon source={IMAGES.ADD_EVENT_ICON} />
+    </TouchableOpacity>
+  );
+
+  React.useEffect(() => {
+    const title = isSearching ? 'Did? Do. Done!' : '';
+    navigation.setOptions({
+      title,
+      headerRight: () => (isSearching ? HeaderRightButton : null),
+    });
+  }, [isSearching]);
 
   React.useEffect(() => {
     selectedTags.length || searchText
