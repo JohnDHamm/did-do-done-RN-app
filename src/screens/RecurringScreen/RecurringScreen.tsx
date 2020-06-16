@@ -3,7 +3,7 @@ import { SectionList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Container, ListSeparator } from './RecurringScreen.styles';
 import { mockSavedEvents } from '../../mocks/mockSavedEvents';
-import { EventCard, SectionHeader } from '../../components';
+import { RecurEventCard, SectionHeader } from '../../components';
 import { COLORS } from '../../styles';
 
 interface SectionData {
@@ -41,7 +41,7 @@ const RecurringScreen: React.FC = () => {
     const { id, name, date, notes, tags, recurs } = event;
     return (
       <TouchableOpacity onPress={() => navigation.navigate('Event')}>
-        <EventCard
+        <RecurEventCard
           id={id}
           name={name}
           date={date}

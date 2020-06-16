@@ -63,7 +63,7 @@ export const mockSavedEvents: Array<SavedEvent> = [
   /// 90 days ago, today
   {
     id: moment(today).subtract(90, 'days').valueOf(),
-    name: 'HVAC filter change',
+    name: 'A/C filter change',
     date: moment(today).subtract(90, 'days').valueOf(),
     tags: [
       {
