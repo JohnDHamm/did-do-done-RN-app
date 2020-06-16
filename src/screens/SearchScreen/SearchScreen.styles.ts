@@ -1,9 +1,12 @@
 import styled from 'styled-components/native';
 import { COLORS, FONTS } from '../../styles';
 
-export const Container = styled.View<{ isSearching: boolean }>`
+export const Container = styled.View<{
+  isSearching: boolean;
+  hasEvents: boolean;
+}>`
   flex: 1;
-  justify-content: space-between;
+  justify-content: ${(props) => (props.hasEvents ? 'space-between' : 'center')};
   align-items: center;
   background-color: ${COLORS.WHITE};
   padding-top: ${(props) => (props.isSearching ? '0px' : '40px')};
@@ -30,7 +33,7 @@ export const TagsBlock = styled.View`
 `;
 
 export const AddIcon = styled.Image`
-  margin: 10px 0;
+  margin: 30px 0;
   width: 36px;
   height: 36px;
 `;
@@ -43,8 +46,14 @@ export const ResultsBlock = styled.View`
 `;
 
 export const EmptyMessage = styled.Text`
-  padding: 10px;
+  padding: 20px;
   color: ${COLORS.PRIMARY_GRAY};
   font-size: 16px;
   text-align: center;
+`;
+
+export const ListSeparator = styled.View`
+  height: 1px;
+  width: 100%;
+  background-color: ${COLORS.LIGHT_GRAY};
 `;

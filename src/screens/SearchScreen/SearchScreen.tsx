@@ -1,10 +1,11 @@
 import React from 'react';
-import { FlatList, TouchableOpacity } from 'react-native';
+import { FlatList, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {
   AddIcon,
   Container,
   EmptyMessage,
+  ListSeparator,
   ResultsBlock,
   SearchBlock,
   StyledText,
@@ -37,6 +38,7 @@ const NO_TAG_LABEL = 'no tag';
 const SearchScreen: React.FC = () => {
   const navigation = useNavigation();
   const [savedEvents] = React.useState<SavedEvent[]>(mockSavedEvents);
+  const [hasSavedEvents, setHasSavedEvents] = React.useState<boolean>(false);
   const [recurTotals, setRecurTotals] = React.useState<RecurTotals>({
     missed: 0,
     today: 0,
@@ -48,9 +50,6 @@ const SearchScreen: React.FC = () => {
   const [isSearching, setIsSearching] = React.useState<boolean>(true);
   const [searchText, setSearchText] = React.useState<string>('');
   const [searchResults, setSearchResults] = React.useState<SavedEvent[]>([]);
-  const [showEmptyMessage, setShowEmptyMessage] = React.useState<boolean>(
-    false
-  );
 
   const getSearchResults = () => {
     //filter by tags
@@ -86,7 +85,6 @@ const SearchScreen: React.FC = () => {
     const uniqueEvents = uniqby(filteredEvents, 'id');
     uniqueEvents.sort((a, b) => b.id - a.id);
     setSearchResults(uniqueEvents);
-    setShowEmptyMessage(uniqueEvents.length === 0);
   };
 
   const toggleTag = (tagName: string): void => {
@@ -159,32 +157,35 @@ const SearchScreen: React.FC = () => {
   }, [selectedTags, searchText]);
 
   React.useEffect(() => {
+    setHasSavedEvents(savedEvents.length > 0);
     setRecurTotals(getRecurTotals(savedEvents));
   }, [savedEvents]);
 
   return (
-    <Container isSearching={isSearching}>
+    <Container isSearching={isSearching} hasEvents={hasSavedEvents}>
       {!isSearching && <StyledText>Did? Do. Done!</StyledText>}
-      <SearchBlock>
-        <SearchBar
-          onClear={() => onSearchTextClear()}
-          onSubmit={(searchText) => handleSearchSubmit(searchText)}
-        />
-        <TagsBlock>
-          {renderTags(savedTags)}
-          <TouchableOpacity onPress={() => toggleTag(NO_TAG_LABEL)}>
-            <Tag
-              label={NO_TAG_LABEL}
-              color={COLORS.PRIMARY_GRAY}
-              selected={selectedTags.includes(NO_TAG_LABEL)}
-              extraStyles={tagExtraStyles}
-            />
+      {hasSavedEvents && (
+        <SearchBlock>
+          <SearchBar
+            onClear={() => onSearchTextClear()}
+            onSubmit={(searchText) => handleSearchSubmit(searchText)}
+          />
+          <TagsBlock>
+            {renderTags(savedTags)}
+            <TouchableOpacity onPress={() => toggleTag(NO_TAG_LABEL)}>
+              <Tag
+                label={NO_TAG_LABEL}
+                color={COLORS.PRIMARY_GRAY}
+                selected={selectedTags.includes(NO_TAG_LABEL)}
+                extraStyles={tagExtraStyles}
+              />
+            </TouchableOpacity>
+          </TagsBlock>
+          <TouchableOpacity onPress={() => handleSearchAll()}>
+            <Button label="see all events" />
           </TouchableOpacity>
-        </TagsBlock>
-        <TouchableOpacity onPress={() => handleSearchAll()}>
-          <Button label="see all events" />
-        </TouchableOpacity>
-      </SearchBlock>
+        </SearchBlock>
+      )}
       {!isSearching && (
         <TouchableOpacity onPress={() => navigation.navigate('Event')}>
           <AddIcon source={IMAGES.ADD_EVENT_ICON} />
@@ -193,9 +194,6 @@ const SearchScreen: React.FC = () => {
       {isSearching && (
         <ResultsBlock>
           <SectionHeader text="looking back..." />
-          {showEmptyMessage && (
-            <EmptyMessage>no matching results found...</EmptyMessage>
-          )}
           <FlatList
             data={searchResults}
             renderItem={({ item }) => (
@@ -209,12 +207,18 @@ const SearchScreen: React.FC = () => {
               />
             )}
             keyExtractor={(item) => item.id.toString()}
+            ItemSeparatorComponent={() => <ListSeparator />}
+            ListEmptyComponent={
+              <EmptyMessage>no matching results found...</EmptyMessage>
+            }
           />
         </ResultsBlock>
       )}
-      <TouchableOpacity onPress={() => navigation.navigate('Recurring')}>
-        <RecurEventsBlock recurTotals={recurTotals} minimized={isSearching} />
-      </TouchableOpacity>
+      {hasSavedEvents && (
+        <TouchableOpacity onPress={() => navigation.navigate('Recurring')}>
+          <RecurEventsBlock recurTotals={recurTotals} minimized={isSearching} />
+        </TouchableOpacity>
+      )}
     </Container>
   );
 };
