@@ -14,7 +14,7 @@ const RecurringScreen: React.FC = () => {
   const ListItem = (event: SavedEvent) => {
     const { id, name, date, notes, tags, recurs } = event;
     return (
-      <TouchableOpacity onPress={() => navigation.navigate('Event')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Event', { event })}>
         <RecurEventCard
           id={id}
           name={name}
