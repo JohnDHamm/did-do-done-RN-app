@@ -1,5 +1,6 @@
 import Button from './Button/Button';
 import EventCard from './EventCard/EventCard';
+import Input from './Input/Input';
 import RecurEventCard from './RecurEventCard/RecurEventCard';
 import RecurEventsBlock from './RecurEventsBlock/RecurEventsBlock';
 import RecurNumberBadge from './RecurNumberBadge/RecurNumberBadge';
@@ -10,6 +11,7 @@ import Tag from './Tag/Tag';
 export {
   Button,
   EventCard,
+  Input,
   RecurEventCard,
   RecurEventsBlock,
   RecurNumberBadge,
