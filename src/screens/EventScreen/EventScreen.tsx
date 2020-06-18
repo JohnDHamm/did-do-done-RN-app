@@ -1,10 +1,15 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import {
   ButtonSection,
   Container,
   Label,
+  NotesHeader,
+  RecurBlock,
+  RecurDateText,
+  RecurFreqText,
+  RecurRow,
   Section,
   TagsBlock,
   TagsRow,
@@ -13,6 +18,7 @@ import { Button, Input, Tag } from '../../components';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { mockSavedTags } from '../../mocks/mockSavedTags';
 import { COLORS } from '../../styles';
+import moment from 'moment';
 
 const tagExtraStyles = {
   marginTop: 3,
@@ -33,6 +39,7 @@ const EventScreen: React.FC = () => {
   const [savedTags] = React.useState<Tag[]>(mockSavedTags);
   const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
   const [recurDate, setRecurDate] = React.useState<string>('');
+  const [recurFreq, setRecurFreq] = React.useState<string>('');
   const [saveBtnLabel, setSaveBtnLabel] = React.useState<string>('save event');
 
   const onDateChange = (event: any, selectedDate?: Date) => {
@@ -64,6 +71,33 @@ const EventScreen: React.FC = () => {
     ));
   };
 
+  const getRecurInfo = () => {
+    if (event.recurs) {
+      const date = moment(event.recurs.nextdate);
+      const year = date.year();
+      let displayDate = date.format('MMMM D');
+      if (year !== moment().year()) {
+        displayDate = displayDate + `, ${year.toString()}`;
+      }
+      setRecurDate(displayDate);
+
+      let freq: string | null = null;
+      if (event.recurs.days) {
+        freq = event.recurs.days.toString() + ' days';
+      }
+      if (event.recurs.weeks) {
+        freq = event.recurs.weeks.toString() + ' weeks';
+      }
+      if (event.recurs.months) {
+        freq = event.recurs.months.toString() + ' months';
+      }
+
+      if (freq) {
+        setRecurFreq(freq);
+      }
+    }
+  };
+
   React.useEffect(() => {
     if (event.tags) {
       const newSelectedTags = Array.from(selectedTags);
@@ -72,10 +106,13 @@ const EventScreen: React.FC = () => {
       });
       setSelectedTags(newSelectedTags);
     }
+    if (event.recurs) {
+      getRecurInfo();
+    }
   }, []);
 
   return (
-    <Container>
+    <Container keyboardDismissMode="on-drag">
       <Section>
         <Input
           initialValue={name}
@@ -89,6 +126,7 @@ const EventScreen: React.FC = () => {
         <DateTimePicker value={date} onChange={onDateChange} />
       </Section>
       <Section>
+        {notes.length > 0 && <NotesHeader>notes:</NotesHeader>}
         <Input
           initialValue={notes}
           placeholder="notes?"
@@ -109,7 +147,21 @@ const EventScreen: React.FC = () => {
         <TagsBlock>{renderTags(savedTags)}</TagsBlock>
       </Section>
       <Section>
-        <Label>do again?</Label>
+        {recurDate ? (
+          <View>
+            <Label>do again:</Label>
+            <RecurBlock>
+              <RecurDateText>{recurDate}</RecurDateText>
+              <RecurRow>
+                <RecurFreqText>every {recurFreq}</RecurFreqText>
+              </RecurRow>
+            </RecurBlock>
+          </View>
+        ) : (
+          <TouchableOpacity onPress={() => null}>
+            <Label>do again?</Label>
+          </TouchableOpacity>
+        )}
       </Section>
       <ButtonSection>
         <Button label={saveBtnLabel} />
