@@ -1,7 +1,10 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer, RouteProp } from '@react-navigation/native';
+import {
+  createStackNavigator,
+  StackNavigationProp,
+} from '@react-navigation/stack';
 import { EventScreen, RecurringScreen, SearchScreen } from './src/screens';
 import { useFonts } from '@use-expo/font';
 import { FONTS, COLORS } from './src/styles';
@@ -9,9 +12,16 @@ import { FONTS, COLORS } from './src/styles';
 declare global {
   type RootStackParamList = {
     Search: undefined;
-    Event: undefined;
+    Event: { event: SavedEvent };
     Recurring: undefined;
   };
+
+  type EventScreenRouteProp = RouteProp<RootStackParamList, 'Event'>;
+
+  type EventScreenNavigationProp = StackNavigationProp<
+    RootStackParamList,
+    'Event'
+  >;
 }
 
 const Stack = createStackNavigator<RootStackParamList>();

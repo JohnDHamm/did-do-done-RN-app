@@ -202,6 +202,18 @@ export const mockSavedEvents: Array<SavedEvent> = [
       nextdate: moment(today).add(6, 'weeks').valueOf(),
     },
   },
+  /// 1 week ago, 12 months
+  {
+    id: moment(today).subtract(1, 'weeks').valueOf(),
+    name: 'something next year',
+    date: moment(today).subtract(1, 'weeks').valueOf(),
+    recurs: {
+      days: null,
+      weeks: null,
+      months: 12,
+      nextdate: moment(today).subtract(1, 'weeks').add(12, 'months').valueOf(),
+    },
+  },
   ///
   {
     id: moment(today).subtract(3, 'weeks').add(1, 'day').valueOf(),

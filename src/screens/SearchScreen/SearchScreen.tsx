@@ -137,7 +137,7 @@ const SearchScreen: React.FC = () => {
   const ListItem = (event: SavedEvent) => {
     const { id, name, date, notes, tags, recurs } = event;
     return (
-      <TouchableOpacity onPress={() => navigation.navigate('Event')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Event', { event })}>
         <EventCard
           id={id}
           name={name}
@@ -151,7 +151,9 @@ const SearchScreen: React.FC = () => {
   };
 
   const HeaderRightButton: JSX.Element = (
-    <TouchableOpacity onPress={() => navigation.navigate('Event')}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate('Event', { event: {} })}
+    >
       <HeaderAddIcon source={IMAGES.ADD_EVENT_ICON} />
     </TouchableOpacity>
   );
@@ -202,7 +204,9 @@ const SearchScreen: React.FC = () => {
         </SearchBlock>
       )}
       {!isSearching && (
-        <TouchableOpacity onPress={() => navigation.navigate('Event')}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Event', { event: {} })}
+        >
           <AddIcon source={IMAGES.ADD_EVENT_ICON} />
         </TouchableOpacity>
       )}
