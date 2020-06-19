@@ -40,6 +40,7 @@ const EventScreen: React.FC = () => {
   const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
   const [recurDate, setRecurDate] = React.useState<string>('');
   const [recurFreq, setRecurFreq] = React.useState<string>('');
+  const [isPastRecurDate, setIsPastRecurDate] = React.useState<boolean>(false);
   const [saveBtnLabel, setSaveBtnLabel] = React.useState<string>('save event');
 
   const onDateChange = (event: any, selectedDate?: Date) => {
@@ -80,6 +81,7 @@ const EventScreen: React.FC = () => {
         displayDate = displayDate + `, ${year.toString()}`;
       }
       setRecurDate(displayDate);
+      setIsPastRecurDate(date.isBefore(moment().startOf('day')));
 
       let freq: string | null = null;
       if (event.recurs.days) {
@@ -151,7 +153,9 @@ const EventScreen: React.FC = () => {
           <View>
             <Label>do again:</Label>
             <RecurBlock>
-              <RecurDateText>{recurDate}</RecurDateText>
+              <RecurDateText isPast={isPastRecurDate}>
+                {recurDate}
+              </RecurDateText>
               <RecurRow>
                 <RecurFreqText>every {recurFreq}</RecurFreqText>
               </RecurRow>
