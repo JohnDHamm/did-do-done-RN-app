@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { Modal, TouchableOpacity, View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import {
   ButtonSection,
@@ -14,10 +14,11 @@ import {
   TagsBlock,
   TagsRow,
 } from './EventScreen.styles';
-import { Button, Input, Tag } from '../../components';
+import { Button, Input, RecurEventModal, Tag } from '../../components';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { mockSavedTags } from '../../mocks/mockSavedTags';
 import { COLORS } from '../../styles';
+import { getRecurDateString, getRecurFreqData } from '../../functions';
 import moment from 'moment';
 
 const tagExtraStyles = {
@@ -42,6 +43,7 @@ const EventScreen: React.FC = () => {
   const [recurFreq, setRecurFreq] = React.useState<string>('');
   const [isPastRecurDate, setIsPastRecurDate] = React.useState<boolean>(false);
   const [saveBtnLabel, setSaveBtnLabel] = React.useState<string>('save event');
+  const [showRecurModal, setShowRecurModal] = React.useState<boolean>(false);
 
   const onDateChange = (event: any, selectedDate?: Date) => {
     const currentDate = selectedDate || date;
@@ -72,33 +74,15 @@ const EventScreen: React.FC = () => {
     ));
   };
 
-  const getRecurInfo = () => {
+  React.useEffect(() => {
     if (event.recurs) {
-      const date = moment(event.recurs.nextdate);
-      const year = date.year();
-      let displayDate = date.format('MMMM D');
-      if (year !== moment().year()) {
-        displayDate = displayDate + `, ${year.toString()}`;
-      }
-      setRecurDate(displayDate);
-      setIsPastRecurDate(date.isBefore(moment().startOf('day')));
-
-      let freq: string | null = null;
-      if (event.recurs.days) {
-        freq = event.recurs.days.toString() + ' days';
-      }
-      if (event.recurs.weeks) {
-        freq = event.recurs.weeks.toString() + ' weeks';
-      }
-      if (event.recurs.months) {
-        freq = event.recurs.months.toString() + ' months';
-      }
-
-      if (freq) {
-        setRecurFreq(freq);
-      }
+      const { freq, metric } = getRecurFreqData(event.recurs);
+      setRecurFreq(freq.toString() + ' ' + metric);
+      setRecurDate(getRecurDateString(date, freq, metric));
+      const nextDate = moment(date).add(freq, metric);
+      setIsPastRecurDate(nextDate.isBefore(moment().startOf('day')));
     }
-  };
+  }, [date]);
 
   React.useEffect(() => {
     if (event.tags) {
@@ -107,9 +91,6 @@ const EventScreen: React.FC = () => {
         newSelectedTags.push(tag.name);
       });
       setSelectedTags(newSelectedTags);
-    }
-    if (event.recurs) {
-      getRecurInfo();
     }
   }, []);
 
@@ -152,17 +133,19 @@ const EventScreen: React.FC = () => {
         {recurDate ? (
           <View>
             <Label>do again:</Label>
-            <RecurBlock>
-              <RecurDateText isPast={isPastRecurDate}>
-                {recurDate}
-              </RecurDateText>
-              <RecurRow>
-                <RecurFreqText>every {recurFreq}</RecurFreqText>
-              </RecurRow>
-            </RecurBlock>
+            <TouchableOpacity onPress={() => setShowRecurModal(true)}>
+              <RecurBlock>
+                <RecurDateText isPast={isPastRecurDate}>
+                  {recurDate}
+                </RecurDateText>
+                <RecurRow>
+                  <RecurFreqText>every {recurFreq}</RecurFreqText>
+                </RecurRow>
+              </RecurBlock>
+            </TouchableOpacity>
           </View>
         ) : (
-          <TouchableOpacity onPress={() => null}>
+          <TouchableOpacity onPress={() => setShowRecurModal(true)}>
             <Label>do again?</Label>
           </TouchableOpacity>
         )}
@@ -170,6 +153,14 @@ const EventScreen: React.FC = () => {
       <ButtonSection>
         <Button label={saveBtnLabel} />
       </ButtonSection>
+
+      <Modal animationType="slide" visible={showRecurModal}>
+        <RecurEventModal
+          onClose={() => setShowRecurModal(false)}
+          date={date}
+          recurInfo={event.recurs || null}
+        />
+      </Modal>
     </Container>
   );
 };

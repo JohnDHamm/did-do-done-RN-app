@@ -127,7 +127,7 @@ export const mockSavedEvents: Array<SavedEvent> = [
     ],
     recurs: {
       days: null,
-      weeks: 12,
+      weeks: 11,
       months: null,
       nextdate: moment(today).subtract(14, 'weeks').add(11, 'weeks').valueOf(),
     },

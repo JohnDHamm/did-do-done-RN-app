@@ -15,3 +15,5 @@ type RecurSectionData = {
   title: RecurSectionHeader;
   data: Array<SavedEvent>;
 };
+
+type RecurFreqMetric = 'days' | 'weeks' | 'months';
