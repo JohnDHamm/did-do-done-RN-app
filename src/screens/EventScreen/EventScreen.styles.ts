@@ -32,6 +32,7 @@ export const TagsRow = styled(Row)`
   align-items: center;
   justify-content: space-between;
 `;
+
 export const TagsBlock = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
@@ -51,9 +52,13 @@ const RecurText = styled.Text`
   font-family: ${FONTS.PRIMARY};
   color: ${COLORS.PRIMARY_PURPLE};
 `;
-export const RecurDateText = styled(RecurText)`
+
+export const RecurDateText = styled(RecurText)<{ isPast: boolean }>`
+  color: ${(props) =>
+    props.isPast ? COLORS.MISSED_RED : COLORS.PRIMARY_PURPLE};
   font-size: 26px;
 `;
+
 export const RecurFreqText = styled(RecurText)`
   font-size: 22px;
 `;

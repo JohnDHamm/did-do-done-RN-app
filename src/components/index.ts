@@ -2,6 +2,7 @@ import Button from './Button/Button';
 import EventCard from './EventCard/EventCard';
 import Input from './Input/Input';
 import RecurEventCard from './RecurEventCard/RecurEventCard';
+import RecurEventModal from './RecurEventModal/RecurEventModal';
 import RecurEventsBlock from './RecurEventsBlock/RecurEventsBlock';
 import RecurNumberBadge from './RecurNumberBadge/RecurNumberBadge';
 import SearchBar from './SearchBar/SearchBar';
@@ -13,6 +14,7 @@ export {
   EventCard,
   Input,
   RecurEventCard,
+  RecurEventModal,
   RecurEventsBlock,
   RecurNumberBadge,
   SearchBar,
