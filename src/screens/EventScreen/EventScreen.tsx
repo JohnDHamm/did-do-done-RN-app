@@ -39,6 +39,9 @@ const EventScreen: React.FC = () => {
   const [notes, setNotes] = React.useState<string>(event.notes || '');
   const [savedTags] = React.useState<Tag[]>(mockSavedTags);
   const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
+  const [recurInfo, setRecurInfo] = React.useState<RecurringInfo | null>(
+    event.recurs || null
+  );
   const [recurDate, setRecurDate] = React.useState<string>('');
   const [recurFreq, setRecurFreq] = React.useState<string>('');
   const [isPastRecurDate, setIsPastRecurDate] = React.useState<boolean>(false);
@@ -74,13 +77,21 @@ const EventScreen: React.FC = () => {
     ));
   };
 
+  const updateRecurDisplay = ({ freq, metric }: RecurFreqData) => {
+    setRecurFreq(freq.toString() + ' ' + metric);
+    setRecurDate(getRecurDateString(date, freq, metric));
+    const nextDate = moment(date).add(freq, metric);
+    setIsPastRecurDate(nextDate.isBefore(moment().startOf('day')));
+  };
+
+  const handleSubmitRecur = (newRecurData: RecurringInfo) => {
+    setRecurInfo(newRecurData);
+    updateRecurDisplay(getRecurFreqData(newRecurData));
+  };
+
   React.useEffect(() => {
-    if (event.recurs) {
-      const { freq, metric } = getRecurFreqData(event.recurs);
-      setRecurFreq(freq.toString() + ' ' + metric);
-      setRecurDate(getRecurDateString(date, freq, metric));
-      const nextDate = moment(date).add(freq, metric);
-      setIsPastRecurDate(nextDate.isBefore(moment().startOf('day')));
+    if (recurInfo) {
+      updateRecurDisplay(getRecurFreqData(recurInfo));
     }
   }, [date]);
 
@@ -156,9 +167,10 @@ const EventScreen: React.FC = () => {
 
       <Modal animationType="slide" visible={showRecurModal}>
         <RecurEventModal
-          onClose={() => setShowRecurModal(false)}
           date={date}
-          recurInfo={event.recurs || null}
+          onClose={() => setShowRecurModal(false)}
+          onSubmit={handleSubmitRecur}
+          recurInfo={recurInfo}
         />
       </Modal>
     </Container>

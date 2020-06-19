@@ -17,3 +17,8 @@ type RecurSectionData = {
 };
 
 type RecurFreqMetric = 'days' | 'weeks' | 'months';
+
+type RecurFreqData = {
+  freq: number;
+  metric: RecurFreqMetric;
+};

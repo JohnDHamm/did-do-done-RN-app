@@ -4,22 +4,16 @@ import { COLORS, FONTS } from '../../styles';
 export const Container = styled.SafeAreaView`
   flex: 1;
   width: 100%;
-  /* justify-content: center; */
   align-items: center;
   background-color: ${COLORS.WHITE};
-  /* padding-top: 60px; */
-  /* padding-bottom: 60px; */
-  /* border-width: 1px; */
 `;
 
 export const CloseIconContainer = styled.View`
   height: 60px;
-  /* flex: 0.1; */
   width: 100%;
   align-items: flex-end;
   padding-top: 10px;
   margin-right: 30px;
-  /* border-width: 1px; */
 `;
 
 export const CloseIcon = styled.Image`
@@ -32,7 +26,6 @@ export const Content = styled.View`
   justify-content: space-between;
   align-items: center;
   padding-bottom: 20px;
-  /* border-width: 3px; */
 `;
 
 export const CenteredView = styled.View`

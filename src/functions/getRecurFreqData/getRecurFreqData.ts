@@ -1,9 +1,4 @@
-interface FreqData {
-  freq: number;
-  metric: RecurFreqMetric;
-}
-
-const getRecurFreqData = (recurInfo: RecurringInfo): FreqData => {
+const getRecurFreqData = (recurInfo: RecurringInfo): RecurFreqData => {
   let freq = 0;
   let metric: RecurFreqMetric = 'days';
   if (recurInfo.days) {

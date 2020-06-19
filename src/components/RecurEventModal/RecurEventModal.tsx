@@ -16,11 +16,12 @@ import { TouchableOpacity } from 'react-native';
 import { COLORS } from '../../styles';
 import IMAGES from '../../../assets/images';
 import { getRecurDateString, getRecurFreqData } from '../../functions';
+import moment from 'moment';
 
 interface Props {
   date: Date;
   onClose: () => void;
-  onSubmit?: () => void;
+  onSubmit: (data: RecurringInfo) => void;
   recurInfo: RecurringInfo | null;
 }
 
@@ -43,6 +44,19 @@ const RecurEventModal: React.FC<Props> = ({
   const [inputValue, setInputValue] = React.useState<string>('');
   const [pickerValue, setPickerValue] = React.useState<RecurFreqMetric>('days');
   const [recurDate, setRecurDate] = React.useState<string>('some date');
+  const [nextdate, setNextdate] = React.useState<number>(0);
+
+  const handleSubmit = () => {
+    const data: RecurringInfo = {
+      days: null,
+      weeks: null,
+      months: null,
+      nextdate,
+    };
+    data[pickerValue] = parseInt(inputValue);
+    onSubmit(data);
+    onClose();
+  };
 
   React.useEffect(() => {
     const displayDate = getRecurDateString(
@@ -51,6 +65,7 @@ const RecurEventModal: React.FC<Props> = ({
       pickerValue
     );
     setRecurDate(displayDate);
+    setNextdate(moment(date).add(parseInt(inputValue), pickerValue).valueOf());
   }, [inputValue, pickerValue]);
 
   React.useEffect(() => {
@@ -100,7 +115,7 @@ const RecurEventModal: React.FC<Props> = ({
           <StyledPicker.Item key="months" value="months" label="months" />
         </StyledPicker>
         <RecurDate>{recurDate}</RecurDate>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => handleSubmit()}>
           <Button label="save" />
         </TouchableOpacity>
       </Content>
