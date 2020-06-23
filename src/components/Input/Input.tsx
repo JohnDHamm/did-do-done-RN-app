@@ -3,14 +3,20 @@ import { Container, StyledInput } from './Input.styles.';
 
 interface InputProps {
   autoFocus?: boolean;
+  clearInputOnSubmit?: boolean;
   initialValue: string;
+  onBlur?: () => void;
   onSubmit: (text: string) => void;
   placeholder: string;
+  maxLength?: number;
 }
 
 const Input: React.FC<InputProps> = ({
   autoFocus = false,
+  clearInputOnSubmit = false,
   initialValue,
+  maxLength,
+  onBlur,
   onSubmit,
   placeholder,
 }) => {
@@ -18,6 +24,7 @@ const Input: React.FC<InputProps> = ({
 
   const handleSubmit = () => {
     onSubmit(inputText);
+    if (clearInputOnSubmit) setInputText('');
   };
 
   return (
@@ -27,8 +34,10 @@ const Input: React.FC<InputProps> = ({
         onChangeText={(text: string) => setInputText(text)}
         placeholder={placeholder}
         blurOnSubmit={true}
+        onBlur={onBlur}
         onSubmitEditing={() => handleSubmit()}
         autoFocus={autoFocus}
+        maxLength={maxLength}
       />
     </Container>
   );
