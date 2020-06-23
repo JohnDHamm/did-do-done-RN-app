@@ -14,7 +14,13 @@ import {
   TagsBlock,
   TagsRow,
 } from './EventScreen.styles';
-import { Button, Input, RecurEventModal, Tag } from '../../components';
+import {
+  Button,
+  Input,
+  RecurEventModal,
+  Tag,
+  TagMgmtModal,
+} from '../../components';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { mockSavedTags } from '../../mocks/mockSavedTags';
 import { COLORS } from '../../styles';
@@ -47,6 +53,7 @@ const EventScreen: React.FC = () => {
   const [isPastRecurDate, setIsPastRecurDate] = React.useState<boolean>(false);
   const [saveBtnLabel, setSaveBtnLabel] = React.useState<string>('save event');
   const [showRecurModal, setShowRecurModal] = React.useState<boolean>(false);
+  const [showTagModal, setShowTagModal] = React.useState<boolean>(false);
 
   const onDateChange = (event: any, selectedDate?: Date) => {
     const currentDate = selectedDate || date;
@@ -87,6 +94,10 @@ const EventScreen: React.FC = () => {
   const handleSubmitRecur = (newRecurData: RecurringInfo) => {
     setRecurInfo(newRecurData);
     updateRecurDisplay(getRecurFreqData(newRecurData));
+  };
+
+  const handleSubmitTag = () => {
+    console.log('tag submit');
   };
 
   React.useEffect(() => {
@@ -130,9 +141,9 @@ const EventScreen: React.FC = () => {
       <Section>
         <TagsRow>
           <Label>tags:</Label>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => setShowTagModal(true)}>
             <Tag
-              label="add tag"
+              label="manage tags"
               color={COLORS.PRIMARY_PURPLE}
               selected={true}
             />
@@ -171,6 +182,13 @@ const EventScreen: React.FC = () => {
           onClose={() => setShowRecurModal(false)}
           onSubmit={handleSubmitRecur}
           recurInfo={recurInfo}
+        />
+      </Modal>
+
+      <Modal animationType="slide" visible={showTagModal}>
+        <TagMgmtModal
+          onClose={() => setShowTagModal(false)}
+          onSubmit={handleSubmitTag}
         />
       </Modal>
     </Container>
