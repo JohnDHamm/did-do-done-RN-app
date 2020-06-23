@@ -1,14 +1,14 @@
 export const mockSavedTags: Array<Tag> = [
   {
     name: 'car',
-    color: 'steelblue',
+    color: '#4682B4',
   },
   {
     name: 'home',
-    color: 'darkolivegreen',
+    color: '#556B2F',
   },
   {
     name: 'clean',
-    color: 'darkgoldenrod',
+    color: '#B8860B',
   },
 ];

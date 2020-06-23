@@ -8,6 +8,7 @@ import RecurNumberBadge from './RecurNumberBadge/RecurNumberBadge';
 import SearchBar from './SearchBar/SearchBar';
 import SectionHeader from './SectionHeader/SectionHeader';
 import Tag from './Tag/Tag';
+import TagMgmtModal from './TagMgmtModal/TagMgmtModal';
 
 export {
   Button,
@@ -20,4 +21,5 @@ export {
   SearchBar,
   SectionHeader,
   Tag,
+  TagMgmtModal,
 };
