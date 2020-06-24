@@ -25,6 +25,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { TagsContext } from '../../contexts';
 import { COLORS } from '../../styles';
 import { getRecurDateString, getRecurFreqData } from '../../functions';
+import { EventsContext } from '../../contexts';
 import moment from 'moment';
 
 const tagExtraStyles = {
@@ -38,6 +39,9 @@ const EventScreen: React.FC = () => {
   const route = useRoute<EventScreenRouteProp>();
   const { event } = route.params;
 
+  const { events, setCurrentEvents } = React.useContext<EventsContextInterface>(
+    EventsContext
+  );
   const { tags } = React.useContext<TagsContextInterface>(TagsContext);
   const [name, setName] = React.useState<string>(event.name || '');
   const [date, setDate] = React.useState<Date>(
@@ -98,6 +102,32 @@ const EventScreen: React.FC = () => {
 
   const handleSubmitTag = () => {
     console.log('tag submit');
+  };
+
+  const saveEvent = () => {
+    if (event.id) {
+      console.log('existing event', event.id);
+    } else {
+      if (name.length > 0) {
+        const updateEvents = Array.from(events);
+        const newEvent: SavedEvent = {
+          id: new Date().getTime(),
+          name,
+          date: date.getTime(),
+        };
+        if (notes.length > 0) {
+          newEvent.notes = notes;
+        }
+        if (selectedTags.length > 0) {
+          newEvent.tagIds = selectedTags;
+        }
+        if (recurInfo) {
+          newEvent.recurs = recurInfo;
+        }
+        updateEvents.push(newEvent);
+        setCurrentEvents(updateEvents);
+      }
+    }
   };
 
   React.useEffect(() => {
@@ -173,7 +203,9 @@ const EventScreen: React.FC = () => {
         )}
       </Section>
       <ButtonSection>
-        <Button label={saveBtnLabel} />
+        <TouchableOpacity onPress={() => saveEvent()}>
+          <Button label={saveBtnLabel} />
+        </TouchableOpacity>
       </ButtonSection>
 
       <Modal animationType="slide" visible={showRecurModal}>
