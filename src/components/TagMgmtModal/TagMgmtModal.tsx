@@ -25,7 +25,7 @@ import Tag from '../Tag/Tag';
 import { TouchableOpacity } from 'react-native';
 import { COLORS } from '../../styles';
 import IMAGES from '../../../assets/images';
-import { mockSavedTags } from '../../mocks/mockSavedTags';
+import { TagsContext } from '../../contexts';
 
 const tagExtraStyles = {
   marginTop: 5,
@@ -48,7 +48,11 @@ interface Props {
 }
 
 const TagMgmtModal: React.FC<Props> = ({ onClose, onSubmit }) => {
-  const [currentTags, setCurrentTags] = React.useState<Tag[]>(mockSavedTags); //TODO: use context
+  const { tags, setCurrentTags } = React.useContext<TagsContextInterface>(
+    TagsContext
+  );
+
+  // const [currentTags, setCurrentTags] = React.useState<Tag[]>(mockSavedTags); //TODO: use context
   const [showNewInput, setShowNewInput] = React.useState<boolean>(false);
   const [selectedTag, setSelectedTag] = React.useState<Tag>(noSelectedTag);
   const [showTagEdits, setShowTagEdits] = React.useState<boolean>(false);
@@ -77,7 +81,7 @@ const TagMgmtModal: React.FC<Props> = ({ onClose, onSubmit }) => {
   };
 
   const changeTagColor = (newColor: string) => {
-    const updatedTags = Array.from(currentTags);
+    const updatedTags = Array.from(tags);
     const idx = updatedTags.findIndex((tag) => tag.name === selectedTag.name);
     updatedTags[idx].color = newColor;
     setCurrentTags(updatedTags);
@@ -113,7 +117,7 @@ const TagMgmtModal: React.FC<Props> = ({ onClose, onSubmit }) => {
   };
 
   const isDuplicateName = (newTagName: string) => {
-    const match = currentTags.filter((tag) => tag.name === newTagName);
+    const match = tags.filter((tag) => tag.name === newTagName);
     return match.length > 0;
   };
 
@@ -123,7 +127,7 @@ const TagMgmtModal: React.FC<Props> = ({ onClose, onSubmit }) => {
       return;
     }
     if (newTagName.length < 1) return;
-    const updatedTags = Array.from(currentTags);
+    const updatedTags = Array.from(tags);
     const newTag: Tag = {
       id: new Date().getTime(),
       name: newTagName,
@@ -141,7 +145,7 @@ const TagMgmtModal: React.FC<Props> = ({ onClose, onSubmit }) => {
       return;
     }
     if (changedTagName.length < 1) return;
-    const updatedTags = Array.from(currentTags);
+    const updatedTags = Array.from(tags);
     const idx = updatedTags.findIndex((tag) => tag.name === selectedTag.name);
     updatedTags[idx].name = changedTagName;
     setErrMsg('');
@@ -159,9 +163,9 @@ const TagMgmtModal: React.FC<Props> = ({ onClose, onSubmit }) => {
     // ?? what about saved events that use the tag?
   };
 
-  React.useEffect(() => {
-    // console.log('currentTags', currentTags);
-  }, [currentTags]);
+  // React.useEffect(() => {
+  // console.log('tags', tags);
+  // }, [tags]);
 
   React.useEffect(() => {
     if (showNewInput) {
@@ -204,7 +208,7 @@ const TagMgmtModal: React.FC<Props> = ({ onClose, onSubmit }) => {
         <ErrorMsg>{errMsg}</ErrorMsg>
         <CenteredView>
           <Label>saved tags:</Label>
-          <TagsBlock>{renderTags(currentTags)}</TagsBlock>
+          <TagsBlock>{renderTags(tags)}</TagsBlock>
           {showTagEdits && (
             <CenteredView>
               <TagNameEdit>

@@ -14,7 +14,7 @@ import {
 import Tag from '../Tag/Tag';
 import IMAGES from '../../../assets/images';
 import moment from 'moment';
-import { mockSavedTags } from '../../mocks/mockSavedTags';
+import { TagsContext } from '../../contexts';
 
 const RecurEventCard: React.FC<SavedEvent> = ({
   name,
@@ -22,6 +22,8 @@ const RecurEventCard: React.FC<SavedEvent> = ({
   tagIds,
   recurs,
 }) => {
+  const { tags } = React.useContext<TagsContextInterface>(TagsContext);
+
   const getDisplayDate = (): string => {
     const nextdateYear = moment(recurs?.nextdate).year();
     const startThisWeek = moment().add(1, 'day').startOf('day');
@@ -77,8 +79,7 @@ const RecurEventCard: React.FC<SavedEvent> = ({
   };
 
   const createTags = (tagIds: number[]) => {
-    return mockSavedTags.filter((tag) => tagIds.includes(tag.id));
-    //TODO: replace mocks with context tags
+    return tags.filter((tag) => tagIds.includes(tag.id));
   };
 
   const renderTags = (tagIds: number[]) => {

@@ -22,6 +22,7 @@ import {
 } from '../../components';
 import IMAGES from '../../../assets/images';
 import { mockSavedEvents } from '../../mocks/mockSavedEvents';
+import { TagsContext } from '../../contexts';
 import { mockSavedTags } from '../../mocks/mockSavedTags';
 import { getRecurTotals } from '../../functions';
 import uniqby from 'lodash.uniqby';
@@ -38,6 +39,10 @@ const NO_TAG_ID = 0;
 
 const SearchScreen: React.FC = () => {
   const navigation = useNavigation();
+  const { tags, setCurrentTags } = React.useContext<TagsContextInterface>(
+    TagsContext
+  );
+
   const [savedEvents] = React.useState<SavedEvent[]>(mockSavedEvents);
   const [hasSavedEvents, setHasSavedEvents] = React.useState<boolean>(false);
   const [recurTotals, setRecurTotals] = React.useState<RecurTotals>({
@@ -46,7 +51,6 @@ const SearchScreen: React.FC = () => {
     thisweek: 0,
     next30: 0,
   });
-  const [savedTags] = React.useState<Tag[]>(mockSavedTags);
   const [selectedTags, setSelectedTags] = React.useState<number[]>([]);
   const [isSearching, setIsSearching] = React.useState<boolean>(true);
   const [searchText, setSearchText] = React.useState<string>('');
@@ -99,7 +103,7 @@ const SearchScreen: React.FC = () => {
   };
 
   const setAllTagsActve = (): void => {
-    const allTagIds = savedTags.map((tag) => tag.id);
+    const allTagIds = tags.map((tag) => tag.id);
     allTagIds.push(NO_TAG_ID);
     setSelectedTags(allTagIds);
   };
@@ -188,7 +192,7 @@ const SearchScreen: React.FC = () => {
             onSubmit={(searchText) => handleSearchSubmit(searchText)}
           />
           <TagsBlock>
-            {renderTags(savedTags)}
+            {renderTags(tags)}
             <TouchableOpacity onPress={() => toggleTag(NO_TAG_ID)}>
               <Tag
                 label={'no tag'}

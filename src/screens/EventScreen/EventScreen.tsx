@@ -22,7 +22,7 @@ import {
   TagMgmtModal,
 } from '../../components';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { mockSavedTags } from '../../mocks/mockSavedTags';
+import { TagsContext } from '../../contexts';
 import { COLORS } from '../../styles';
 import { getRecurDateString, getRecurFreqData } from '../../functions';
 import moment from 'moment';
@@ -38,12 +38,12 @@ const EventScreen: React.FC = () => {
   const route = useRoute<EventScreenRouteProp>();
   const { event } = route.params;
 
+  const { tags } = React.useContext<TagsContextInterface>(TagsContext);
   const [name, setName] = React.useState<string>(event.name || '');
   const [date, setDate] = React.useState<Date>(
     event.date ? new Date(event.date) : new Date()
   );
   const [notes, setNotes] = React.useState<string>(event.notes || '');
-  const [savedTags] = React.useState<Tag[]>(mockSavedTags);
   const [selectedTags, setSelectedTags] = React.useState<number[]>([]);
   const [recurInfo, setRecurInfo] = React.useState<RecurringInfo | null>(
     event.recurs || null
@@ -149,7 +149,7 @@ const EventScreen: React.FC = () => {
             />
           </TouchableOpacity>
         </TagsRow>
-        <TagsBlock>{renderTags(savedTags)}</TagsBlock>
+        <TagsBlock>{renderTags(tags)}</TagsBlock>
       </Section>
       <Section>
         {recurDate ? (
