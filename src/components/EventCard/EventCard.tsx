@@ -14,7 +14,7 @@ import {
 import Tag from '../Tag/Tag';
 import IMAGES from '../../../assets/images';
 import moment from 'moment';
-import { mockSavedTags } from '../../mocks/mockSavedTags';
+import { TagsContext } from '../../contexts';
 
 const EventCard: React.FC<SavedEvent> = ({
   name,
@@ -23,6 +23,7 @@ const EventCard: React.FC<SavedEvent> = ({
   tagIds,
   recurs,
 }) => {
+  const { tags } = React.useContext<TagsContextInterface>(TagsContext);
   const savedYear = moment(date).year();
   let displayDate = moment(date).format('MMM D');
   if (savedYear !== moment().year()) {
@@ -46,8 +47,7 @@ const EventCard: React.FC<SavedEvent> = ({
   };
 
   const createTags = (tagIds: number[]) => {
-    return mockSavedTags.filter((tag) => tagIds.includes(tag.id));
-    //TODO: replace mocks with context tags
+    return tags.filter((tag) => tagIds.includes(tag.id));
   };
 
   const renderTags = (tagIds: number[]) => {

@@ -22,9 +22,10 @@ import {
   TagMgmtModal,
 } from '../../components';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { mockSavedTags } from '../../mocks/mockSavedTags';
+import { TagsContext } from '../../contexts';
 import { COLORS } from '../../styles';
 import { getRecurDateString, getRecurFreqData } from '../../functions';
+import { EventsContext } from '../../contexts';
 import moment from 'moment';
 
 const tagExtraStyles = {
@@ -38,12 +39,15 @@ const EventScreen: React.FC = () => {
   const route = useRoute<EventScreenRouteProp>();
   const { event } = route.params;
 
+  const { events, setCurrentEvents } = React.useContext<EventsContextInterface>(
+    EventsContext
+  );
+  const { tags } = React.useContext<TagsContextInterface>(TagsContext);
   const [name, setName] = React.useState<string>(event.name || '');
   const [date, setDate] = React.useState<Date>(
     event.date ? new Date(event.date) : new Date()
   );
   const [notes, setNotes] = React.useState<string>(event.notes || '');
-  const [savedTags] = React.useState<Tag[]>(mockSavedTags);
   const [selectedTags, setSelectedTags] = React.useState<number[]>([]);
   const [recurInfo, setRecurInfo] = React.useState<RecurringInfo | null>(
     event.recurs || null
@@ -100,6 +104,46 @@ const EventScreen: React.FC = () => {
     console.log('tag submit');
   };
 
+  const composeEvent = (eventId: number): SavedEvent => {
+    const event: SavedEvent = {
+      id: eventId,
+      name,
+      date: date.getTime(),
+    };
+    if (notes.length > 0) {
+      event.notes = notes;
+    }
+    if (selectedTags.length > 0) {
+      event.tagIds = selectedTags;
+    }
+    if (recurInfo) {
+      event.recurs = recurInfo;
+    }
+
+    return event;
+  };
+
+  const saveEvent = () => {
+    if (name.length > 0) {
+      const updateEvents = Array.from(events);
+      if (event.id) {
+        const changedEvent = composeEvent(event.id);
+        const blah = updateEvents.filter(
+          (event) => event.id !== changedEvent.id
+        );
+        blah.push(changedEvent);
+        setCurrentEvents(blah);
+      } else {
+        const newEvent = composeEvent(date.getTime());
+        updateEvents.push(newEvent);
+        setCurrentEvents(updateEvents);
+      }
+      navigation.goBack();
+    } else {
+      console.warn('need a name!');
+    }
+  };
+
   React.useEffect(() => {
     if (recurInfo) {
       updateRecurDisplay(getRecurFreqData(recurInfo));
@@ -149,7 +193,7 @@ const EventScreen: React.FC = () => {
             />
           </TouchableOpacity>
         </TagsRow>
-        <TagsBlock>{renderTags(savedTags)}</TagsBlock>
+        <TagsBlock>{renderTags(tags)}</TagsBlock>
       </Section>
       <Section>
         {recurDate ? (
@@ -173,7 +217,9 @@ const EventScreen: React.FC = () => {
         )}
       </Section>
       <ButtonSection>
-        <Button label={saveBtnLabel} />
+        <TouchableOpacity onPress={() => saveEvent()}>
+          <Button label={saveBtnLabel} />
+        </TouchableOpacity>
       </ButtonSection>
 
       <Modal animationType="slide" visible={showRecurModal}>

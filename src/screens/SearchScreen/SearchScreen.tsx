@@ -21,8 +21,7 @@ import {
   Tag,
 } from '../../components';
 import IMAGES from '../../../assets/images';
-import { mockSavedEvents } from '../../mocks/mockSavedEvents';
-import { mockSavedTags } from '../../mocks/mockSavedTags';
+import { EventsContext, TagsContext } from '../../contexts';
 import { getRecurTotals } from '../../functions';
 import uniqby from 'lodash.uniqby';
 import { COLORS } from '../../styles';
@@ -38,7 +37,9 @@ const NO_TAG_ID = 0;
 
 const SearchScreen: React.FC = () => {
   const navigation = useNavigation();
-  const [savedEvents] = React.useState<SavedEvent[]>(mockSavedEvents);
+  const { events } = React.useContext<EventsContextInterface>(EventsContext);
+  const { tags } = React.useContext<TagsContextInterface>(TagsContext);
+
   const [hasSavedEvents, setHasSavedEvents] = React.useState<boolean>(false);
   const [recurTotals, setRecurTotals] = React.useState<RecurTotals>({
     missed: 0,
@@ -46,7 +47,6 @@ const SearchScreen: React.FC = () => {
     thisweek: 0,
     next30: 0,
   });
-  const [savedTags] = React.useState<Tag[]>(mockSavedTags);
   const [selectedTags, setSelectedTags] = React.useState<number[]>([]);
   const [isSearching, setIsSearching] = React.useState<boolean>(true);
   const [searchText, setSearchText] = React.useState<string>('');
@@ -56,7 +56,7 @@ const SearchScreen: React.FC = () => {
     //filter by tags
     const tagFilteredEvents: Array<SavedEvent> = [];
     if (selectedTags.length > 0) {
-      savedEvents.forEach((event) => {
+      events.forEach((event) => {
         if (event.tagIds) {
           const eventTagIds = event.tagIds.map((id) => id);
           eventTagIds.forEach((tagId) => {
@@ -84,7 +84,7 @@ const SearchScreen: React.FC = () => {
       : tagFilteredEvents;
 
     const uniqueEvents = uniqby(filteredEvents, 'id');
-    uniqueEvents.sort((a, b) => b.id - a.id);
+    uniqueEvents.sort((a, b) => b.date - a.date);
     setSearchResults(uniqueEvents);
   };
 
@@ -99,7 +99,7 @@ const SearchScreen: React.FC = () => {
   };
 
   const setAllTagsActve = (): void => {
-    const allTagIds = savedTags.map((tag) => tag.id);
+    const allTagIds = tags.map((tag) => tag.id);
     allTagIds.push(NO_TAG_ID);
     setSelectedTags(allTagIds);
   };
@@ -174,9 +174,9 @@ const SearchScreen: React.FC = () => {
   }, [selectedTags, searchText]);
 
   React.useEffect(() => {
-    setHasSavedEvents(savedEvents.length > 0);
-    setRecurTotals(getRecurTotals(savedEvents));
-  }, [savedEvents]);
+    setHasSavedEvents(events.length > 0);
+    setRecurTotals(getRecurTotals(events));
+  }, [events]);
 
   return (
     <Container isSearching={isSearching} hasEvents={hasSavedEvents}>
@@ -188,7 +188,7 @@ const SearchScreen: React.FC = () => {
             onSubmit={(searchText) => handleSearchSubmit(searchText)}
           />
           <TagsBlock>
-            {renderTags(savedTags)}
+            {renderTags(tags)}
             <TouchableOpacity onPress={() => toggleTag(NO_TAG_ID)}>
               <Tag
                 label={'no tag'}
