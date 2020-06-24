@@ -9,12 +9,7 @@ export const mockSavedEvents: Array<SavedEvent> = [
     name: 'change Honda oil',
     date: moment(today).subtract(2, 'months').valueOf(),
     notes: '120,045 miles',
-    tags: [
-      {
-        name: 'car',
-        color: 'steelblue',
-      },
-    ],
+    tagIds: [1],
     recurs: {
       days: null,
       weeks: null,
@@ -28,12 +23,7 @@ export const mockSavedEvents: Array<SavedEvent> = [
     name: 'rotate tires',
     date: moment('2019-12-25').valueOf(),
     notes: '81,632 miles - at JiffyLube',
-    tags: [
-      {
-        name: 'car',
-        color: 'steelblue',
-      },
-    ],
+    tagIds: [1],
     recurs: {
       days: null,
       weeks: null,
@@ -47,12 +37,7 @@ export const mockSavedEvents: Array<SavedEvent> = [
     name: 'changed air filter',
     date: moment(today).subtract(4, 'months').add(2, 'days').valueOf(),
     notes: '97,045 miles',
-    tags: [
-      {
-        name: 'car',
-        color: 'steelblue',
-      },
-    ],
+    tagIds: [1],
     recurs: {
       days: null,
       weeks: null,
@@ -65,12 +50,7 @@ export const mockSavedEvents: Array<SavedEvent> = [
     id: moment(today).subtract(90, 'days').valueOf(),
     name: 'A/C filter change',
     date: moment(today).subtract(90, 'days').valueOf(),
-    tags: [
-      {
-        name: 'home',
-        color: 'darkolivegreen',
-      },
-    ],
+    tagIds: [2],
     recurs: {
       days: 90,
       weeks: null,
@@ -83,12 +63,7 @@ export const mockSavedEvents: Array<SavedEvent> = [
     id: moment(today).subtract(100, 'days').valueOf(),
     name: 'aaa',
     date: moment(today).subtract(100, 'days').valueOf(),
-    tags: [
-      {
-        name: 'home',
-        color: 'darkolivegreen',
-      },
-    ],
+    tagIds: [2],
     recurs: {
       days: 100,
       weeks: null,
@@ -101,12 +76,7 @@ export const mockSavedEvents: Array<SavedEvent> = [
     id: moment(today).subtract(13, 'weeks').valueOf(),
     name: 'replace smoke alarm batteries',
     date: moment(today).subtract(13, 'weeks').valueOf(),
-    tags: [
-      {
-        name: 'home',
-        color: 'darkolivegreen',
-      },
-    ],
+    tagIds: [2],
     recurs: {
       days: null,
       weeks: 12,
@@ -119,12 +89,7 @@ export const mockSavedEvents: Array<SavedEvent> = [
     id: moment(today).subtract(14, 'weeks').valueOf(),
     name: 'something',
     date: moment(today).subtract(14, 'weeks').valueOf(),
-    tags: [
-      {
-        name: 'home',
-        color: 'darkolivegreen',
-      },
-    ],
+    tagIds: [2],
     recurs: {
       days: null,
       weeks: 11,
@@ -137,12 +102,7 @@ export const mockSavedEvents: Array<SavedEvent> = [
     id: moment(today).subtract(6, 'weeks').add(8, 'days').valueOf(),
     name: 'replace water filter',
     date: moment(today).subtract(6, 'weeks').add(8, 'days').valueOf(),
-    tags: [
-      {
-        name: 'home',
-        color: 'darkolivegreen',
-      },
-    ],
+    tagIds: [2],
     recurs: {
       days: null,
       weeks: 6,
@@ -155,12 +115,7 @@ export const mockSavedEvents: Array<SavedEvent> = [
     id: moment(today).subtract(4, 'months').add(4, 'days').valueOf(),
     name: 'deep oven cleaning',
     date: moment(today).subtract(4, 'months').add(4, 'days').valueOf(),
-    tags: [
-      {
-        name: 'clean',
-        color: 'darkgoldenrod',
-      },
-    ],
+    tagIds: [3],
     recurs: {
       days: null,
       weeks: 4,
@@ -173,16 +128,7 @@ export const mockSavedEvents: Array<SavedEvent> = [
     id: moment(today).subtract(2, 'weeks').valueOf(),
     name: 'wash shower curtains',
     date: moment(today).subtract(2, 'weeks').valueOf(),
-    tags: [
-      {
-        name: 'clean',
-        color: 'darkgoldenrod',
-      },
-      {
-        name: 'home',
-        color: 'darkolivegreen',
-      },
-    ],
+    tagIds: [3, 2],
     recurs: {
       days: null,
       weeks: 4,

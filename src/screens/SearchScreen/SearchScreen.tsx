@@ -34,7 +34,7 @@ const tagExtraStyles = {
   marginLeft: 3,
 };
 
-const NO_TAG_LABEL = 'no tag';
+const NO_TAG_ID = 0;
 
 const SearchScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -47,7 +47,7 @@ const SearchScreen: React.FC = () => {
     next30: 0,
   });
   const [savedTags] = React.useState<Tag[]>(mockSavedTags);
-  const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = React.useState<number[]>([]);
   const [isSearching, setIsSearching] = React.useState<boolean>(true);
   const [searchText, setSearchText] = React.useState<string>('');
   const [searchResults, setSearchResults] = React.useState<SavedEvent[]>([]);
@@ -57,16 +57,16 @@ const SearchScreen: React.FC = () => {
     const tagFilteredEvents: Array<SavedEvent> = [];
     if (selectedTags.length > 0) {
       savedEvents.forEach((event) => {
-        if (event.tags) {
-          const eventTags = event.tags.map((tag) => tag.name);
-          eventTags.forEach((tag) => {
-            if (selectedTags.includes(tag)) {
+        if (event.tagIds) {
+          const eventTagIds = event.tagIds.map((id) => id);
+          eventTagIds.forEach((tagId) => {
+            if (selectedTags.includes(tagId)) {
               tagFilteredEvents.push(event);
               return;
             }
           });
         } else {
-          if (selectedTags.includes('no tag')) {
+          if (selectedTags.includes(NO_TAG_ID)) {
             tagFilteredEvents.push(event);
           }
         }
@@ -88,20 +88,20 @@ const SearchScreen: React.FC = () => {
     setSearchResults(uniqueEvents);
   };
 
-  const toggleTag = (tagName: string): void => {
+  const toggleTag = (id: number): void => {
     const newSelectedTags = Array.from(selectedTags);
-    if (selectedTags.includes(tagName)) {
-      setSelectedTags(newSelectedTags.filter((tag) => tag !== tagName));
+    if (selectedTags.includes(id)) {
+      setSelectedTags(newSelectedTags.filter((tag) => tag !== id));
     } else {
-      newSelectedTags.push(tagName);
+      newSelectedTags.push(id);
       setSelectedTags(newSelectedTags);
     }
   };
 
   const setAllTagsActve = (): void => {
-    const allTagNames = savedTags.map((tag) => tag.name);
-    allTagNames.push(NO_TAG_LABEL);
-    setSelectedTags(allTagNames);
+    const allTagIds = savedTags.map((tag) => tag.id);
+    allTagIds.push(NO_TAG_ID);
+    setSelectedTags(allTagIds);
   };
 
   const handleSearchSubmit = (searchText: string) => {
@@ -122,12 +122,12 @@ const SearchScreen: React.FC = () => {
 
   const renderTags = (tags: Tag[]) => {
     return tags.map((tag) => (
-      <TouchableOpacity key={tag.name} onPress={() => toggleTag(tag.name)}>
+      <TouchableOpacity key={tag.name} onPress={() => toggleTag(tag.id)}>
         <Tag
-          key={tag.name}
+          key={tag.id}
           label={tag.name}
           color={tag.color}
-          selected={selectedTags.includes(tag.name)}
+          selected={selectedTags.includes(tag.id)}
           extraStyles={tagExtraStyles}
         />
       </TouchableOpacity>
@@ -135,7 +135,7 @@ const SearchScreen: React.FC = () => {
   };
 
   const ListItem = (event: SavedEvent) => {
-    const { id, name, date, notes, tags, recurs } = event;
+    const { id, name, date, notes, tagIds, recurs } = event;
     return (
       <TouchableOpacity onPress={() => navigation.navigate('Event', { event })}>
         <EventCard
@@ -143,7 +143,7 @@ const SearchScreen: React.FC = () => {
           name={name}
           date={date}
           notes={notes}
-          tags={tags}
+          tagIds={tagIds}
           recurs={recurs}
         />
       </TouchableOpacity>
@@ -189,11 +189,11 @@ const SearchScreen: React.FC = () => {
           />
           <TagsBlock>
             {renderTags(savedTags)}
-            <TouchableOpacity onPress={() => toggleTag(NO_TAG_LABEL)}>
+            <TouchableOpacity onPress={() => toggleTag(NO_TAG_ID)}>
               <Tag
-                label={NO_TAG_LABEL}
+                label={'no tag'}
                 color={COLORS.PRIMARY_GRAY}
-                selected={selectedTags.includes(NO_TAG_LABEL)}
+                selected={selectedTags.includes(NO_TAG_ID)}
                 extraStyles={tagExtraStyles}
               />
             </TouchableOpacity>
@@ -221,7 +221,7 @@ const SearchScreen: React.FC = () => {
                 name={item.name}
                 date={item.date}
                 notes={item.notes}
-                tags={item.tags}
+                tagIds={item.tagIds}
                 recurs={item.recurs}
               />
             )}

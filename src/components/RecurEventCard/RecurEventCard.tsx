@@ -14,11 +14,12 @@ import {
 import Tag from '../Tag/Tag';
 import IMAGES from '../../../assets/images';
 import moment from 'moment';
+import { mockSavedTags } from '../../mocks/mockSavedTags';
 
 const RecurEventCard: React.FC<SavedEvent> = ({
   name,
   notes,
-  tags,
+  tagIds,
   recurs,
 }) => {
   const getDisplayDate = (): string => {
@@ -75,7 +76,13 @@ const RecurEventCard: React.FC<SavedEvent> = ({
     return `${recurFreq}`;
   };
 
-  const renderTags = (tags: Tag[]) => {
+  const createTags = (tagIds: number[]) => {
+    return mockSavedTags.filter((tag) => tagIds.includes(tag.id));
+    //TODO: replace mocks with context tags
+  };
+
+  const renderTags = (tagIds: number[]) => {
+    const tags: Tag[] = createTags(tagIds);
     const extraStyles = {
       marginRight: 5,
     };
@@ -102,7 +109,7 @@ const RecurEventCard: React.FC<SavedEvent> = ({
       </TopRow>
       <Name>{name}</Name>
       {notes && <Notes>{notes}</Notes>}
-      {tags && tags.length && <TagsRow>{renderTags(tags)}</TagsRow>}
+      {tagIds && tagIds.length && <TagsRow>{renderTags(tagIds)}</TagsRow>}
     </Container>
   );
 };

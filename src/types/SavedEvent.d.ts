@@ -10,6 +10,6 @@ type SavedEvent = {
   name: string;
   date: number;
   notes?: string;
-  tags?: Tag[];
+  tagIds?: number[];
   recurs?: RecurringInfo;
 };
