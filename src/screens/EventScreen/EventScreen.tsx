@@ -104,30 +104,43 @@ const EventScreen: React.FC = () => {
     console.log('tag submit');
   };
 
+  const composeEvent = (eventId: number): SavedEvent => {
+    const event: SavedEvent = {
+      id: eventId,
+      name,
+      date: date.getTime(),
+    };
+    if (notes.length > 0) {
+      event.notes = notes;
+    }
+    if (selectedTags.length > 0) {
+      event.tagIds = selectedTags;
+    }
+    if (recurInfo) {
+      event.recurs = recurInfo;
+    }
+
+    return event;
+  };
+
   const saveEvent = () => {
-    if (event.id) {
-      console.log('existing event', event.id);
-    } else {
-      if (name.length > 0) {
-        const updateEvents = Array.from(events);
-        const newEvent: SavedEvent = {
-          id: date.getTime(),
-          name,
-          date: date.getTime(),
-        };
-        if (notes.length > 0) {
-          newEvent.notes = notes;
-        }
-        if (selectedTags.length > 0) {
-          newEvent.tagIds = selectedTags;
-        }
-        if (recurInfo) {
-          newEvent.recurs = recurInfo;
-        }
+    if (name.length > 0) {
+      const updateEvents = Array.from(events);
+      if (event.id) {
+        const changedEvent = composeEvent(event.id);
+        const blah = updateEvents.filter(
+          (event) => event.id !== changedEvent.id
+        );
+        blah.push(changedEvent);
+        setCurrentEvents(blah);
+      } else {
+        const newEvent = composeEvent(date.getTime());
         updateEvents.push(newEvent);
         setCurrentEvents(updateEvents);
-        navigation.goBack();
       }
+      navigation.goBack();
+    } else {
+      console.warn('need a name!');
     }
   };
 
