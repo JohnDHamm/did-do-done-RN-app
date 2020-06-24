@@ -111,7 +111,7 @@ const EventScreen: React.FC = () => {
       if (name.length > 0) {
         const updateEvents = Array.from(events);
         const newEvent: SavedEvent = {
-          id: new Date().getTime(),
+          id: date.getTime(),
           name,
           date: date.getTime(),
         };
@@ -126,6 +126,7 @@ const EventScreen: React.FC = () => {
         }
         updateEvents.push(newEvent);
         setCurrentEvents(updateEvents);
+        navigation.goBack();
       }
     }
   };

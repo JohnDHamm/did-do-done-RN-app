@@ -84,7 +84,7 @@ const SearchScreen: React.FC = () => {
       : tagFilteredEvents;
 
     const uniqueEvents = uniqby(filteredEvents, 'id');
-    uniqueEvents.sort((a, b) => b.id - a.id);
+    uniqueEvents.sort((a, b) => b.date - a.date);
     setSearchResults(uniqueEvents);
   };
 
