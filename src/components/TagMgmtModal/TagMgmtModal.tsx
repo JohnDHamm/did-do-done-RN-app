@@ -52,7 +52,6 @@ const TagMgmtModal: React.FC<Props> = ({ onClose, onSubmit }) => {
     TagsContext
   );
 
-  // const [currentTags, setCurrentTags] = React.useState<Tag[]>(mockSavedTags); //TODO: use context
   const [showNewInput, setShowNewInput] = React.useState<boolean>(false);
   const [selectedTag, setSelectedTag] = React.useState<Tag>(noSelectedTag);
   const [showTagEdits, setShowTagEdits] = React.useState<boolean>(false);
