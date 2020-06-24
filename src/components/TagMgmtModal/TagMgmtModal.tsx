@@ -8,6 +8,7 @@ import {
   CloseIconContainer,
   Container,
   Content,
+  ErrorMsg,
   Label,
   SelectedIcon,
   SelectedTag,
@@ -34,9 +35,12 @@ const tagExtraStyles = {
 };
 
 const noSelectedTag: Tag = {
+  id: 0,
   name: '',
   color: '',
 };
+
+const DUPE_ERR_MSG = 'Sorry, there is already a tag wth that name!';
 
 interface Props {
   onClose: () => void;
@@ -48,9 +52,11 @@ const TagMgmtModal: React.FC<Props> = ({ onClose, onSubmit }) => {
   const [showNewInput, setShowNewInput] = React.useState<boolean>(false);
   const [selectedTag, setSelectedTag] = React.useState<Tag>(noSelectedTag);
   const [showTagEdits, setShowTagEdits] = React.useState<boolean>(false);
+  const [errMsg, setErrMsg] = React.useState<string>('');
 
   const selectTag = (tag: Tag) => {
     setShowTagEdits(true);
+    setErrMsg('');
     setSelectedTag(tag);
   };
 
@@ -106,32 +112,46 @@ const TagMgmtModal: React.FC<Props> = ({ onClose, onSubmit }) => {
     ));
   };
 
-  const handleSaveChanges = () => {
-    //TODO: save changes to context/AsyncStorage
-    onSubmit();
-    onClose();
+  const isDuplicateName = (newTagName: string) => {
+    const match = currentTags.filter((tag) => tag.name === newTagName);
+    return match.length > 0;
   };
 
   const addNewTag = (newTagName: string) => {
-    //TODO check if duplicate tag name -> show err msg?
+    if (isDuplicateName(newTagName)) {
+      setErrMsg(DUPE_ERR_MSG);
+      return;
+    }
     if (newTagName.length < 1) return;
     const updatedTags = Array.from(currentTags);
     const newTag: Tag = {
+      id: new Date().getTime(),
       name: newTagName,
       color: COLORS.PRIMARY_GRAY,
     };
     updatedTags.push(newTag);
+    setErrMsg('');
     setCurrentTags(updatedTags);
     setShowNewInput(false);
   };
 
-  const changeTagName = (tagName: string) => {
-    //TODO check if duplicate tag name -> show err msg?
-    if (tagName.length < 1) return;
+  const changeTagName = (changedTagName: string) => {
+    if (isDuplicateName(changedTagName)) {
+      setErrMsg(DUPE_ERR_MSG);
+      return;
+    }
+    if (changedTagName.length < 1) return;
     const updatedTags = Array.from(currentTags);
     const idx = updatedTags.findIndex((tag) => tag.name === selectedTag.name);
-    updatedTags[idx].name = tagName;
+    updatedTags[idx].name = changedTagName;
+    setErrMsg('');
     setCurrentTags(updatedTags);
+  };
+
+  const handleSaveChanges = () => {
+    //TODO: save changes to context/AsyncStorage
+    onSubmit();
+    onClose();
   };
 
   const deleteTag = () => {
@@ -146,6 +166,7 @@ const TagMgmtModal: React.FC<Props> = ({ onClose, onSubmit }) => {
   React.useEffect(() => {
     if (showNewInput) {
       setSelectedTag(noSelectedTag);
+      setErrMsg('');
     }
   }, [showNewInput]);
 
@@ -180,6 +201,7 @@ const TagMgmtModal: React.FC<Props> = ({ onClose, onSubmit }) => {
             </CenteredView>
           )}
         </AddTagBlock>
+        <ErrorMsg>{errMsg}</ErrorMsg>
         <CenteredView>
           <Label>saved tags:</Label>
           <TagsBlock>{renderTags(currentTags)}</TagsBlock>
