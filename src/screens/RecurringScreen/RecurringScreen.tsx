@@ -12,7 +12,7 @@ const RecurringScreen: React.FC = () => {
   const [sectionData, setSectionData] = React.useState<RecurSectionData[]>([]);
 
   const ListItem = (event: SavedEvent) => {
-    const { id, name, date, notes, tags, recurs } = event;
+    const { id, name, date, notes, tagIds, recurs } = event;
     return (
       <TouchableOpacity onPress={() => navigation.navigate('Event', { event })}>
         <RecurEventCard
@@ -20,7 +20,7 @@ const RecurringScreen: React.FC = () => {
           name={name}
           date={date}
           notes={notes}
-          tags={tags}
+          tagIds={tagIds}
           recurs={recurs}
         />
       </TouchableOpacity>
@@ -70,7 +70,7 @@ const RecurringScreen: React.FC = () => {
             name={item.name}
             date={item.date}
             notes={item.notes}
-            tags={item.tags}
+            tagIds={item.tagIds}
             recurs={item.recurs}
           />
         )}

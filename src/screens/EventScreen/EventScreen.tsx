@@ -44,7 +44,7 @@ const EventScreen: React.FC = () => {
   );
   const [notes, setNotes] = React.useState<string>(event.notes || '');
   const [savedTags] = React.useState<Tag[]>(mockSavedTags);
-  const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = React.useState<number[]>([]);
   const [recurInfo, setRecurInfo] = React.useState<RecurringInfo | null>(
     event.recurs || null
   );
@@ -60,24 +60,24 @@ const EventScreen: React.FC = () => {
     setDate(currentDate);
   };
 
-  const toggleTag = (tagName: string): void => {
+  const toggleTag = (tagId: number): void => {
     const newSelectedTags = Array.from(selectedTags);
-    if (selectedTags.includes(tagName)) {
-      setSelectedTags(newSelectedTags.filter((tag) => tag !== tagName));
+    if (selectedTags.includes(tagId)) {
+      setSelectedTags(newSelectedTags.filter((id) => id !== tagId));
     } else {
-      newSelectedTags.push(tagName);
+      newSelectedTags.push(tagId);
       setSelectedTags(newSelectedTags);
     }
   };
 
   const renderTags = (tags: Tag[]) => {
     return tags.map((tag) => (
-      <TouchableOpacity key={tag.name} onPress={() => toggleTag(tag.name)}>
+      <TouchableOpacity key={tag.name} onPress={() => toggleTag(tag.id)}>
         <Tag
           key={tag.name}
           label={tag.name}
           color={tag.color}
-          selected={selectedTags.includes(tag.name)}
+          selected={selectedTags.includes(tag.id)}
           extraStyles={tagExtraStyles}
         />
       </TouchableOpacity>
@@ -107,10 +107,10 @@ const EventScreen: React.FC = () => {
   }, [date]);
 
   React.useEffect(() => {
-    if (event.tags) {
+    if (event.tagIds) {
       const newSelectedTags = Array.from(selectedTags);
-      event.tags.forEach((tag) => {
-        newSelectedTags.push(tag.name);
+      event.tagIds.forEach((tagId) => {
+        newSelectedTags.push(tagId);
       });
       setSelectedTags(newSelectedTags);
     }
