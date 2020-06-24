@@ -21,9 +21,7 @@ import {
   Tag,
 } from '../../components';
 import IMAGES from '../../../assets/images';
-import { mockSavedEvents } from '../../mocks/mockSavedEvents';
-import { TagsContext } from '../../contexts';
-import { mockSavedTags } from '../../mocks/mockSavedTags';
+import { EventsContext, TagsContext } from '../../contexts';
 import { getRecurTotals } from '../../functions';
 import uniqby from 'lodash.uniqby';
 import { COLORS } from '../../styles';
@@ -39,11 +37,9 @@ const NO_TAG_ID = 0;
 
 const SearchScreen: React.FC = () => {
   const navigation = useNavigation();
-  const { tags, setCurrentTags } = React.useContext<TagsContextInterface>(
-    TagsContext
-  );
+  const { events } = React.useContext<EventsContextInterface>(EventsContext);
+  const { tags } = React.useContext<TagsContextInterface>(TagsContext);
 
-  const [savedEvents] = React.useState<SavedEvent[]>(mockSavedEvents);
   const [hasSavedEvents, setHasSavedEvents] = React.useState<boolean>(false);
   const [recurTotals, setRecurTotals] = React.useState<RecurTotals>({
     missed: 0,
@@ -60,7 +56,7 @@ const SearchScreen: React.FC = () => {
     //filter by tags
     const tagFilteredEvents: Array<SavedEvent> = [];
     if (selectedTags.length > 0) {
-      savedEvents.forEach((event) => {
+      events.forEach((event) => {
         if (event.tagIds) {
           const eventTagIds = event.tagIds.map((id) => id);
           eventTagIds.forEach((tagId) => {
@@ -178,9 +174,9 @@ const SearchScreen: React.FC = () => {
   }, [selectedTags, searchText]);
 
   React.useEffect(() => {
-    setHasSavedEvents(savedEvents.length > 0);
-    setRecurTotals(getRecurTotals(savedEvents));
-  }, [savedEvents]);
+    setHasSavedEvents(events.length > 0);
+    setRecurTotals(getRecurTotals(events));
+  }, [events]);
 
   return (
     <Container isSearching={isSearching} hasEvents={hasSavedEvents}>

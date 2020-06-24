@@ -2,13 +2,14 @@ import React from 'react';
 import { SectionList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Container, ListSeparator } from './RecurringScreen.styles';
-import { mockSavedEvents } from '../../mocks/mockSavedEvents';
+import { EventsContext } from '../../contexts';
 import { RecurEventCard, SectionHeader } from '../../components';
 import { COLORS } from '../../styles';
 import { composeRecurData } from '../../functions';
 
 const RecurringScreen: React.FC = () => {
   const navigation = useNavigation();
+  const { events } = React.useContext<EventsContextInterface>(EventsContext);
   const [sectionData, setSectionData] = React.useState<RecurSectionData[]>([]);
 
   const ListItem = (event: SavedEvent) => {
@@ -51,9 +52,7 @@ const RecurringScreen: React.FC = () => {
   };
 
   React.useEffect(() => {
-    const recurData = composeRecurData(
-      mockSavedEvents.filter((event) => event.recurs)
-    );
+    const recurData = composeRecurData(events.filter((event) => event.recurs));
     setSectionData(recurData);
   }, []);
 

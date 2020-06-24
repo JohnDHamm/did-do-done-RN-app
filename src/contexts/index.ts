@@ -1,3 +1,4 @@
+import { EventsContext } from './EventsContext/EventsContext';
 import { TagsContext } from './TagsContext/TagsContext';
 
-export { TagsContext };
+export { EventsContext, TagsContext };

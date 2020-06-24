@@ -5,8 +5,8 @@ import {
   createStackNavigator,
   StackNavigationProp,
 } from '@react-navigation/stack';
-import { TagsContext } from './src/contexts';
-import { useTags } from './src/hooks';
+import { EventsContext, TagsContext } from './src/contexts';
+import { useEvents, useTags } from './src/hooks';
 import { EventScreen, RecurringScreen, SearchScreen } from './src/screens';
 import { useFonts } from '@use-expo/font';
 import { FONTS, COLORS } from './src/styles';
@@ -29,6 +29,7 @@ declare global {
 const Stack = createStackNavigator<RootStackParamList>();
 
 const App = (): JSX.Element => {
+  const events = useEvents();
   const tags = useTags();
 
   const [fontsLoaded] = useFonts({
@@ -43,36 +44,38 @@ const App = (): JSX.Element => {
     );
   } else {
     return (
-      <TagsContext.Provider value={tags}>
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName="Search"
-            screenOptions={{
-              headerTitleStyle: {
-                fontFamily: FONTS.PRIMARY,
-                fontSize: 24,
-              },
-              headerTintColor: COLORS.PRIMARY_PURPLE,
-            }}
-          >
-            <Stack.Screen
-              name="Search"
-              component={SearchScreen}
-              options={{ title: '' }}
-            />
-            <Stack.Screen
-              name="Event"
-              component={EventScreen}
-              options={{ title: 'Event', headerBackTitle: 'Back' }}
-            />
-            <Stack.Screen
-              name="Recurring"
-              component={RecurringScreen}
-              options={{ title: 'Do again', headerBackTitle: 'Search' }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </TagsContext.Provider>
+      <EventsContext.Provider value={events}>
+        <TagsContext.Provider value={tags}>
+          <NavigationContainer>
+            <Stack.Navigator
+              initialRouteName="Search"
+              screenOptions={{
+                headerTitleStyle: {
+                  fontFamily: FONTS.PRIMARY,
+                  fontSize: 24,
+                },
+                headerTintColor: COLORS.PRIMARY_PURPLE,
+              }}
+            >
+              <Stack.Screen
+                name="Search"
+                component={SearchScreen}
+                options={{ title: '' }}
+              />
+              <Stack.Screen
+                name="Event"
+                component={EventScreen}
+                options={{ title: 'Event', headerBackTitle: 'Back' }}
+              />
+              <Stack.Screen
+                name="Recurring"
+                component={RecurringScreen}
+                options={{ title: 'Do again', headerBackTitle: 'Search' }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </TagsContext.Provider>
+      </EventsContext.Provider>
     );
   }
 };
