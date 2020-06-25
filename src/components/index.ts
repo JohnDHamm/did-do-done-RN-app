@@ -1,4 +1,5 @@
 import Button from './Button/Button';
+import ErrorMessage from './ErrorMessage/ErrorMessage';
 import EventCard from './EventCard/EventCard';
 import Input from './Input/Input';
 import RecurEventCard from './RecurEventCard/RecurEventCard';
@@ -12,6 +13,7 @@ import TagMgmtModal from './TagMgmtModal/TagMgmtModal';
 
 export {
   Button,
+  ErrorMessage,
   EventCard,
   Input,
   RecurEventCard,

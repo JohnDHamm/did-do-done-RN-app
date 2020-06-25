@@ -65,6 +65,9 @@ export const RecurFreqText = styled(RecurText)`
 
 export const ButtonSection = styled(Section)`
   margin-top: 20px;
-  padding-bottom: 30px;
   align-items: center;
+`;
+
+export const DeleteBtnContainer = styled.View`
+  margin-top: 10px;
 `;

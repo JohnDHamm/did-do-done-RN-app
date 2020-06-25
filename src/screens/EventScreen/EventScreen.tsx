@@ -1,9 +1,10 @@
 import React from 'react';
-import { Modal, TouchableOpacity, View } from 'react-native';
+import { Alert, Modal, TouchableOpacity, View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import {
   ButtonSection,
   Container,
+  DeleteBtnContainer,
   Label,
   NotesHeader,
   RecurBlock,
@@ -16,6 +17,7 @@ import {
 } from './EventScreen.styles';
 import {
   Button,
+  ErrorMessage,
   Input,
   RecurEventModal,
   Tag,
@@ -58,6 +60,8 @@ const EventScreen: React.FC = () => {
   const [saveBtnLabel, setSaveBtnLabel] = React.useState<string>('save event');
   const [showRecurModal, setShowRecurModal] = React.useState<boolean>(false);
   const [showTagModal, setShowTagModal] = React.useState<boolean>(false);
+  const [errMsg, setErrMsg] = React.useState<string>('');
+  const [showDeleteBtn, setShowDeleteBtn] = React.useState<boolean>(false);
 
   const onDateChange = (event: any, selectedDate?: Date) => {
     const currentDate = selectedDate || date;
@@ -123,8 +127,9 @@ const EventScreen: React.FC = () => {
     return event;
   };
 
-  const saveEvent = () => {
+  const saveEvent = (): void => {
     if (name.length > 0) {
+      setErrMsg('');
       const updateEvents = Array.from(events);
       if (event.id) {
         const changedEvent = composeEvent(event.id);
@@ -140,9 +145,35 @@ const EventScreen: React.FC = () => {
       }
       navigation.goBack();
     } else {
-      console.warn('need a name!');
+      setErrMsg('Sorry, your event cannot be saved without a name!');
     }
   };
+
+  const deleteConfirm = (): void => {
+    Alert.alert('Warning!', 'Are you sure you want to delete this event?', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('cancel delete event'),
+        style: 'cancel',
+      },
+      { text: 'Delete', onPress: () => deleteEvent() },
+    ]);
+  };
+
+  const deleteEvent = () => {
+    console.log('delete event', event.id);
+    const updateEvents = Array.from(
+      events.filter((evt) => evt.id !== event.id)
+    );
+    setCurrentEvents(updateEvents);
+    navigation.goBack();
+  };
+
+  React.useEffect(() => {
+    if (name.length > 0) {
+      setErrMsg('');
+    }
+  }, [name]);
 
   React.useEffect(() => {
     if (recurInfo) {
@@ -151,6 +182,10 @@ const EventScreen: React.FC = () => {
   }, [date]);
 
   React.useEffect(() => {
+    if (event.id) {
+      setSaveBtnLabel('save changes');
+      setShowDeleteBtn(true);
+    }
     if (event.tagIds) {
       const newSelectedTags = Array.from(selectedTags);
       event.tagIds.forEach((tagId) => {
@@ -217,9 +252,20 @@ const EventScreen: React.FC = () => {
         )}
       </Section>
       <ButtonSection>
-        <TouchableOpacity onPress={() => saveEvent()}>
-          <Button label={saveBtnLabel} />
-        </TouchableOpacity>
+        {errMsg.length > 0 ? (
+          <ErrorMessage>{errMsg}</ErrorMessage>
+        ) : (
+          <TouchableOpacity onPress={() => saveEvent()}>
+            <Button label={saveBtnLabel} />
+          </TouchableOpacity>
+        )}
+        {showDeleteBtn && (
+          <DeleteBtnContainer>
+            <TouchableOpacity onPress={() => deleteConfirm()}>
+              <Button type="delete" label="delete event" />
+            </TouchableOpacity>
+          </DeleteBtnContainer>
+        )}
       </ButtonSection>
 
       <Modal animationType="slide" visible={showRecurModal}>
