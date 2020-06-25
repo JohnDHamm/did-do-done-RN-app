@@ -16,6 +16,7 @@ import {
 } from './EventScreen.styles';
 import {
   Button,
+  ErrorMessage,
   Input,
   RecurEventModal,
   Tag,
@@ -58,6 +59,7 @@ const EventScreen: React.FC = () => {
   const [saveBtnLabel, setSaveBtnLabel] = React.useState<string>('save event');
   const [showRecurModal, setShowRecurModal] = React.useState<boolean>(false);
   const [showTagModal, setShowTagModal] = React.useState<boolean>(false);
+  const [errMsg, setErrMsg] = React.useState<string>('');
 
   const onDateChange = (event: any, selectedDate?: Date) => {
     const currentDate = selectedDate || date;
@@ -125,6 +127,7 @@ const EventScreen: React.FC = () => {
 
   const saveEvent = () => {
     if (name.length > 0) {
+      setErrMsg('');
       const updateEvents = Array.from(events);
       if (event.id) {
         const changedEvent = composeEvent(event.id);
@@ -140,9 +143,15 @@ const EventScreen: React.FC = () => {
       }
       navigation.goBack();
     } else {
-      console.warn('need a name!');
+      setErrMsg('Sorry, your event cannot be saved without a name!');
     }
   };
+
+  React.useEffect(() => {
+    if (name.length > 0) {
+      setErrMsg('');
+    }
+  }, [name]);
 
   React.useEffect(() => {
     if (recurInfo) {
@@ -151,6 +160,9 @@ const EventScreen: React.FC = () => {
   }, [date]);
 
   React.useEffect(() => {
+    if (event.id) {
+      setSaveBtnLabel('save changes');
+    }
     if (event.tagIds) {
       const newSelectedTags = Array.from(selectedTags);
       event.tagIds.forEach((tagId) => {
@@ -217,9 +229,13 @@ const EventScreen: React.FC = () => {
         )}
       </Section>
       <ButtonSection>
-        <TouchableOpacity onPress={() => saveEvent()}>
-          <Button label={saveBtnLabel} />
-        </TouchableOpacity>
+        {errMsg.length > 0 ? (
+          <ErrorMessage>{errMsg}</ErrorMessage>
+        ) : (
+          <TouchableOpacity onPress={() => saveEvent()}>
+            <Button label={saveBtnLabel} />
+          </TouchableOpacity>
+        )}
       </ButtonSection>
 
       <Modal animationType="slide" visible={showRecurModal}>

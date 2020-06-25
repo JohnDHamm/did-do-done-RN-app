@@ -8,7 +8,6 @@ import {
   CloseIconContainer,
   Container,
   Content,
-  ErrorMsg,
   Label,
   SelectedIcon,
   SelectedTag,
@@ -20,6 +19,7 @@ import {
   TitleBlock,
 } from './TagMgmtModal.styles';
 import Button from '../Button/Button';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import Input from '../Input/Input';
 import Tag from '../Tag/Tag';
 import { TouchableOpacity } from 'react-native';
@@ -204,7 +204,7 @@ const TagMgmtModal: React.FC<Props> = ({ onClose, onSubmit }) => {
             </CenteredView>
           )}
         </AddTagBlock>
-        <ErrorMsg>{errMsg}</ErrorMsg>
+        <ErrorMessage>{errMsg}</ErrorMessage>
         <CenteredView>
           <Label>saved tags:</Label>
           <TagsBlock>{renderTags(tags)}</TagsBlock>

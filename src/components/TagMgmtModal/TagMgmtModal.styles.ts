@@ -60,11 +60,6 @@ export const AddIcon = styled.Image`
   height: 36px;
 `;
 
-export const ErrorMsg = styled.Text`
-  color: ${COLORS.MISSED_RED};
-  font-size: 14px;
-`;
-
 export const CenteredView = styled.View`
   align-items: center;
 `;
