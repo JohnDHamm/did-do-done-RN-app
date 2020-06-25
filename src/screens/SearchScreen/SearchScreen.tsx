@@ -22,7 +22,7 @@ import {
 } from '../../components';
 import IMAGES from '../../../assets/images';
 import { EventsContext, TagsContext } from '../../contexts';
-import { getRecurTotals } from '../../functions';
+import { getRecurTotals, searchEventsByText } from '../../functions';
 import uniqby from 'lodash.uniqby';
 import { COLORS } from '../../styles';
 
@@ -72,12 +72,12 @@ const SearchScreen: React.FC = () => {
         }
       });
     }
+
     //filter by searchText
-    const textFilteredEvents: Array<SavedEvent> = searchText
-      ? tagFilteredEvents.filter((event) =>
-          event.name.toLowerCase().includes(searchText.toLowerCase())
-        )
-      : [];
+    const textFilteredEvents: Array<SavedEvent> = searchEventsByText(
+      tagFilteredEvents,
+      searchText
+    );
 
     const filteredEvents: SavedEvent[] = searchText
       ? textFilteredEvents
