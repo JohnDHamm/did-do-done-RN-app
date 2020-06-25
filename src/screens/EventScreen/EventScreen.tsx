@@ -1,9 +1,10 @@
 import React from 'react';
-import { Modal, TouchableOpacity, View } from 'react-native';
+import { Alert, Modal, TouchableOpacity, View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import {
   ButtonSection,
   Container,
+  DeleteBtnContainer,
   Label,
   NotesHeader,
   RecurBlock,
@@ -60,6 +61,7 @@ const EventScreen: React.FC = () => {
   const [showRecurModal, setShowRecurModal] = React.useState<boolean>(false);
   const [showTagModal, setShowTagModal] = React.useState<boolean>(false);
   const [errMsg, setErrMsg] = React.useState<string>('');
+  const [showDeleteBtn, setShowDeleteBtn] = React.useState<boolean>(false);
 
   const onDateChange = (event: any, selectedDate?: Date) => {
     const currentDate = selectedDate || date;
@@ -125,7 +127,7 @@ const EventScreen: React.FC = () => {
     return event;
   };
 
-  const saveEvent = () => {
+  const saveEvent = (): void => {
     if (name.length > 0) {
       setErrMsg('');
       const updateEvents = Array.from(events);
@@ -147,6 +149,26 @@ const EventScreen: React.FC = () => {
     }
   };
 
+  const deleteConfirm = (): void => {
+    Alert.alert('Warning!', 'Are you sure you want to delete this event?', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('cancel delete event'),
+        style: 'cancel',
+      },
+      { text: 'Delete', onPress: () => deleteEvent() },
+    ]);
+  };
+
+  const deleteEvent = () => {
+    console.log('delete event', event.id);
+    const updateEvents = Array.from(
+      events.filter((evt) => evt.id !== event.id)
+    );
+    setCurrentEvents(updateEvents);
+    navigation.goBack();
+  };
+
   React.useEffect(() => {
     if (name.length > 0) {
       setErrMsg('');
@@ -162,6 +184,7 @@ const EventScreen: React.FC = () => {
   React.useEffect(() => {
     if (event.id) {
       setSaveBtnLabel('save changes');
+      setShowDeleteBtn(true);
     }
     if (event.tagIds) {
       const newSelectedTags = Array.from(selectedTags);
@@ -235,6 +258,13 @@ const EventScreen: React.FC = () => {
           <TouchableOpacity onPress={() => saveEvent()}>
             <Button label={saveBtnLabel} />
           </TouchableOpacity>
+        )}
+        {showDeleteBtn && (
+          <DeleteBtnContainer>
+            <TouchableOpacity onPress={() => deleteConfirm()}>
+              <Button type="delete" label="delete event" />
+            </TouchableOpacity>
+          </DeleteBtnContainer>
         )}
       </ButtonSection>
 
