@@ -149,11 +149,11 @@ const TagMgmtModal: React.FC<Props> = ({ onClose, onSubmit }) => {
     const idx = updatedTags.findIndex((tag) => tag.name === selectedTag.name);
     updatedTags[idx].name = changedTagName;
     setErrMsg('');
-    saveData('TagsStore', updatedTags, setCurrentTags);
+    setCurrentTags(updatedTags);
   };
 
   const handleSaveChanges = () => {
-    //TODO: save changes to context/AsyncStorage
+    saveData('TagsStore', tags, setCurrentTags);
     onSubmit();
     onClose();
   };
@@ -163,18 +163,12 @@ const TagMgmtModal: React.FC<Props> = ({ onClose, onSubmit }) => {
     // ?? what about saved events that use the tag?
   };
 
-  // React.useEffect(() => {
-  // console.log('tags', tags);
-  // }, [tags]);
-
   React.useEffect(() => {
     if (showNewInput) {
       setSelectedTag(noSelectedTag);
       setErrMsg('');
     }
   }, [showNewInput]);
-
-  // React.useEffect(() => {}, []);
 
   return (
     <Container>

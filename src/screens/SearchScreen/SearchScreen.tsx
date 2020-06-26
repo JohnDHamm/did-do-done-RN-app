@@ -42,7 +42,9 @@ const NO_TAG_ID = 0;
 
 const SearchScreen: React.FC = () => {
   const navigation = useNavigation();
-  const { events } = React.useContext<EventsContextInterface>(EventsContext);
+  const { events, setCurrentEvents } = React.useContext<EventsContextInterface>(
+    EventsContext
+  );
   const { tags, setCurrentTags } = React.useContext<TagsContextInterface>(
     TagsContext
   );
@@ -191,6 +193,7 @@ const SearchScreen: React.FC = () => {
 
   React.useEffect(() => {
     getStoreData('TagsStore', setCurrentTags);
+    getStoreData('EventsStore', setCurrentEvents);
   }, []);
 
   return (
