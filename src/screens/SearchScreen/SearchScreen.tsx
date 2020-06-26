@@ -22,7 +22,12 @@ import {
 } from '../../components';
 import IMAGES from '../../../assets/images';
 import { EventsContext, TagsContext } from '../../contexts';
-import { getRecurTotals, searchEventsByText } from '../../functions';
+import {
+  getRecurTotals,
+  searchEventsByText,
+  getStoreData,
+} from '../../functions';
+import { StoreUtils } from '../../utils';
 import uniqby from 'lodash.uniqby';
 import { COLORS } from '../../styles';
 
@@ -37,8 +42,12 @@ const NO_TAG_ID = 0;
 
 const SearchScreen: React.FC = () => {
   const navigation = useNavigation();
-  const { events } = React.useContext<EventsContextInterface>(EventsContext);
-  const { tags } = React.useContext<TagsContextInterface>(TagsContext);
+  const { events, setCurrentEvents } = React.useContext<EventsContextInterface>(
+    EventsContext
+  );
+  const { tags, setCurrentTags } = React.useContext<TagsContextInterface>(
+    TagsContext
+  );
 
   const [hasSavedEvents, setHasSavedEvents] = React.useState<boolean>(false);
   const [recurTotals, setRecurTotals] = React.useState<RecurTotals>({
@@ -178,9 +187,22 @@ const SearchScreen: React.FC = () => {
     setRecurTotals(getRecurTotals(events));
   }, [events]);
 
+  React.useEffect(() => {
+    console.log('tags', tags);
+  }, [tags]);
+
+  React.useEffect(() => {
+    getStoreData('TagsStore', setCurrentTags);
+    getStoreData('EventsStore', setCurrentEvents);
+  }, []);
+
   return (
     <Container isSearching={isSearching} hasEvents={hasSavedEvents}>
-      {!isSearching && <StyledText>Did? Do. Done!</StyledText>}
+      {!isSearching && (
+        <TouchableOpacity onPress={() => StoreUtils.removeStore('TagsStore')}>
+          <StyledText>Did? Do. Done!</StyledText>
+        </TouchableOpacity>
+      )}
       {hasSavedEvents && (
         <SearchBlock>
           <SearchBar

@@ -26,6 +26,7 @@ import { TouchableOpacity } from 'react-native';
 import { COLORS } from '../../styles';
 import IMAGES from '../../../assets/images';
 import { TagsContext } from '../../contexts';
+import { saveData } from '../../functions';
 
 const tagExtraStyles = {
   marginTop: 5,
@@ -134,7 +135,7 @@ const TagMgmtModal: React.FC<Props> = ({ onClose, onSubmit }) => {
     };
     updatedTags.push(newTag);
     setErrMsg('');
-    setCurrentTags(updatedTags);
+    saveData('TagsStore', updatedTags, setCurrentTags);
     setShowNewInput(false);
   };
 
@@ -152,7 +153,7 @@ const TagMgmtModal: React.FC<Props> = ({ onClose, onSubmit }) => {
   };
 
   const handleSaveChanges = () => {
-    //TODO: save changes to context/AsyncStorage
+    saveData('TagsStore', tags, setCurrentTags);
     onSubmit();
     onClose();
   };
@@ -162,18 +163,12 @@ const TagMgmtModal: React.FC<Props> = ({ onClose, onSubmit }) => {
     // ?? what about saved events that use the tag?
   };
 
-  // React.useEffect(() => {
-  // console.log('tags', tags);
-  // }, [tags]);
-
   React.useEffect(() => {
     if (showNewInput) {
       setSelectedTag(noSelectedTag);
       setErrMsg('');
     }
   }, [showNewInput]);
-
-  // React.useEffect(() => {}, []);
 
   return (
     <Container>

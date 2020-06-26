@@ -26,7 +26,11 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { TagsContext } from '../../contexts';
 import { COLORS } from '../../styles';
-import { getRecurDateString, getRecurFreqData } from '../../functions';
+import {
+  getRecurDateString,
+  getRecurFreqData,
+  saveData,
+} from '../../functions';
 import { EventsContext } from '../../contexts';
 import moment from 'moment';
 
@@ -141,7 +145,7 @@ const EventScreen: React.FC = () => {
       } else {
         const newEvent = composeEvent(date.getTime());
         updateEvents.push(newEvent);
-        setCurrentEvents(updateEvents);
+        saveData('EventsStore', updateEvents, setCurrentEvents);
       }
       navigation.goBack();
     } else {
@@ -161,11 +165,10 @@ const EventScreen: React.FC = () => {
   };
 
   const deleteEvent = () => {
-    console.log('delete event', event.id);
     const updateEvents = Array.from(
       events.filter((evt) => evt.id !== event.id)
     );
-    setCurrentEvents(updateEvents);
+    saveData('EventsStore', updateEvents, setCurrentEvents);
     navigation.goBack();
   };
 
