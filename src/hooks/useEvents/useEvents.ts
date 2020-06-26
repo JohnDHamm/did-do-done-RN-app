@@ -1,8 +1,8 @@
 import React from 'react';
-import { mockSavedEvents } from '../../mocks/mockSavedEvents'; //TODO: remove
+// import { mockSavedEvents } from '../../mocks/mockSavedEvents'; //TODO: remove
 
 export const useEvents = (): EventsContextInterface => {
-  const [events, setEvents] = React.useState<SavedEvent[]>(mockSavedEvents);
+  const [events, setEvents] = React.useState<SavedEvent[]>([]);
 
   const setCurrentEvents = React.useCallback(
     (currentEvents: SavedEvent[]): void => {

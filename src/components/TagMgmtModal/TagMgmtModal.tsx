@@ -26,6 +26,7 @@ import { TouchableOpacity } from 'react-native';
 import { COLORS } from '../../styles';
 import IMAGES from '../../../assets/images';
 import { TagsContext } from '../../contexts';
+import { saveData } from '../../functions';
 
 const tagExtraStyles = {
   marginTop: 5,
@@ -134,7 +135,7 @@ const TagMgmtModal: React.FC<Props> = ({ onClose, onSubmit }) => {
     };
     updatedTags.push(newTag);
     setErrMsg('');
-    setCurrentTags(updatedTags);
+    saveData('TagsStore', updatedTags, setCurrentTags);
     setShowNewInput(false);
   };
 
@@ -148,7 +149,7 @@ const TagMgmtModal: React.FC<Props> = ({ onClose, onSubmit }) => {
     const idx = updatedTags.findIndex((tag) => tag.name === selectedTag.name);
     updatedTags[idx].name = changedTagName;
     setErrMsg('');
-    setCurrentTags(updatedTags);
+    saveData('TagsStore', updatedTags, setCurrentTags);
   };
 
   const handleSaveChanges = () => {
