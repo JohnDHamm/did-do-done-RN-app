@@ -14,6 +14,7 @@ import {
 } from './SearchScreen.styles';
 import {
   Button,
+  DevSettings,
   EventCard,
   RecurEventsBlock,
   SearchBar,
@@ -27,7 +28,6 @@ import {
   searchEventsByText,
   getStoreData,
 } from '../../functions';
-import { StoreUtils } from '../../utils';
 import uniqby from 'lodash.uniqby';
 import { COLORS } from '../../styles';
 
@@ -200,11 +200,8 @@ const SearchScreen: React.FC = () => {
 
   return (
     <Container isSearching={isSearching} hasEvents={hasSavedEvents}>
-      {!isSearching && (
-        <TouchableOpacity onPress={() => StoreUtils.removeStore('TagsStore')}>
-          <StyledText>Did? Do. Done!</StyledText>
-        </TouchableOpacity>
-      )}
+      {/* <DevSettings /> */}
+      {!isSearching && <StyledText>Did? Do. Done!</StyledText>}
       {hasSavedEvents && (
         <SearchBlock>
           <SearchBar
