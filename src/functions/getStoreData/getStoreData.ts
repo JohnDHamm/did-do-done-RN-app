@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 const getStoreData = async (
   storeKey: StoreKey,
-  contextCallback: (storeData: StoreData) => void
+  contextCallback: (storeData: any) => void
 ): Promise<void> => {
   try {
     const savedData = await AsyncStorage.getItem(storeKey);
