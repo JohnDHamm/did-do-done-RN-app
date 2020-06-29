@@ -21,9 +21,9 @@ const Button: React.FC<ButtonProps> = ({
       labelColor = COLORS.PRIMARY_PURPLE;
       break;
     case 'delete':
-      backgroundColor = COLORS.WHITE;
+      backgroundColor = COLORS.MISSED_RED;
       borderColor = COLORS.MISSED_RED;
-      labelColor = COLORS.MISSED_RED;
+      labelColor = COLORS.WHITE;
       break;
   }
   return (
