@@ -1,6 +1,6 @@
 import React from 'react';
 import { SectionList, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { Container, ListSeparator } from './RecurringScreen.styles';
 import { EventsContext } from '../../contexts';
 import { RecurEventCard, SectionHeader } from '../../components';
@@ -11,6 +11,17 @@ const RecurringScreen: React.FC = () => {
   const navigation = useNavigation();
   const { events } = React.useContext<EventsContextInterface>(EventsContext);
   const [sectionData, setSectionData] = React.useState<RecurSectionData[]>([]);
+
+  const createList = () => {
+    const recurData = composeRecurData(events.filter((event) => event.recurs));
+    setSectionData(recurData);
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      createList();
+    }, [events])
+  );
 
   const ListItem = (event: SavedEvent) => {
     const { id, name, date, notes, tagIds, recurs } = event;
@@ -52,8 +63,7 @@ const RecurringScreen: React.FC = () => {
   };
 
   React.useEffect(() => {
-    const recurData = composeRecurData(events.filter((event) => event.recurs));
-    setSectionData(recurData);
+    createList();
   }, []);
 
   return (

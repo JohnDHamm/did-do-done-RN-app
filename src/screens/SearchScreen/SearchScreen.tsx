@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   AddIcon,
   Container,
@@ -14,6 +14,7 @@ import {
 } from './SearchScreen.styles';
 import {
   Button,
+  DevSettings,
   EventCard,
   RecurEventsBlock,
   SearchBar,
@@ -27,7 +28,6 @@ import {
   searchEventsByText,
   getStoreData,
 } from '../../functions';
-import { StoreUtils } from '../../utils';
 import uniqby from 'lodash.uniqby';
 import { COLORS } from '../../styles';
 
@@ -60,6 +60,12 @@ const SearchScreen: React.FC = () => {
   const [isSearching, setIsSearching] = React.useState<boolean>(true);
   const [searchText, setSearchText] = React.useState<string>('');
   const [searchResults, setSearchResults] = React.useState<SavedEvent[]>([]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getSearchResults();
+    }, [events])
+  );
 
   const getSearchResults = () => {
     //filter by tags
@@ -188,21 +194,14 @@ const SearchScreen: React.FC = () => {
   }, [events]);
 
   React.useEffect(() => {
-    console.log('tags', tags);
-  }, [tags]);
-
-  React.useEffect(() => {
     getStoreData('TagsStore', setCurrentTags);
     getStoreData('EventsStore', setCurrentEvents);
   }, []);
 
   return (
     <Container isSearching={isSearching} hasEvents={hasSavedEvents}>
-      {!isSearching && (
-        <TouchableOpacity onPress={() => StoreUtils.removeStore('TagsStore')}>
-          <StyledText>Did? Do. Done!</StyledText>
-        </TouchableOpacity>
-      )}
+      {/* <DevSettings /> */}
+      {!isSearching && <StyledText>Did? Do. Done!</StyledText>}
       {hasSavedEvents && (
         <SearchBlock>
           <SearchBar
