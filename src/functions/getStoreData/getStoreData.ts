@@ -6,7 +6,6 @@ const getStoreData = async (
 ): Promise<void> => {
   try {
     const savedData = await AsyncStorage.getItem(storeKey);
-    console.log('savedData', savedData);
 
     if (savedData !== null) {
       contextCallback(JSON.parse(savedData));

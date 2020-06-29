@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   AddIcon,
   Container,
@@ -60,6 +60,12 @@ const SearchScreen: React.FC = () => {
   const [isSearching, setIsSearching] = React.useState<boolean>(true);
   const [searchText, setSearchText] = React.useState<string>('');
   const [searchResults, setSearchResults] = React.useState<SavedEvent[]>([]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getSearchResults();
+    }, [events])
+  );
 
   const getSearchResults = () => {
     //filter by tags
@@ -186,10 +192,6 @@ const SearchScreen: React.FC = () => {
     setHasSavedEvents(events.length > 0);
     setRecurTotals(getRecurTotals(events));
   }, [events]);
-
-  React.useEffect(() => {
-    console.log('tags', tags);
-  }, [tags]);
 
   React.useEffect(() => {
     getStoreData('TagsStore', setCurrentTags);
