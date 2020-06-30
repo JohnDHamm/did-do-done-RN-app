@@ -13,9 +13,10 @@ import {
 import Button from '../Button/Button';
 import SectionHeader from '../SectionHeader/SectionHeader';
 import { TouchableOpacity } from 'react-native';
-import { COLORS } from '../../styles';
+import { COLORS, darkTheme, lightTheme } from '../../styles';
 import IMAGES from '../../../assets/images';
 import { getRecurDateString, getRecurFreqData } from '../../functions';
+import { ThemeContext } from 'styled-components';
 import moment from 'moment';
 
 interface Props {
@@ -45,6 +46,8 @@ const RecurEventModal: React.FC<Props> = ({
   const [pickerValue, setPickerValue] = React.useState<RecurFreqMetric>('days');
   const [recurDate, setRecurDate] = React.useState<string>('some date');
   const [nextdate, setNextdate] = React.useState<number>(0);
+
+  const theme = React.useContext(ThemeContext);
 
   const handleSubmit = () => {
     const data: RecurringInfo = {
@@ -109,6 +112,9 @@ const RecurEventModal: React.FC<Props> = ({
         <StyledPicker
           selectedValue={pickerValue}
           onValueChange={(value) => setPickerValue(value)}
+          itemStyle={{
+            color: theme.text,
+          }}
         >
           <StyledPicker.Item key="days" value="days" label="days" />
           <StyledPicker.Item key="weeks" value="weeks" label="weeks" />

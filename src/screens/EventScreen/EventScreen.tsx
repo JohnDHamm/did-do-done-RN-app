@@ -32,6 +32,7 @@ import {
   saveData,
 } from '../../functions';
 import { EventsContext } from '../../contexts';
+import { ThemeContext } from 'styled-components';
 import moment from 'moment';
 
 const tagExtraStyles = {
@@ -44,6 +45,7 @@ const EventScreen: React.FC = () => {
   const navigation = useNavigation<EventScreenNavigationProp>();
   const route = useRoute<EventScreenRouteProp>();
   const { event } = route.params;
+  const theme = React.useContext(ThemeContext);
 
   const { events, setCurrentEvents } = React.useContext<EventsContextInterface>(
     EventsContext
@@ -210,7 +212,11 @@ const EventScreen: React.FC = () => {
       </Section>
       <Section>
         <Label>event date:</Label>
-        <DateTimePicker value={date} onChange={onDateChange} />
+        <DateTimePicker
+          value={date}
+          onChange={onDateChange}
+          textColor={theme.text}
+        />
       </Section>
       <Section>
         {notes.length > 0 && <NotesHeader>notes:</NotesHeader>}
