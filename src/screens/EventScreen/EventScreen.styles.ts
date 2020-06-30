@@ -1,27 +1,28 @@
 import styled from 'styled-components/native';
 import { COLORS, FONTS } from '../../styles';
 
-export const Container = styled.ScrollView`
+export const Container = styled.ScrollView<Theme>`
   flex: 1;
   padding-top: 16px;
   padding-right: 20px;
   padding-left: 20px;
   padding-bottom: 30px;
-  background-color: ${COLORS.WHITE};
+  background-color: ${(props) => props.theme.background};
 `;
 
 export const Section = styled.View`
   margin-bottom: 16px;
 `;
 
-export const Label = styled.Text`
+export const Label = styled.Text<Theme>`
   font-family: ${FONTS.PRIMARY};
-  color: ${COLORS.PRIMARY_GRAY};
+  color: ${(props) => props.theme.label};
   font-size: 22px;
 `;
 
-export const NotesHeader = styled.Text`
+export const NotesHeader = styled.Text<Theme>`
   font-size: 14px;
+  color: ${(props) => props.theme.notesLabel};
 `;
 
 const Row = styled.View`

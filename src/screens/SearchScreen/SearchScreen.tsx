@@ -42,6 +42,7 @@ const NO_TAG_ID = 0;
 
 const SearchScreen: React.FC = () => {
   const navigation = useNavigation();
+
   const { events, setCurrentEvents } = React.useContext<EventsContextInterface>(
     EventsContext
   );

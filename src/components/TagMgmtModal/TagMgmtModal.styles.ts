@@ -1,11 +1,11 @@
 import styled from 'styled-components/native';
 import { COLORS, FONTS } from '../../styles';
 
-export const Container = styled.SafeAreaView`
+export const Container = styled.SafeAreaView<Theme>`
   flex: 1;
   width: 100%;
   align-items: center;
-  background-color: ${COLORS.WHITE};
+  background-color: ${(props) => props.theme.background};
 `;
 
 export const CloseIconContainer = styled.View`
@@ -69,9 +69,9 @@ export const TagNameEdit = styled(CenteredView)`
   padding-bottom: 30px;
 `;
 
-export const Label = styled.Text`
+export const Label = styled.Text<Theme>`
   font-family: ${FONTS.PRIMARY};
-  color: ${COLORS.PRIMARY_GRAY};
+  color: ${(props) => props.theme.label};
   font-size: 22px;
 `;
 
@@ -82,9 +82,9 @@ export const TagsBlock = styled.View`
   margin-bottom: 10px;
 `;
 
-export const SelectedTag = styled.View<{ selected: boolean }>`
+export const SelectedTag = styled.View<Theme & { selected: boolean }>`
   border-width: ${(props) => (props.selected ? '2px' : 0)};
-  border-color: ${COLORS.PRIMARY_PURPLE};
+  border-color: ${(props) => props.theme.selectedTagHighlight};
   border-radius: 22px;
 `;
 

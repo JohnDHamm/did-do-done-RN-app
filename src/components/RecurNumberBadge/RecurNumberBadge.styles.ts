@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { COLORS, FONTS } from '../../styles';
+import { FONTS } from '../../styles';
 
 export const Badge = styled.View<{ color: string }>`
   width: 32px;
@@ -10,8 +10,8 @@ export const Badge = styled.View<{ color: string }>`
   align-items: center;
 `;
 
-export const BadgeNumber = styled.Text`
+export const BadgeNumber = styled.Text<Theme>`
   font-family: ${FONTS.PRIMARY};
   font-size: 20px;
-  color: ${COLORS.WHITE};
+  color: ${(props) => props.theme.badgeNumber};
 `;

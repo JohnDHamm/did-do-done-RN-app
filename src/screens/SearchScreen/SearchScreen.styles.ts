@@ -1,14 +1,16 @@
 import styled from 'styled-components/native';
 import { COLORS, FONTS } from '../../styles';
 
-export const Container = styled.View<{
-  isSearching: boolean;
-  hasEvents: boolean;
-}>`
+export const Container = styled.View<
+  Theme & {
+    isSearching: boolean;
+    hasEvents: boolean;
+  }
+>`
   flex: 1;
   justify-content: ${(props) => (props.hasEvents ? 'space-between' : 'center')};
   align-items: center;
-  background-color: ${COLORS.WHITE};
+  background-color: ${(props) => props.theme.background};
   padding-top: ${(props) => (props.isSearching ? '0px' : '40px')};
   padding-bottom: 40px;
 `;
@@ -52,10 +54,10 @@ export const EmptyMessage = styled.Text`
   text-align: center;
 `;
 
-export const ListSeparator = styled.View`
+export const ListSeparator = styled.View<Theme>`
   height: 1px;
   width: 100%;
-  background-color: ${COLORS.LIGHT_GRAY};
+  background-color: ${(props) => props.theme.cardSeparator};
 `;
 
 export const HeaderAddIcon = styled.Image`
