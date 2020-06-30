@@ -57,7 +57,7 @@ const RecurringScreen: React.FC = () => {
         break;
       case 'later':
         bgColor = COLORS.LIGHT_GRAY;
-        textColor = COLORS.PRIMARY_GRAY;
+        textColor = COLORS.DARK_GRAY;
     }
     return <SectionHeader text={title} color={bgColor} textColor={textColor} />;
   };

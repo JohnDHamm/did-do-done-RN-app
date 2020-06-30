@@ -1,11 +1,11 @@
 import styled from 'styled-components/native';
 import { COLORS, FONTS } from '../../styles';
 
-export const Container = styled.SafeAreaView`
+export const Container = styled.SafeAreaView<Theme>`
   flex: 1;
   width: 100%;
   align-items: center;
-  background-color: ${COLORS.WHITE};
+  background-color: ${(props) => props.theme.background};
 `;
 
 export const CloseIconContainer = styled.View`
@@ -36,9 +36,9 @@ const ModalText = styled.Text`
   font-family: ${FONTS.PRIMARY};
 `;
 
-export const StyledText = styled(ModalText)`
+export const StyledText = styled(ModalText)<Theme>`
   font-size: 22px;
-  color: ${COLORS.PRIMARY_GRAY};
+  color: ${(props) => props.theme.label};
 `;
 
 export const StyledInput = styled.TextInput`

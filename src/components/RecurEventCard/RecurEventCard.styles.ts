@@ -24,9 +24,9 @@ export const Name = styled.Text`
   color: ${COLORS.PRIMARY_PURPLE};
 `;
 
-export const Date = styled.Text`
+export const Date = styled.Text<Theme>`
   font-size: 22px;
-  color: ${COLORS.BLACK};
+  color: ${(props) => props.theme.text};
 `;
 
 export const Icon = styled.Image`
@@ -41,9 +41,9 @@ export const RecurMsg = styled.Text`
   padding-left: 6px;
 `;
 
-export const Notes = styled.Text`
+export const Notes = styled.Text<Theme>`
   font-size: 14px;
-  color: ${COLORS.BLACK};
+  color: ${(props) => props.theme.text};
   padding-top: 6px;
 `;
 

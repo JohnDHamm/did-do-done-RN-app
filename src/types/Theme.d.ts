@@ -15,5 +15,6 @@ type Theme = {
     unselectedTag: string;
     tagText: string;
     selectedTagHighlight: string;
+    notesLabel: string;
   };
 };
