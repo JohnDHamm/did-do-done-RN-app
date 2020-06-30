@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, TouchableOpacity, useColorScheme } from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   AddIcon,
@@ -42,7 +42,6 @@ const NO_TAG_ID = 0;
 
 const SearchScreen: React.FC = () => {
   const navigation = useNavigation();
-  const colorScheme = useColorScheme();
 
   const { events, setCurrentEvents } = React.useContext<EventsContextInterface>(
     EventsContext
@@ -174,10 +173,6 @@ const SearchScreen: React.FC = () => {
       <HeaderAddIcon source={IMAGES.ADD_EVENT_ICON} />
     </TouchableOpacity>
   );
-
-  React.useEffect(() => {
-    console.log('colorScheme', colorScheme);
-  }, [colorScheme]);
 
   React.useEffect(() => {
     const title = isSearching ? 'Did? Do. Done!' : '';
