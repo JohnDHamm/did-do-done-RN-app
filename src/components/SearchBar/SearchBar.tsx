@@ -8,6 +8,7 @@ import {
   LeftSide,
 } from './SearchBar.styles.';
 import IMAGES from '../../../assets/images';
+import { ThemeContext } from 'styled-components';
 
 interface SearchBarProps {
   onSubmit: (text: string) => void;
@@ -15,6 +16,7 @@ interface SearchBarProps {
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSubmit, onClear }) => {
+  const theme = React.useContext(ThemeContext);
   const [inputText, setInputText] = React.useState<string>('');
 
   const handleClear = () => {
@@ -37,6 +39,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSubmit, onClear }) => {
           placeholder="when did I...?"
           blurOnSubmit={true}
           onSubmitEditing={() => handleSubmit()}
+          placeholderTextColor={theme.placeholderText}
         />
       </LeftSide>
       <TouchableOpacity onPress={() => handleClear()}>

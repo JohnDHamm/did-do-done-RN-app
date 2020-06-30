@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, StyledInput } from './Input.styles.';
+import { ThemeContext } from 'styled-components';
 
 interface InputProps {
   autoFocus?: boolean;
@@ -20,6 +21,7 @@ const Input: React.FC<InputProps> = ({
   onSubmit,
   placeholder,
 }) => {
+  const theme = React.useContext(ThemeContext);
   const [inputText, setInputText] = React.useState<string>(initialValue);
 
   const handleSubmit = () => {
@@ -38,6 +40,7 @@ const Input: React.FC<InputProps> = ({
         onSubmitEditing={() => handleSubmit()}
         autoFocus={autoFocus}
         maxLength={maxLength}
+        placeholderTextColor={theme.placeholderText}
       />
     </Container>
   );

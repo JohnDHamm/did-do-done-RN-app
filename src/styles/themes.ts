@@ -11,6 +11,7 @@ export const lightTheme: Theme = {
     selectedTagHighlight: COLORS.PRIMARY_PURPLE,
     tagText: COLORS.WHITE,
     notesLabel: COLORS.BLACK,
+    placeholderText: COLORS.PRIMARY_GRAY,
   },
 };
 
@@ -25,5 +26,6 @@ export const darkTheme: Theme = {
     selectedTagHighlight: COLORS.BADASS,
     tagText: COLORS.BLACK,
     notesLabel: COLORS.DARK_GRAY,
+    placeholderText: COLORS.DARK_GRAY,
   },
 };

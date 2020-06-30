@@ -13,7 +13,7 @@ import {
 import Button from '../Button/Button';
 import SectionHeader from '../SectionHeader/SectionHeader';
 import { TouchableOpacity } from 'react-native';
-import { COLORS, darkTheme, lightTheme } from '../../styles';
+import { COLORS } from '../../styles';
 import IMAGES from '../../../assets/images';
 import { getRecurDateString, getRecurFreqData } from '../../functions';
 import { ThemeContext } from 'styled-components';
