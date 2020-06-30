@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, useColorScheme } from 'react-native';
+import { StatusBar, View, Text, useColorScheme } from 'react-native';
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import {
   createStackNavigator,
@@ -80,6 +80,9 @@ const App = (): JSX.Element => {
         <ThemeProvider
           theme={themeState === 'light' ? lightTheme.theme : darkTheme.theme}
         >
+          <StatusBar
+            barStyle={themeState === 'dark' ? 'light-content' : 'dark-content'}
+          />
           <EventsContext.Provider value={events}>
             <TagsContext.Provider value={tags}>
               <NavigationContainer>
