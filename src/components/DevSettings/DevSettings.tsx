@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View, Text } from 'react-native';
-import { Block, Container } from './DevSettings.styles';
+import { Block, Container, Toggle } from './DevSettings.styles';
 import Button from '../Button/Button';
 import { StoreUtils } from '../../utils';
 import { mockSavedEvents } from '../../mocks/mockSavedEvents';
@@ -25,7 +25,7 @@ const DevSettings: React.FC = () => {
   return (
     <Container>
       <TouchableOpacity onPress={() => setShowSettings(!showSettings)}>
-        <Text>DEV</Text>
+        <Toggle>DEV</Toggle>
       </TouchableOpacity>
       {showSettings ? (
         <View>
