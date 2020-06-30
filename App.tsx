@@ -29,6 +29,17 @@ declare global {
 
 const Stack = createStackNavigator<RootStackParamList>();
 
+interface HeaderStyle {
+  backgroundColor: string;
+  shadowColor: string;
+}
+
+const getBgColor = (colorScheme: ThemeMode): string => {
+  return colorScheme === 'light'
+    ? lightTheme.theme.background
+    : darkTheme.theme.background;
+};
+
 const App = (): JSX.Element => {
   const events = useEvents();
   const tags = useTags();
@@ -38,6 +49,10 @@ const App = (): JSX.Element => {
   const [themeState, setThemeState] = React.useState<ThemeMode>(
     colorScheme || 'light'
   );
+  const [headerStyle, setHeaderStyle] = React.useState<HeaderStyle>({
+    backgroundColor: '',
+    shadowColor: '',
+  });
 
   const [fontsLoaded] = useFonts({
     'Lobster-Regular': require('./assets/fonts/Lobster-Regular.ttf'),
@@ -46,6 +61,10 @@ const App = (): JSX.Element => {
   React.useEffect(() => {
     if (colorScheme) {
       setThemeState(colorScheme);
+      setHeaderStyle({
+        backgroundColor: getBgColor(colorScheme),
+        shadowColor: getBgColor(colorScheme),
+      });
     }
   }, [colorScheme]);
 
@@ -67,6 +86,7 @@ const App = (): JSX.Element => {
                 <Stack.Navigator
                   initialRouteName="Search"
                   screenOptions={{
+                    headerStyle: headerStyle,
                     headerTitleStyle: {
                       fontFamily: FONTS.PRIMARY,
                       fontSize: 24,
