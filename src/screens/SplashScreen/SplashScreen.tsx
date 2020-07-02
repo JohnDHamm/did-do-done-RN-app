@@ -40,7 +40,6 @@ const SplashScreen: React.FC = () => {
       .then(() => getStoreData('EventsStore', setCurrentEvents))
       .then(() => {
         const elapsedTime = new Date().getTime() - startTime;
-        console.log('elapsedTime', elapsedTime);
         setDataLoadTime(elapsedTime);
         setDataIsLoading(false);
       });

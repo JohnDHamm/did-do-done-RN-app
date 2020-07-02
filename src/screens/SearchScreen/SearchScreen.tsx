@@ -56,11 +56,14 @@ const SearchScreen: React.FC = () => {
 
   useFocusEffect(
     React.useCallback(() => {
+      console.log('focus: selectedTags', selectedTags);
+      console.log('focus: searchText', searchText);
       getSearchResults();
     }, [events])
   );
 
   const getSearchResults = () => {
+    console.log('searching...');
     //filter by tags
     const tagFilteredEvents: Array<SavedEvent> = [];
     if (selectedTags.length > 0) {
@@ -106,7 +109,7 @@ const SearchScreen: React.FC = () => {
     }
   };
 
-  const setAllTagsActve = (): void => {
+  const setAllTagsActive = (): void => {
     const allTagIds = tags.map((tag) => tag.id);
     allTagIds.push(NO_TAG_ID);
     setSelectedTags(allTagIds);
@@ -114,7 +117,7 @@ const SearchScreen: React.FC = () => {
 
   const handleSearchSubmit = (searchText: string) => {
     if (searchText && selectedTags.length === 0) {
-      setAllTagsActve();
+      setAllTagsActive();
     }
     setSearchText(searchText);
   };
@@ -125,7 +128,7 @@ const SearchScreen: React.FC = () => {
 
   const handleSearchAll = () => {
     setIsSearching(true);
-    setAllTagsActve();
+    setAllTagsActive();
   };
 
   const renderTags = (tags: Tag[]) => {
@@ -182,20 +185,25 @@ const SearchScreen: React.FC = () => {
   }, [selectedTags, searchText]);
 
   React.useEffect(() => {
+    if (events.length < 1) {
+      setIsSearching(false);
+    }
     setHasSavedEvents(events.length > 0);
     setRecurTotals(getRecurTotals(events));
   }, [events]);
 
-  // React.useEffect(() => {
-  // }, [tags]);
+  React.useEffect(() => {
+    // console.log('selectedTags', selectedTags);
+  }, [selectedTags]);
 
   React.useEffect(() => {
     // console.log('tags', tags);
+    console.log('SearchScreen mount');
   }, []);
 
   return (
     <Container isSearching={isSearching} hasEvents={hasSavedEvents}>
-      {/* <DevSettings /> */}
+      <DevSettings />
       {!isSearching && <AppTitle />}
       {hasSavedEvents && (
         <SearchBlock>
