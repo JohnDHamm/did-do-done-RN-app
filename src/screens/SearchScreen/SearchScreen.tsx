@@ -56,11 +56,15 @@ const SearchScreen: React.FC = () => {
 
   useFocusEffect(
     React.useCallback(() => {
+      console.log('focus: selected tags', selectedTags);
+      // console.log('events', events);
+      // console.log('selectedTags', selectedTags);
       getSearchResults();
     }, [events])
   );
 
   const getSearchResults = () => {
+    console.log('searching...');
     //filter by tags
     const tagFilteredEvents: Array<SavedEvent> = [];
     if (selectedTags.length > 0) {
@@ -182,12 +186,16 @@ const SearchScreen: React.FC = () => {
   }, [selectedTags, searchText]);
 
   React.useEffect(() => {
+    if (events.length < 1) {
+      setIsSearching(false);
+    }
     setHasSavedEvents(events.length > 0);
     setRecurTotals(getRecurTotals(events));
   }, [events]);
 
-  // React.useEffect(() => {
-  // }, [tags]);
+  React.useEffect(() => {
+    console.log('selectedTags', selectedTags);
+  }, [selectedTags]);
 
   React.useEffect(() => {
     // console.log('tags', tags);
@@ -195,7 +203,7 @@ const SearchScreen: React.FC = () => {
 
   return (
     <Container isSearching={isSearching} hasEvents={hasSavedEvents}>
-      {/* <DevSettings /> */}
+      <DevSettings />
       {!isSearching && <AppTitle />}
       {hasSavedEvents && (
         <SearchBlock>
