@@ -56,10 +56,8 @@ const SearchScreen: React.FC = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      console.log('focus: selectedTags', selectedTags);
-      console.log('focus: searchText', searchText);
       getSearchResults();
-    }, [events])
+    }, [events, selectedTags, searchText])
   );
 
   const getSearchResults = () => {
