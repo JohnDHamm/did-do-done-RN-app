@@ -1,14 +1,17 @@
 import React from 'react';
 
 export const useSearch = (): SearchContextInterface => {
-  const [selectedTagIds, setSelectedTagIds] = React.useState<number[]>([]);
+  const [searchTerms, setSearchTerms] = React.useState<SearchTerms>({
+    selectedTagIds: [],
+    searchText: '',
+  });
 
-  const setCurrentSelectedTagIds = React.useCallback(
-    (currentSelectedTagIds: number[]): void => {
-      setSelectedTagIds(currentSelectedTagIds);
+  const setCurrentSearchTerms = React.useCallback(
+    (currentSearchTerms: SearchTerms): void => {
+      setSearchTerms(currentSearchTerms);
     },
     []
   );
 
-  return { selectedTagIds, setCurrentSelectedTagIds };
+  return { searchTerms, setCurrentSearchTerms };
 };

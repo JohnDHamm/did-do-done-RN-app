@@ -41,7 +41,7 @@ const SearchScreen: React.FC = () => {
 
   const { events } = React.useContext<EventsContextInterface>(EventsContext);
   const { tags } = React.useContext<TagsContextInterface>(TagsContext);
-  const { selectedTagIds, setCurrentSelectedTagIds } = React.useContext<
+  const { searchTerms, setCurrentSearchTerms } = React.useContext<
     SearchContextInterface
   >(SearchContext);
 
@@ -52,24 +52,23 @@ const SearchScreen: React.FC = () => {
     thisweek: 0,
     next30: 0,
   });
-  // const [selectedTagIds, setSelectedTagIds] = React.useState<number[]>(
-  //   []
-  // );
+  const [selectedTagIds, setSelectedTagIds] = React.useState<number[]>(
+    searchTerms.selectedTagIds
+  );
   const [isSearching, setIsSearching] = React.useState<boolean>(true);
-  const [searchText, setSearchText] = React.useState<string>('');
+  const [searchText, setSearchText] = React.useState<string>(
+    searchTerms.searchText
+  );
   const [searchResults, setSearchResults] = React.useState<SavedEvent[]>([]);
 
   useFocusEffect(
     React.useCallback(() => {
-      // console.log('searchTerms', searchTerms);
-      console.log('focus: selectedTagIds', selectedTagIds);
-      // console.log('focus: searchText', searchTerms);
+      //TODO?: check if changes in events before getSearchResults? usePrev hook?
       getSearchResults();
-    }, [events, selectedTagIds])
+    }, [events, searchTerms])
   );
 
   const getSearchResults = () => {
-    console.log('searching...');
     //filter by tags
     const tagFilteredEvents: Array<SavedEvent> = [];
     if (selectedTagIds.length > 0) {
@@ -106,12 +105,12 @@ const SearchScreen: React.FC = () => {
   };
 
   const setSelectedTags = (tagIds: number[]) => {
-    setCurrentSelectedTagIds(tagIds);
-    // const newSearchTerms: SearchTerms = {
-    //   selectedTagIds: tagIds,
-    //   searchText,
-    // };
-    // setCurrentSearchTerms(newSearchTerms);
+    setSelectedTagIds(tagIds);
+    const newSearchTerms: SearchTerms = {
+      selectedTagIds: tagIds,
+      searchText,
+    };
+    setCurrentSearchTerms(newSearchTerms);
   };
 
   const toggleTag = (id: number): void => {
@@ -130,15 +129,24 @@ const SearchScreen: React.FC = () => {
     setSelectedTags(allTagIds);
   };
 
+  const changeSearchText = (text: string) => {
+    setSearchText(text);
+    const newSearchTerms: SearchTerms = {
+      selectedTagIds,
+      searchText: text,
+    };
+    setCurrentSearchTerms(newSearchTerms);
+  };
+
   const handleSearchSubmit = (searchText: string) => {
     if (searchText && selectedTagIds.length === 0) {
       setAllTagsActive();
     }
-    setSearchText(searchText);
+    changeSearchText(searchText);
   };
 
   const onSearchTextClear = (): void => {
-    setSearchText('');
+    changeSearchText('');
   };
 
   const handleSearchAll = () => {
@@ -208,13 +216,7 @@ const SearchScreen: React.FC = () => {
   }, [events]);
 
   React.useEffect(() => {
-    // console.log('searchTerms', searchTerms);
-    console.log('selectedTagIds', selectedTagIds);
-  }, [selectedTagIds]);
-
-  React.useEffect(() => {
-    // console.log('tags', tags);
-    console.log('SearchScreen mount');
+    // console.log('SearchScreen mount');
   }, []);
 
   return (

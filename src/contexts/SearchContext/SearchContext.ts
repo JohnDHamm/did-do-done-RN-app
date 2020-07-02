@@ -1,15 +1,22 @@
 import React from 'react';
 
 declare global {
-  interface SearchContextInterface {
+  interface SearchTerms {
     selectedTagIds: number[];
-    setCurrentSelectedTagIds: (selectedTagIds: number[]) => void;
+    searchText: string;
+  }
+  interface SearchContextInterface {
+    searchTerms: SearchTerms;
+    setCurrentSearchTerms: (searchTerms: SearchTerms) => void;
   }
 }
 
 export const SEARCHTERMS_DEFAULT_VALUE: SearchContextInterface = {
-  selectedTagIds: [],
-  setCurrentSelectedTagIds: () => [],
+  searchTerms: {
+    selectedTagIds: [],
+    searchText: '',
+  },
+  setCurrentSearchTerms: () => [],
 };
 
 export const SearchContext = React.createContext<SearchContextInterface>(
