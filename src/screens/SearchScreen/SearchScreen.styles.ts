@@ -15,12 +15,6 @@ export const Container = styled.View<
   padding-bottom: 40px;
 `;
 
-export const StyledText = styled.Text`
-  color: ${COLORS.PRIMARY_PURPLE};
-  font-family: ${FONTS.PRIMARY};
-  font-size: 40px;
-`;
-
 export const SearchBlock = styled.View`
   width: 100%;
   align-items: center;

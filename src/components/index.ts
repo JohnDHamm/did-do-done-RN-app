@@ -1,3 +1,4 @@
+import AppTitle from './AppTitle/AppTitle';
 import Button from './Button/Button';
 import DevSettings from './DevSettings/DevSettings';
 import ErrorMessage from './ErrorMessage/ErrorMessage';
@@ -13,6 +14,7 @@ import Tag from './Tag/Tag';
 import TagMgmtModal from './TagMgmtModal/TagMgmtModal';
 
 export {
+  AppTitle,
   Button,
   DevSettings,
   ErrorMessage,
