@@ -2,8 +2,13 @@ import React from 'react';
 import { StatusBar, useColorScheme } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { EventsContext, TagsContext, ThemeContext } from './src/contexts';
-import { useEvents, useTags, useTheme } from './src/hooks';
+import {
+  EventsContext,
+  SearchContext,
+  TagsContext,
+  ThemeContext,
+} from './src/contexts';
+import { useEvents, useSearch, useTags, useTheme } from './src/hooks';
 import { ThemeProvider } from 'styled-components/native';
 import { SplashScreen } from './src/screens';
 import { MainStack } from './src/navigation';
@@ -13,6 +18,7 @@ const RootStack = createStackNavigator();
 
 const App = (): JSX.Element => {
   const events = useEvents();
+  const search = useSearch();
   const tags = useTags();
   const theme = useTheme();
   const colorScheme = useColorScheme();
@@ -37,16 +43,18 @@ const App = (): JSX.Element => {
         />
         <EventsContext.Provider value={events}>
           <TagsContext.Provider value={tags}>
-            <NavigationContainer>
-              <RootStack.Navigator
-                initialRouteName="Splash"
-                headerMode="none"
-                mode="modal"
-              >
-                <RootStack.Screen name="Splash" component={SplashScreen} />
-                <RootStack.Screen name="Main" component={MainStack} />
-              </RootStack.Navigator>
-            </NavigationContainer>
+            <SearchContext.Provider value={search}>
+              <NavigationContainer>
+                <RootStack.Navigator
+                  initialRouteName="Splash"
+                  headerMode="none"
+                  mode="modal"
+                >
+                  <RootStack.Screen name="Splash" component={SplashScreen} />
+                  <RootStack.Screen name="Main" component={MainStack} />
+                </RootStack.Navigator>
+              </NavigationContainer>
+            </SearchContext.Provider>
           </TagsContext.Provider>
         </EventsContext.Provider>
       </ThemeProvider>

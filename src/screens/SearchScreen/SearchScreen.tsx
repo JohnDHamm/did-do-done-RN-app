@@ -22,7 +22,7 @@ import {
   Tag,
 } from '../../components';
 import IMAGES from '../../../assets/images';
-import { EventsContext, TagsContext } from '../../contexts';
+import { EventsContext, SearchContext, TagsContext } from '../../contexts';
 import { getRecurTotals, searchEventsByText } from '../../functions';
 import uniqby from 'lodash.uniqby';
 import { COLORS } from '../../styles';
@@ -41,6 +41,9 @@ const SearchScreen: React.FC = () => {
 
   const { events } = React.useContext<EventsContextInterface>(EventsContext);
   const { tags } = React.useContext<TagsContextInterface>(TagsContext);
+  const { selectedTagIds, setCurrentSelectedTagIds } = React.useContext<
+    SearchContextInterface
+  >(SearchContext);
 
   const [hasSavedEvents, setHasSavedEvents] = React.useState<boolean>(false);
   const [recurTotals, setRecurTotals] = React.useState<RecurTotals>({
@@ -49,35 +52,38 @@ const SearchScreen: React.FC = () => {
     thisweek: 0,
     next30: 0,
   });
-  const [selectedTags, setSelectedTags] = React.useState<number[]>([]);
+  // const [selectedTagIds, setSelectedTagIds] = React.useState<number[]>(
+  //   []
+  // );
   const [isSearching, setIsSearching] = React.useState<boolean>(true);
   const [searchText, setSearchText] = React.useState<string>('');
   const [searchResults, setSearchResults] = React.useState<SavedEvent[]>([]);
 
   useFocusEffect(
     React.useCallback(() => {
-      console.log('focus: selectedTags', selectedTags);
-      console.log('focus: searchText', searchText);
+      // console.log('searchTerms', searchTerms);
+      console.log('focus: selectedTagIds', selectedTagIds);
+      // console.log('focus: searchText', searchTerms);
       getSearchResults();
-    }, [events])
+    }, [events, selectedTagIds])
   );
 
   const getSearchResults = () => {
     console.log('searching...');
     //filter by tags
     const tagFilteredEvents: Array<SavedEvent> = [];
-    if (selectedTags.length > 0) {
+    if (selectedTagIds.length > 0) {
       events.forEach((event) => {
         if (event.tagIds) {
           const eventTagIds = event.tagIds.map((id) => id);
           eventTagIds.forEach((tagId) => {
-            if (selectedTags.includes(tagId)) {
+            if (selectedTagIds.includes(tagId)) {
               tagFilteredEvents.push(event);
               return;
             }
           });
         } else {
-          if (selectedTags.includes(NO_TAG_ID)) {
+          if (selectedTagIds.includes(NO_TAG_ID)) {
             tagFilteredEvents.push(event);
           }
         }
@@ -99,9 +105,18 @@ const SearchScreen: React.FC = () => {
     setSearchResults(uniqueEvents);
   };
 
+  const setSelectedTags = (tagIds: number[]) => {
+    setCurrentSelectedTagIds(tagIds);
+    // const newSearchTerms: SearchTerms = {
+    //   selectedTagIds: tagIds,
+    //   searchText,
+    // };
+    // setCurrentSearchTerms(newSearchTerms);
+  };
+
   const toggleTag = (id: number): void => {
-    const newSelectedTags = Array.from(selectedTags);
-    if (selectedTags.includes(id)) {
+    const newSelectedTags = Array.from(selectedTagIds);
+    if (selectedTagIds.includes(id)) {
       setSelectedTags(newSelectedTags.filter((tag) => tag !== id));
     } else {
       newSelectedTags.push(id);
@@ -116,7 +131,7 @@ const SearchScreen: React.FC = () => {
   };
 
   const handleSearchSubmit = (searchText: string) => {
-    if (searchText && selectedTags.length === 0) {
+    if (searchText && selectedTagIds.length === 0) {
       setAllTagsActive();
     }
     setSearchText(searchText);
@@ -138,7 +153,7 @@ const SearchScreen: React.FC = () => {
           key={tag.id}
           label={tag.name}
           color={tag.color}
-          selected={selectedTags.includes(tag.id)}
+          selected={selectedTagIds.includes(tag.id)}
           extraStyles={tagExtraStyles}
         />
       </TouchableOpacity>
@@ -178,11 +193,11 @@ const SearchScreen: React.FC = () => {
   }, [isSearching]);
 
   React.useEffect(() => {
-    selectedTags.length || searchText
+    selectedTagIds.length || searchText
       ? setIsSearching(true)
       : setIsSearching(false);
     getSearchResults();
-  }, [selectedTags, searchText]);
+  }, [selectedTagIds, searchText]);
 
   React.useEffect(() => {
     if (events.length < 1) {
@@ -193,8 +208,9 @@ const SearchScreen: React.FC = () => {
   }, [events]);
 
   React.useEffect(() => {
-    // console.log('selectedTags', selectedTags);
-  }, [selectedTags]);
+    // console.log('searchTerms', searchTerms);
+    console.log('selectedTagIds', selectedTagIds);
+  }, [selectedTagIds]);
 
   React.useEffect(() => {
     // console.log('tags', tags);
@@ -217,7 +233,7 @@ const SearchScreen: React.FC = () => {
               <Tag
                 label={'no tag'}
                 color={COLORS.PRIMARY_GRAY}
-                selected={selectedTags.includes(NO_TAG_ID)}
+                selected={selectedTagIds.includes(NO_TAG_ID)}
                 extraStyles={tagExtraStyles}
               />
             </TouchableOpacity>
