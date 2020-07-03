@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { COLORS, FONTS } from '../../styles';
+import { FONTS } from '../../styles';
 
 export const Container = styled.View`
   width: 100%;
@@ -19,8 +19,8 @@ export const TopRow = styled(Row)`
 `;
 
 export const Name = styled.Text<Theme>`
-  font-family: ${FONTS.PRIMARY};
-  font-size: 22px;
+  font-size: 20px;
+  font-weight: 500;
   color: ${(props) => props.theme.purple};
 `;
 

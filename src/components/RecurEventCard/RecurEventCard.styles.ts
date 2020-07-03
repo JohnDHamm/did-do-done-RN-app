@@ -19,8 +19,9 @@ export const TopRow = styled(Row)`
 `;
 
 export const Name = styled.Text<Theme>`
-  font-family: ${FONTS.PRIMARY};
-  font-size: 22px;
+  font-size: 20px;
+  font-weight: 500;
+  padding: 2px 0;
   color: ${(props) => props.theme.purple};
 `;
 
