@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, TouchableOpacity } from 'react-native';
+import { FlatList, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   AddIcon,
@@ -12,10 +12,10 @@ import {
   TagsBlock,
 } from './SearchScreen.styles';
 import {
-  AppTitle,
   Button,
   DevSettings,
   EventCard,
+  Logo,
   RecurEventsBlock,
   SearchBar,
   SectionHeader,
@@ -23,9 +23,10 @@ import {
 } from '../../components';
 import IMAGES from '../../../assets/images';
 import { EventsContext, TagsContext } from '../../contexts';
+import { ThemeContext } from 'styled-components';
 import { getRecurTotals, searchEventsByText } from '../../functions';
 import uniqby from 'lodash.uniqby';
-import { COLORS } from '../../styles';
+import { COLORS, LAYOUT } from '../../styles';
 
 const tagExtraStyles = {
   marginTop: 3,
@@ -37,10 +38,12 @@ const tagExtraStyles = {
 const NO_TAG_ID = 0;
 
 const SearchScreen: React.FC = () => {
+  const { width } = useWindowDimensions();
   const navigation = useNavigation();
 
   const { events } = React.useContext<EventsContextInterface>(EventsContext);
   const { tags } = React.useContext<TagsContextInterface>(TagsContext);
+  const theme = React.useContext(ThemeContext);
 
   const [hasSavedEvents, setHasSavedEvents] = React.useState<boolean>(false);
   const [recurTotals, setRecurTotals] = React.useState<RecurTotals>({
@@ -202,7 +205,9 @@ const SearchScreen: React.FC = () => {
   return (
     <Container isSearching={isSearching} hasEvents={hasSavedEvents}>
       {/* <DevSettings /> */}
-      {!isSearching && <AppTitle />}
+      {!isSearching && (
+        <Logo color={theme.purple} width={width * LAYOUT.LOGO_WIDTH_SCALE} />
+      )}
       {hasSavedEvents && (
         <SearchBlock>
           <SearchBar
