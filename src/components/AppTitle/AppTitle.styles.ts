@@ -1,8 +1,8 @@
 import styled from 'styled-components/native';
-import { COLORS, FONTS } from '../../styles';
+import { FONTS } from '../../styles';
 
-export const Title = styled.Text<{ color?: string }>`
-  color: ${(props) => (props.color ? props.color : COLORS.PRIMARY_PURPLE)};
+export const Title = styled.Text<Theme & { color?: string }>`
+  color: ${(props) => (props.color ? props.color : props.theme.purple)};
   font-family: ${FONTS.PRIMARY};
   font-size: 40px;
 `;

@@ -12,6 +12,7 @@ export const lightTheme: Theme = {
     tagText: COLORS.WHITE,
     notesLabel: COLORS.BLACK,
     placeholderText: COLORS.PRIMARY_GRAY,
+    purple: COLORS.PRIMARY_PURPLE,
   },
 };
 
@@ -27,5 +28,6 @@ export const darkTheme: Theme = {
     tagText: COLORS.BLACK,
     notesLabel: COLORS.DARK_GRAY,
     placeholderText: COLORS.DARK_GRAY,
+    purple: COLORS.PRIMARY_PURPLE_DARK,
   },
 };

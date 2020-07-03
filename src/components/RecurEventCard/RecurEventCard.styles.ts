@@ -18,10 +18,11 @@ export const TopRow = styled(Row)`
   flex-wrap: wrap;
 `;
 
-export const Name = styled.Text`
-  font-family: ${FONTS.PRIMARY};
-  font-size: 22px;
-  color: ${COLORS.PRIMARY_PURPLE};
+export const Name = styled.Text<Theme>`
+  font-size: 20px;
+  font-weight: 500;
+  padding: 2px 0;
+  color: ${(props) => props.theme.purple};
 `;
 
 export const Date = styled.Text<Theme>`
@@ -29,15 +30,16 @@ export const Date = styled.Text<Theme>`
   color: ${(props) => props.theme.text};
 `;
 
-export const Icon = styled.Image`
+export const Icon = styled.Image<Theme>`
   width: 16px;
   height: 16px;
+  tint-color: ${(props) => props.theme.purple};
 `;
 
-export const RecurMsg = styled.Text`
+export const RecurMsg = styled.Text<Theme>`
   font-family: ${FONTS.PRIMARY};
   font-size: 18px;
-  color: ${COLORS.PRIMARY_PURPLE};
+  color: ${(props) => props.theme.purple};
   padding-left: 6px;
 `;
 

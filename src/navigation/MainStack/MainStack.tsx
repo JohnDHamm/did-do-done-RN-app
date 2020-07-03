@@ -40,7 +40,7 @@ const MainStack: React.FC = () => {
           fontFamily: FONTS.PRIMARY,
           fontSize: 24,
         },
-        headerTintColor: COLORS.PRIMARY_PURPLE,
+        headerTintColor: theme.purple,
       }}
     >
       <Stack.Screen
@@ -51,12 +51,12 @@ const MainStack: React.FC = () => {
       <Stack.Screen
         name="Event"
         component={EventScreen}
-        options={{ title: 'Event', headerBackTitle: 'Back' }}
+        options={{ title: 'Done!', headerBackTitle: 'Back' }}
       />
       <Stack.Screen
         name="Recurring"
         component={RecurringScreen}
-        options={{ title: 'Do again', headerBackTitle: 'Search' }}
+        options={{ title: 'Do again.', headerBackTitle: 'Search' }}
       />
     </Stack.Navigator>
   );

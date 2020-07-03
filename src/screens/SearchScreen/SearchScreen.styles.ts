@@ -28,10 +28,11 @@ export const TagsBlock = styled.View`
   margin-bottom: 10px;
 `;
 
-export const AddIcon = styled.Image`
+export const AddIcon = styled.Image<Theme>`
   margin: 30px 0;
   width: 36px;
   height: 36px;
+  tint-color: ${(props) => props.theme.purple};
 `;
 
 export const ResultsBlock = styled.View`
@@ -54,8 +55,9 @@ export const ListSeparator = styled.View<Theme>`
   background-color: ${(props) => props.theme.cardSeparator};
 `;
 
-export const HeaderAddIcon = styled.Image`
+export const HeaderAddIcon = styled.Image<Theme>`
   margin-right: 16px;
   width: 24px;
   height: 24px;
+  tint-color: ${(props) => props.theme.purple};
 `;
