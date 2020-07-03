@@ -49,14 +49,13 @@ export const RecurRow = styled(Row)`
   align-items: flex-end;
 `;
 
-const RecurText = styled.Text`
+const RecurText = styled.Text<Theme>`
   font-family: ${FONTS.PRIMARY};
-  color: ${COLORS.PRIMARY_PURPLE};
+  color: ${(props) => props.theme.purple};
 `;
 
-export const RecurDateText = styled(RecurText)<{ isPast: boolean }>`
-  color: ${(props) =>
-    props.isPast ? COLORS.MISSED_RED : COLORS.PRIMARY_PURPLE};
+export const RecurDateText = styled(RecurText)<Theme & { isPast: boolean }>`
+  color: ${(props) => (props.isPast ? COLORS.MISSED_RED : props.theme.purple)};
   font-size: 26px;
 `;
 

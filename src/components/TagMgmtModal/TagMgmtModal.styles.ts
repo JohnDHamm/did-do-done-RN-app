@@ -16,9 +16,10 @@ export const CloseIconContainer = styled.View`
   margin-right: 30px;
 `;
 
-export const CloseIcon = styled.Image`
+export const CloseIcon = styled.Image<Theme>`
   width: 24px;
   height: 24px;
+  tint-color: ${(props) => props.theme.purple};
 `;
 
 export const SelectedIcon = styled.Image`
@@ -55,9 +56,10 @@ export const AddTagBlock = styled.View`
   justify-content: center;
 `;
 
-export const AddIcon = styled.Image`
+export const AddIcon = styled.Image<Theme>`
   width: 36px;
   height: 36px;
+  tint-color: ${(props) => props.theme.purple};
 `;
 
 export const CenteredView = styled.View`

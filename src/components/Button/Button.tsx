@@ -17,7 +17,7 @@ const Button: React.FC<ButtonProps> = ({
 
   switch (type) {
     case 'alt':
-      backgroundColor = COLORS.WHITE;
+      backgroundColor = 'transparent';
       labelColor = COLORS.PRIMARY_PURPLE;
       break;
     case 'delete':

@@ -38,7 +38,7 @@ import moment from 'moment';
 const tagExtraStyles = {
   marginTop: 3,
   marginBottom: 3,
-  marginRight: 3,
+  marginRight: 5,
 };
 
 const EventScreen: React.FC = () => {
@@ -230,11 +230,7 @@ const EventScreen: React.FC = () => {
         <TagsRow>
           <Label>tags:</Label>
           <TouchableOpacity onPress={() => setShowTagModal(true)}>
-            <Tag
-              label="manage tags"
-              color={COLORS.PRIMARY_PURPLE}
-              selected={true}
-            />
+            <Tag label="manage tags" color={theme.purple} selected={true} />
           </TouchableOpacity>
         </TagsRow>
         <TagsBlock>{renderTags(tags)}</TagsBlock>

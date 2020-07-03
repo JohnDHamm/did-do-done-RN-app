@@ -61,7 +61,7 @@ const SearchScreen: React.FC = () => {
   );
 
   const getSearchResults = () => {
-    console.log('searching...');
+    // console.log('searching...');
     //filter by tags
     const tagFilteredEvents: Array<SavedEvent> = [];
     if (selectedTags.length > 0) {
@@ -168,7 +168,7 @@ const SearchScreen: React.FC = () => {
   );
 
   React.useEffect(() => {
-    const title = isSearching ? 'Did? Do. Done!' : '';
+    const title = isSearching ? 'Did?' : '';
     navigation.setOptions({
       title,
       headerRight: () => (isSearching ? HeaderRightButton : null),
@@ -196,12 +196,12 @@ const SearchScreen: React.FC = () => {
 
   React.useEffect(() => {
     // console.log('tags', tags);
-    console.log('SearchScreen mount');
+    // console.log('SearchScreen mount');
   }, []);
 
   return (
     <Container isSearching={isSearching} hasEvents={hasSavedEvents}>
-      <DevSettings />
+      {/* <DevSettings /> */}
       {!isSearching && <AppTitle />}
       {hasSavedEvents && (
         <SearchBlock>

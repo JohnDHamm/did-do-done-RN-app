@@ -17,9 +17,17 @@ const DevSettings: React.FC = () => {
     TagsContext
   );
 
+  const removeAll = () => {
+    StoreUtils.removeStore('TagsStore').then(() =>
+      StoreUtils.removeStore('EventsStore')
+    );
+  };
+
   const addMocks = () => {
-    saveData('EventsStore', mockSavedEvents, setCurrentEvents);
-    saveData('TagsStore', mockSavedTags, setCurrentTags);
+    StoreUtils.removeStore('TagsStore')
+      .then(() => StoreUtils.removeStore('EventsStore'))
+      .then(() => saveData('TagsStore', mockSavedTags, setCurrentTags))
+      .then(() => saveData('EventsStore', mockSavedEvents, setCurrentEvents));
   };
 
   return (
@@ -29,7 +37,7 @@ const DevSettings: React.FC = () => {
       </TouchableOpacity>
       {showSettings ? (
         <View>
-          <Block>
+          {/* <Block>
             <TouchableOpacity
               onPress={() => StoreUtils.removeStore('TagsStore')}
             >
@@ -42,10 +50,15 @@ const DevSettings: React.FC = () => {
             >
               <Button label="remove Events store" type="alt" />
             </TouchableOpacity>
-          </Block>
+          </Block> */}
           <Block>
             <TouchableOpacity onPress={() => addMocks()}>
-              <Button label="add mock events and tags" type="alt" />
+              <Button label="reset mock events and tags" type="alt" />
+            </TouchableOpacity>
+          </Block>
+          <Block>
+            <TouchableOpacity onPress={() => removeAll()}>
+              <Button label="remove all events and tags" type="alt" />
             </TouchableOpacity>
           </Block>
         </View>

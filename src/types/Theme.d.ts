@@ -17,5 +17,6 @@ type Theme = {
     selectedTagHighlight: string;
     notesLabel: string;
     placeholderText: string;
+    purple: string;
   };
 };

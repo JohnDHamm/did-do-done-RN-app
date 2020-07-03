@@ -16,9 +16,10 @@ export const CloseIconContainer = styled.View`
   margin-right: 30px;
 `;
 
-export const CloseIcon = styled.Image`
+export const CloseIcon = styled.Image<Theme>`
   width: 24px;
   height: 24px;
+  tint-color: ${(props) => props.theme.purple};
 `;
 export const Content = styled.View`
   flex: 1;
@@ -41,18 +42,17 @@ export const StyledText = styled(ModalText)<Theme>`
   color: ${(props) => props.theme.label};
 `;
 
-export const StyledInput = styled.TextInput`
+export const StyledInput = styled.TextInput<Theme>`
   font-family: ${FONTS.PRIMARY};
   font-size: 42px;
-
-  color: ${COLORS.PRIMARY_PURPLE};
+  color: ${(props) => props.theme.purple};
 `;
 
 export const StyledPicker = styled.Picker`
   width: 100%;
 `;
 
-export const RecurDate = styled(ModalText)`
+export const RecurDate = styled(ModalText)<Theme>`
   font-size: 26px;
-  color: ${COLORS.PRIMARY_PURPLE};
+  color: ${(props) => props.theme.purple};
 `;
