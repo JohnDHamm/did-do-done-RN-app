@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SectionHeader renders correctly 1`] = `
+<View
+  color="#c3c3c3"
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#c3c3c3",
+        "justifyContent": "center",
+        "paddingBottom": 5,
+        "paddingLeft": 0,
+        "paddingRight": 0,
+        "paddingTop": 5,
+        "width": "100%",
+      },
+    ]
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#4c408f",
+          "fontFamily": "Lobster-Regular",
+          "fontSize": 24,
+        },
+      ]
+    }
+    textColor="#4c408f"
+  >
+    testing
+  </Text>
+</View>
+`;
