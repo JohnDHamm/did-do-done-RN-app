@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorMessage renders correctly 1`] = `
+<Text
+  style={
+    Array [
+      Object {
+        "color": "#B70000",
+        "fontSize": 14,
+      },
+    ]
+  }
+>
+  error message
+</Text>
+`;
