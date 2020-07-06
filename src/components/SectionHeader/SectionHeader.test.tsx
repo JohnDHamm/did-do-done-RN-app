@@ -6,7 +6,15 @@ describe('SectionHeader', () => {
   afterEach(cleanup);
 
   it('renders correctly with defaults', () => {
-    const { toJSON } = render(<SectionHeader text="testing" />);
+    const { toJSON } = render(<SectionHeader text="test 1" />);
+
+    expect(toJSON()).toMatchSnapshot();
+  });
+
+  it('renders with specified color and textColor props', () => {
+    const { toJSON } = render(
+      <SectionHeader text="test 2" color="blue" textColor="yellow" />
+    );
 
     expect(toJSON()).toMatchSnapshot();
   });
