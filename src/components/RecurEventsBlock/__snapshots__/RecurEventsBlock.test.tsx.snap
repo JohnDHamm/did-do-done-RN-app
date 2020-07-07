@@ -1,0 +1,435 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RecurEventsBlock renders correctly with defaults 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+      },
+    ]
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#4c408f",
+          "fontFamily": "Lobster-Regular",
+          "fontSize": 20,
+        },
+      ]
+    }
+  >
+    do again:
+  </Text>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "paddingTop": 10,
+        },
+      ]
+    }
+  >
+    <View
+      color="#B70000"
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#B70000",
+            "borderRadius": 16,
+            "height": 32,
+            "justifyContent": "center",
+            "width": 32,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#fff",
+              "fontFamily": "Lobster-Regular",
+              "fontSize": 20,
+            },
+          ]
+        }
+      >
+        1
+      </Text>
+    </View>
+    <Text
+      color="#B70000"
+      style={
+        Array [
+          Object {
+            "color": "#B70000",
+            "fontFamily": "Lobster-Regular",
+            "fontSize": 22,
+            "paddingLeft": 8,
+          },
+        ]
+      }
+    >
+      missed
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "paddingTop": 10,
+        },
+      ]
+    }
+  >
+    <View
+      color="#237b59"
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#237b59",
+            "borderRadius": 16,
+            "height": 32,
+            "justifyContent": "center",
+            "width": 32,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#fff",
+              "fontFamily": "Lobster-Regular",
+              "fontSize": 20,
+            },
+          ]
+        }
+      >
+        2
+      </Text>
+    </View>
+    <Text
+      color="#237b59"
+      style={
+        Array [
+          Object {
+            "color": "#237b59",
+            "fontFamily": "Lobster-Regular",
+            "fontSize": 22,
+            "paddingLeft": 8,
+          },
+        ]
+      }
+    >
+      today
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "paddingTop": 10,
+        },
+      ]
+    }
+  >
+    <View
+      color="#ffd764"
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#ffd764",
+            "borderRadius": 16,
+            "height": 32,
+            "justifyContent": "center",
+            "width": 32,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#fff",
+              "fontFamily": "Lobster-Regular",
+              "fontSize": 20,
+            },
+          ]
+        }
+      >
+        4
+      </Text>
+    </View>
+    <Text
+      color="#ffd764"
+      style={
+        Array [
+          Object {
+            "color": "#ffd764",
+            "fontFamily": "Lobster-Regular",
+            "fontSize": 22,
+            "paddingLeft": 8,
+          },
+        ]
+      }
+    >
+      this week
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "paddingTop": 10,
+        },
+      ]
+    }
+  >
+    <View
+      color="#c3c3c3"
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#c3c3c3",
+            "borderRadius": 16,
+            "height": 32,
+            "justifyContent": "center",
+            "width": 32,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#fff",
+              "fontFamily": "Lobster-Regular",
+              "fontSize": 20,
+            },
+          ]
+        }
+      >
+        3
+      </Text>
+    </View>
+    <Text
+      color="#c3c3c3"
+      style={
+        Array [
+          Object {
+            "color": "#c3c3c3",
+            "fontFamily": "Lobster-Regular",
+            "fontSize": 22,
+            "paddingLeft": 8,
+          },
+        ]
+      }
+    >
+      next 30 days
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`RecurEventsBlock renders correctly with minimized prop set to true 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "paddingTop": 10,
+      },
+    ]
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#4c408f",
+          "fontFamily": "Lobster-Regular",
+          "fontSize": 20,
+        },
+      ]
+    }
+  >
+    do again:
+  </Text>
+  <View
+    style={
+      Array [
+        Object {
+          "paddingLeft": 10,
+        },
+      ]
+    }
+  >
+    <View
+      color="#B70000"
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#B70000",
+            "borderRadius": 16,
+            "height": 32,
+            "justifyContent": "center",
+            "width": 32,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#fff",
+              "fontFamily": "Lobster-Regular",
+              "fontSize": 20,
+            },
+          ]
+        }
+      >
+        1
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "paddingLeft": 10,
+        },
+      ]
+    }
+  >
+    <View
+      color="#237b59"
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#237b59",
+            "borderRadius": 16,
+            "height": 32,
+            "justifyContent": "center",
+            "width": 32,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#fff",
+              "fontFamily": "Lobster-Regular",
+              "fontSize": 20,
+            },
+          ]
+        }
+      >
+        2
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "paddingLeft": 10,
+        },
+      ]
+    }
+  >
+    <View
+      color="#ffd764"
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#ffd764",
+            "borderRadius": 16,
+            "height": 32,
+            "justifyContent": "center",
+            "width": 32,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#fff",
+              "fontFamily": "Lobster-Regular",
+              "fontSize": 20,
+            },
+          ]
+        }
+      >
+        4
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "paddingLeft": 10,
+        },
+      ]
+    }
+  >
+    <View
+      color="#c3c3c3"
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#c3c3c3",
+            "borderRadius": 16,
+            "height": 32,
+            "justifyContent": "center",
+            "width": 32,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#fff",
+              "fontFamily": "Lobster-Regular",
+              "fontSize": 20,
+            },
+          ]
+        }
+      >
+        3
+      </Text>
+    </View>
+  </View>
+</View>
+`;
