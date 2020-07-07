@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Logo renders correctly 1`] = `
+<Image
+  color="purple"
+  height={12.5}
+  source={1}
+  style={
+    Array [
+      Object {
+        "height": 12.5,
+        "tintColor": "purple",
+        "width": 100,
+      },
+    ]
+  }
+  width={100}
+/>
+`;

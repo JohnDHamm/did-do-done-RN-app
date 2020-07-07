@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button renders correctly as an "alt" type 1`] = `
+<View
+  border="#4c408f"
+  color="transparent"
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "transparent",
+        "borderColor": "#4c408f",
+        "borderRadius": 5,
+        "borderWidth": 2,
+        "paddingBottom": 3,
+        "paddingLeft": 36,
+        "paddingRight": 36,
+        "paddingTop": 3,
+      },
+    ]
+  }
+>
+  <Text
+    labelColor="#4c408f"
+    style={
+      Array [
+        Object {
+          "color": "#4c408f",
+          "fontFamily": "Lobster-Regular",
+          "fontSize": 22,
+        },
+      ]
+    }
+  >
+    alt
+  </Text>
+</View>
+`;
+
+exports[`Button renders correctly as an "delete" type 1`] = `
+<View
+  border="#B70000"
+  color="#B70000"
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#B70000",
+        "borderColor": "#B70000",
+        "borderRadius": 5,
+        "borderWidth": 2,
+        "paddingBottom": 3,
+        "paddingLeft": 36,
+        "paddingRight": 36,
+        "paddingTop": 3,
+      },
+    ]
+  }
+>
+  <Text
+    labelColor="#fff"
+    style={
+      Array [
+        Object {
+          "color": "#fff",
+          "fontFamily": "Lobster-Regular",
+          "fontSize": 22,
+        },
+      ]
+    }
+  >
+    delete
+  </Text>
+</View>
+`;
+
+exports[`Button renders correctly with defaults 1`] = `
+<View
+  border="#4c408f"
+  color="#4c408f"
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#4c408f",
+        "borderColor": "#4c408f",
+        "borderRadius": 5,
+        "borderWidth": 2,
+        "paddingBottom": 3,
+        "paddingLeft": 36,
+        "paddingRight": 36,
+        "paddingTop": 3,
+      },
+    ]
+  }
+>
+  <Text
+    labelColor="#fff"
+    style={
+      Array [
+        Object {
+          "color": "#fff",
+          "fontFamily": "Lobster-Regular",
+          "fontSize": 22,
+        },
+      ]
+    }
+  >
+    regular
+  </Text>
+</View>
+`;

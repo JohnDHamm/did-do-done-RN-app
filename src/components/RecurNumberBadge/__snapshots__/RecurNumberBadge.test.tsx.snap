@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RecurNumberBadge renders correctly with "missed" type 1`] = `
+<View
+  color="#B70000"
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#B70000",
+        "borderRadius": 16,
+        "height": 32,
+        "justifyContent": "center",
+        "width": 32,
+      },
+    ]
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#fff",
+          "fontFamily": "Lobster-Regular",
+          "fontSize": 20,
+        },
+      ]
+    }
+  >
+    42
+  </Text>
+</View>
+`;
+
+exports[`RecurNumberBadge renders correctly with "next30" type 1`] = `
+<View
+  color="#c3c3c3"
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#c3c3c3",
+        "borderRadius": 16,
+        "height": 32,
+        "justifyContent": "center",
+        "width": 32,
+      },
+    ]
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#fff",
+          "fontFamily": "Lobster-Regular",
+          "fontSize": 20,
+        },
+      ]
+    }
+  >
+    45
+  </Text>
+</View>
+`;
+
+exports[`RecurNumberBadge renders correctly with "thisweek" type 1`] = `
+<View
+  color="#ffd764"
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#ffd764",
+        "borderRadius": 16,
+        "height": 32,
+        "justifyContent": "center",
+        "width": 32,
+      },
+    ]
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#fff",
+          "fontFamily": "Lobster-Regular",
+          "fontSize": 20,
+        },
+      ]
+    }
+  >
+    44
+  </Text>
+</View>
+`;
+
+exports[`RecurNumberBadge renders correctly with "today" type 1`] = `
+<View
+  color="#237b59"
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#237b59",
+        "borderRadius": 16,
+        "height": 32,
+        "justifyContent": "center",
+        "width": 32,
+      },
+    ]
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#fff",
+          "fontFamily": "Lobster-Regular",
+          "fontSize": 20,
+        },
+      ]
+    }
+  >
+    43
+  </Text>
+</View>
+`;
