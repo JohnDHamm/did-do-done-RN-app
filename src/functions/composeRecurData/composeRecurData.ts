@@ -1,4 +1,5 @@
 import moment from 'moment';
+
 const composeRecurData = (events: SavedEvent[]): Array<RecurSectionData> => {
   const startThisWeek = moment().add(1, 'day').startOf('day');
   const endThisWeek = moment().add(7, 'day').endOf('day');
