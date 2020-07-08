@@ -1,6 +1,11 @@
 import moment from 'moment';
 
-const formatDisplayDate = (date: number, showDay: boolean): string => {
+interface DisplayDateInterface {
+  date: number;
+  showDay: boolean;
+}
+
+const formatDisplayDate = ({ date, showDay }: DisplayDateInterface): string => {
   const savedYear = moment(date).year();
   let displayDate;
   if (showDay) {

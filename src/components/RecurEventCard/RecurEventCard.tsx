@@ -34,7 +34,7 @@ const RecurEventCard: React.FC<SavedEvent> = ({
     );
 
     return recurs?.nextdate
-      ? formatDisplayDate(recurs.nextdate, isThisWeek)
+      ? formatDisplayDate({ date: recurs.nextdate, showDay: isThisWeek })
       : '';
   };
 

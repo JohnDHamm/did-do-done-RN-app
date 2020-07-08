@@ -24,7 +24,7 @@ const EventCard: React.FC<SavedEvent> = ({
   recurs,
 }) => {
   const { tags } = React.useContext<TagsContextInterface>(TagsContext);
-  const displayDate = formatDisplayDate(date, false);
+  const displayDate = formatDisplayDate({ date, showDay: false });
 
   const createTags = (tagIds: number[]) => {
     return tags.filter((tag) => tagIds.includes(tag.id));
