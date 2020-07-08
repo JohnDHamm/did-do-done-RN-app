@@ -1,4 +1,5 @@
 import composeRecurData from './composeRecurData/composeRecurData';
+import formatDisplayDate from './formatDisplayDate/formatDisplayDate';
 import formatEventCardRecurInfo from './formatEventCardRecurInfo/formatEventCardRecurInfo';
 import getRecurDateString from './getRecurDateString/getRecurDateString';
 import getRecurFreqData from './getRecurFreqData/getRecurFreqData';
@@ -9,6 +10,7 @@ import searchEventsByText from './searchEventsByText/searchEventsByText';
 
 export {
   composeRecurData,
+  formatDisplayDate,
   formatEventCardRecurInfo,
   getRecurDateString,
   getRecurFreqData,

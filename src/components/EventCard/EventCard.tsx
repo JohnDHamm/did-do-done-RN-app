@@ -13,9 +13,8 @@ import {
 } from './EventCard.styles';
 import Tag from '../Tag/Tag';
 import IMAGES from '../../../assets/images';
-import moment from 'moment';
 import { TagsContext } from '../../contexts';
-import { formatEventCardRecurInfo } from '../../functions';
+import { formatDisplayDate, formatEventCardRecurInfo } from '../../functions';
 
 const EventCard: React.FC<SavedEvent> = ({
   name,
@@ -25,11 +24,7 @@ const EventCard: React.FC<SavedEvent> = ({
   recurs,
 }) => {
   const { tags } = React.useContext<TagsContextInterface>(TagsContext);
-  const savedYear = moment(date).year();
-  let displayDate = moment(date).format('MMM D');
-  if (savedYear !== moment().year()) {
-    displayDate = displayDate + `, '${savedYear.toString().slice(2, 4)}`;
-  }
+  const displayDate = formatDisplayDate(date, false);
 
   const createTags = (tagIds: number[]) => {
     return tags.filter((tag) => tagIds.includes(tag.id));
