@@ -15,6 +15,11 @@ import Tag from '../Tag/Tag';
 import IMAGES from '../../../assets/images';
 import moment from 'moment';
 import { TagsContext } from '../../contexts';
+import {
+  checkDateIsThisWeek,
+  formatDisplayDate,
+  getRecurInfoString,
+} from '../../functions';
 
 const RecurEventCard: React.FC<SavedEvent> = ({
   name,
@@ -25,20 +30,13 @@ const RecurEventCard: React.FC<SavedEvent> = ({
   const { tags } = React.useContext<TagsContextInterface>(TagsContext);
 
   const getDisplayDate = (): string => {
-    const nextdateYear = moment(recurs?.nextdate).year();
-    const startThisWeek = moment().add(1, 'day').startOf('day');
-    const endThisWeek = moment().add(7, 'day').endOf('day');
-    const isThisWeek = moment(recurs?.nextdate).isBetween(
-      startThisWeek,
-      endThisWeek
-    );
-    let displayDate = isThisWeek
-      ? moment(recurs?.nextdate).format('dddd, MMM D')
-      : moment(recurs?.nextdate).format('MMM D');
-    if (nextdateYear !== moment().year()) {
-      displayDate = displayDate + `, '${nextdateYear.toString().slice(2, 4)}`;
-    }
-    return displayDate;
+    const isThisWeek = recurs?.nextdate
+      ? checkDateIsThisWeek(recurs?.nextdate)
+      : false;
+
+    return recurs?.nextdate
+      ? formatDisplayDate({ date: recurs.nextdate, showDay: isThisWeek })
+      : '';
   };
 
   const renderMissedMsg = () => {
@@ -62,20 +60,6 @@ const RecurEventCard: React.FC<SavedEvent> = ({
     return missedMsg.length > 0 ? (
       <MissedMsg>{missedMsg} late!</MissedMsg>
     ) : null;
-  };
-
-  const getRecurDate = (): string => {
-    let recurFreq = 'every ';
-    if (recurs?.days) {
-      recurFreq = recurFreq + (recurs?.days).toString() + ' days';
-    }
-    if (recurs?.weeks) {
-      recurFreq = recurFreq + (recurs?.weeks).toString() + ' weeks';
-    }
-    if (recurs?.months) {
-      recurFreq = recurFreq + (recurs?.months).toString() + ' months';
-    }
-    return `${recurFreq}`;
   };
 
   const createTags = (tagIds: number[]) => {
@@ -105,7 +89,7 @@ const RecurEventCard: React.FC<SavedEvent> = ({
         <Date>{getDisplayDate()}</Date>
         <Row>
           <Icon source={IMAGES.RECUR_ICON} />
-          <RecurMsg>{getRecurDate()}</RecurMsg>
+          {recurs && <RecurMsg>{getRecurInfoString(recurs)}</RecurMsg>}
         </Row>
       </TopRow>
       <Name>{name}</Name>
