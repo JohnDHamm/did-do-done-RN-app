@@ -1,3 +1,4 @@
+import checkDateIsThisWeek from './checkDateIsThisWeek/checkDateIsThisWeek';
 import composeRecurData from './composeRecurData/composeRecurData';
 import formatDisplayDate from './formatDisplayDate/formatDisplayDate';
 import formatEventCardRecurInfo from './formatEventCardRecurInfo/formatEventCardRecurInfo';
@@ -9,6 +10,7 @@ import saveData from './saveData/saveData';
 import searchEventsByText from './searchEventsByText/searchEventsByText';
 
 export {
+  checkDateIsThisWeek,
   composeRecurData,
   formatDisplayDate,
   formatEventCardRecurInfo,

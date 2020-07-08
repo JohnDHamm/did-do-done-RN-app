@@ -15,7 +15,7 @@ import Tag from '../Tag/Tag';
 import IMAGES from '../../../assets/images';
 import moment from 'moment';
 import { TagsContext } from '../../contexts';
-import { formatDisplayDate } from '../../functions';
+import { checkDateIsThisWeek, formatDisplayDate } from '../../functions';
 
 const RecurEventCard: React.FC<SavedEvent> = ({
   name,
@@ -26,12 +26,9 @@ const RecurEventCard: React.FC<SavedEvent> = ({
   const { tags } = React.useContext<TagsContextInterface>(TagsContext);
 
   const getDisplayDate = (): string => {
-    const startThisWeek = moment().add(1, 'day').startOf('day');
-    const endThisWeek = moment().add(7, 'day').endOf('day');
-    const isThisWeek = moment(recurs?.nextdate).isBetween(
-      startThisWeek,
-      endThisWeek
-    );
+    const isThisWeek = recurs?.nextdate
+      ? checkDateIsThisWeek(recurs?.nextdate)
+      : false;
 
     return recurs?.nextdate
       ? formatDisplayDate({ date: recurs.nextdate, showDay: isThisWeek })
