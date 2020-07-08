@@ -4,6 +4,7 @@ import formatDisplayDate from './formatDisplayDate/formatDisplayDate';
 import formatEventCardRecurInfo from './formatEventCardRecurInfo/formatEventCardRecurInfo';
 import getRecurDateString from './getRecurDateString/getRecurDateString';
 import getRecurFreqData from './getRecurFreqData/getRecurFreqData';
+import getRecurInfoString from './getRecurInfoString/getRecurInfoString';
 import getRecurTotals from './getRecurTotals/getRecurTotals';
 import getStoreData from './getStoreData/getStoreData';
 import saveData from './saveData/saveData';
@@ -16,6 +17,7 @@ export {
   formatEventCardRecurInfo,
   getRecurDateString,
   getRecurFreqData,
+  getRecurInfoString,
   getRecurTotals,
   getStoreData,
   saveData,

@@ -15,7 +15,11 @@ import Tag from '../Tag/Tag';
 import IMAGES from '../../../assets/images';
 import moment from 'moment';
 import { TagsContext } from '../../contexts';
-import { checkDateIsThisWeek, formatDisplayDate } from '../../functions';
+import {
+  checkDateIsThisWeek,
+  formatDisplayDate,
+  getRecurInfoString,
+} from '../../functions';
 
 const RecurEventCard: React.FC<SavedEvent> = ({
   name,
@@ -58,20 +62,6 @@ const RecurEventCard: React.FC<SavedEvent> = ({
     ) : null;
   };
 
-  const getRecurDate = (): string => {
-    let recurFreq = 'every ';
-    if (recurs?.days) {
-      recurFreq = recurFreq + (recurs?.days).toString() + ' days';
-    }
-    if (recurs?.weeks) {
-      recurFreq = recurFreq + (recurs?.weeks).toString() + ' weeks';
-    }
-    if (recurs?.months) {
-      recurFreq = recurFreq + (recurs?.months).toString() + ' months';
-    }
-    return `${recurFreq}`;
-  };
-
   const createTags = (tagIds: number[]) => {
     return tags.filter((tag) => tagIds.includes(tag.id));
   };
@@ -99,7 +89,7 @@ const RecurEventCard: React.FC<SavedEvent> = ({
         <Date>{getDisplayDate()}</Date>
         <Row>
           <Icon source={IMAGES.RECUR_ICON} />
-          <RecurMsg>{getRecurDate()}</RecurMsg>
+          {recurs && <RecurMsg>{getRecurInfoString(recurs)}</RecurMsg>}
         </Row>
       </TopRow>
       <Name>{name}</Name>
