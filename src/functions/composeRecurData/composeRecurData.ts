@@ -1,9 +1,7 @@
 import moment from 'moment';
+import { DATE_MOMENTS } from '../../constants';
 
 const composeRecurData = (events: SavedEvent[]): Array<RecurSectionData> => {
-  const startThisWeek = moment().add(1, 'day').startOf('day');
-  const endThisWeek = moment().add(7, 'day').endOf('day');
-  const end30days = moment().add(30, 'days').endOf('day');
   const missedEvents: Array<SavedEvent> = [];
   const todayEvents: Array<SavedEvent> = [];
   const thisweekEvents: Array<SavedEvent> = [];
@@ -21,11 +19,21 @@ const composeRecurData = (events: SavedEvent[]): Array<RecurSectionData> => {
         todayEvents.push(event);
         return;
       }
-      if (recurDate.isBetween(startThisWeek, endThisWeek)) {
+      if (
+        recurDate.isBetween(
+          DATE_MOMENTS.startThisWeek(),
+          DATE_MOMENTS.endThisWeek()
+        )
+      ) {
         thisweekEvents.push(event);
         return;
       }
-      if (recurDate.isBetween(endThisWeek, end30days)) {
+      if (
+        recurDate.isBetween(
+          DATE_MOMENTS.endThisWeek(),
+          DATE_MOMENTS.end30days()
+        )
+      ) {
         next30Events.push(event);
         return;
       }

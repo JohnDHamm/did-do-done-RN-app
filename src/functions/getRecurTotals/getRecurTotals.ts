@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { DATE_MOMENTS } from '../../constants';
 
 const getRecurTotals = (events: SavedEvent[]): RecurTotals => {
   const totals: RecurTotals = {
@@ -7,9 +8,6 @@ const getRecurTotals = (events: SavedEvent[]): RecurTotals => {
     thisweek: 0,
     next30: 0,
   };
-  const startThisWeek = moment().add(1, 'day').startOf('day');
-  const endThisWeek = moment().add(7, 'day').endOf('day');
-  const end30days = moment().add(30, 'days').endOf('day');
 
   events.forEach((event) => {
     if (event.recurs) {
@@ -22,11 +20,21 @@ const getRecurTotals = (events: SavedEvent[]): RecurTotals => {
         totals.today = totals.today + 1;
         return;
       }
-      if (recurDate.isBetween(startThisWeek, endThisWeek)) {
+      if (
+        recurDate.isBetween(
+          DATE_MOMENTS.startThisWeek(),
+          DATE_MOMENTS.endThisWeek()
+        )
+      ) {
         totals.thisweek = totals.thisweek + 1;
         return;
       }
-      if (recurDate.isBetween(endThisWeek, end30days)) {
+      if (
+        recurDate.isBetween(
+          DATE_MOMENTS.endThisWeek(),
+          DATE_MOMENTS.end30days()
+        )
+      ) {
         totals.next30 = totals.next30 + 1;
         return;
       }

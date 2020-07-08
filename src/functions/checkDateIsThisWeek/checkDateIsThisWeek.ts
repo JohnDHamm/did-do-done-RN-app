@@ -1,9 +1,11 @@
 import moment from 'moment';
+import { DATE_MOMENTS } from '../../constants/';
 
 const checkDateIsThisWeek = (date: number): boolean => {
-  const startThisWeek = moment().add(1, 'day').startOf('day');
-  const endThisWeek = moment().add(7, 'day').endOf('day');
-  return moment(date).isBetween(startThisWeek, endThisWeek);
+  return moment(date).isBetween(
+    DATE_MOMENTS.startThisWeek(),
+    DATE_MOMENTS.endThisWeek()
+  );
 };
 
 export default checkDateIsThisWeek;
