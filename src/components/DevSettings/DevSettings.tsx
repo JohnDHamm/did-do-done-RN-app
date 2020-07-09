@@ -5,6 +5,8 @@ import Button from '../Button/Button';
 import { StoreUtils } from '../../utils';
 import { mockSavedEvents } from '../../mocks/mockSavedEvents';
 import { mockSavedTags } from '../../mocks/mockSavedTags';
+import { mockEventsForScreenshots } from '../../mocks/mockEventsForScreenshots';
+import { mockTagsForScreenshots } from '../../mocks/mockTagsForScreenshots';
 import { EventsContext, TagsContext } from '../../contexts';
 import { saveData } from '../../functions';
 
@@ -28,6 +30,15 @@ const DevSettings: React.FC = () => {
       .then(() => StoreUtils.removeStore('EventsStore'))
       .then(() => saveData('TagsStore', mockSavedTags, setCurrentTags))
       .then(() => saveData('EventsStore', mockSavedEvents, setCurrentEvents));
+  };
+
+  const addScreenshotMocks = () => {
+    StoreUtils.removeStore('TagsStore')
+      .then(() => StoreUtils.removeStore('EventsStore'))
+      .then(() => saveData('TagsStore', mockTagsForScreenshots, setCurrentTags))
+      .then(() =>
+        saveData('EventsStore', mockEventsForScreenshots, setCurrentEvents)
+      );
   };
 
   return (
@@ -59,6 +70,11 @@ const DevSettings: React.FC = () => {
           <Block>
             <TouchableOpacity onPress={() => removeAll()}>
               <Button label="remove all events and tags" type="alt" />
+            </TouchableOpacity>
+          </Block>
+          <Block>
+            <TouchableOpacity onPress={() => addScreenshotMocks()}>
+              <Button label="mock for screenshots" type="alt" />
             </TouchableOpacity>
           </Block>
         </View>
