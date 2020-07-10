@@ -1,5 +1,6 @@
 const IMAGES = {
   ADD_EVENT_ICON: require('./images/addEventIcon.png'),
+  CHECKMARK_ICON: require('./images/checkmarkIcon.png'),
   CLOSE_ICON: require('./images/closeIcon.png'),
   LOGO: require('./images/logo.png'),
   RECUR_ICON: require('./images/recurIcon.png'),
