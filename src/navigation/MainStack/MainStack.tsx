@@ -4,9 +4,10 @@ import {
   createStackNavigator,
   StackNavigationProp,
 } from '@react-navigation/stack';
-import { FONTS, COLORS } from '../../styles';
+import { FONTS } from '../../styles';
 import { SearchScreen, EventScreen, RecurringScreen } from '../../screens';
 import { ThemeContext } from 'styled-components';
+import EventScreenHeaderTitle from '../EventScreenHeaderTitle/EventScreenHeaderTitle';
 
 declare global {
   type MainStackParamList = {
@@ -51,7 +52,11 @@ const MainStack: React.FC = () => {
       <Stack.Screen
         name="Event"
         component={EventScreen}
-        options={{ title: 'Done!', headerBackTitle: 'Back' }}
+        options={{
+          // eslint-disable-next-line react/display-name
+          headerTitle: (props) => <EventScreenHeaderTitle {...props} />,
+          headerBackTitle: 'Back',
+        }}
       />
       <Stack.Screen
         name="Recurring"

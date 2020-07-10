@@ -23,9 +23,8 @@ export const CloseIcon = styled.Image<Theme>`
 `;
 
 export const SelectedIcon = styled.Image`
-  width: 24px;
-  height: 24px;
-  tint-color: ${COLORS.WHITE};
+  width: 32px;
+  height: 32px;
 `;
 
 export const Content = styled.View`

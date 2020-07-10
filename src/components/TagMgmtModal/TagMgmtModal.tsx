@@ -95,7 +95,7 @@ const TagMgmtModal: React.FC<Props> = ({ onClose, onSubmit }) => {
       >
         <TagSwatch color={tagSwatch.color}>
           {tagSwatch.color === selectedTag.color && (
-            <SelectedIcon source={IMAGES.CLOSE_ICON} />
+            <SelectedIcon source={IMAGES.CHECKMARK_ICON} />
           )}
         </TagSwatch>
       </TouchableOpacity>
@@ -109,7 +109,7 @@ const TagMgmtModal: React.FC<Props> = ({ onClose, onSubmit }) => {
       >
         <TagSwatch color={tagSwatch.color}>
           {tagSwatch.color === selectedTag.color && (
-            <SelectedIcon source={IMAGES.CLOSE_ICON} />
+            <SelectedIcon source={IMAGES.CHECKMARK_ICON} />
           )}
         </TagSwatch>
       </TouchableOpacity>
