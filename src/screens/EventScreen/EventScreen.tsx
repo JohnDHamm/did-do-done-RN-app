@@ -208,6 +208,7 @@ const EventScreen: React.FC = () => {
           placeholder="event name"
           onSubmit={(text) => setName(text)}
           autoFocus={name.length < 1}
+          onBlur={(text) => setName(text)}
         />
       </Section>
       <Section>
@@ -224,6 +225,7 @@ const EventScreen: React.FC = () => {
           initialValue={notes}
           placeholder="notes?"
           onSubmit={(text) => setNotes(text)}
+          onBlur={(text) => setNotes(text)}
         />
       </Section>
       <Section>

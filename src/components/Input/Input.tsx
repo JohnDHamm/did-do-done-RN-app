@@ -6,7 +6,7 @@ interface InputProps {
   autoFocus?: boolean;
   clearInputOnSubmit?: boolean;
   initialValue: string;
-  onBlur?: () => void;
+  onBlur?: (text: string) => void;
   onSubmit: (text: string) => void;
   placeholder: string;
   maxLength?: number;
@@ -29,6 +29,12 @@ const Input: React.FC<InputProps> = ({
     if (clearInputOnSubmit) setInputText('');
   };
 
+  const handleBlur = () => {
+    if (onBlur) {
+      onBlur(inputText);
+    }
+  };
+
   return (
     <Container>
       <StyledInput
@@ -36,7 +42,7 @@ const Input: React.FC<InputProps> = ({
         onChangeText={(text: string) => setInputText(text)}
         placeholder={placeholder}
         blurOnSubmit={true}
-        onBlur={onBlur}
+        onBlur={handleBlur}
         onSubmitEditing={() => handleSubmit()}
         autoFocus={autoFocus}
         maxLength={maxLength}
