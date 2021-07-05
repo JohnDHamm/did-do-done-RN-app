@@ -1,6 +1,6 @@
 import React from 'react';
-import { TouchableOpacity, View, Text } from 'react-native';
-import { Block, Container, Toggle } from './DevSettings.styles';
+import { TouchableOpacity, View } from 'react-native';
+import { Block, Container, Toggle } from './DevTools.styles';
 import Button from '../Button/Button';
 import { StoreUtils } from '../../utils';
 import { mockSavedEvents } from '../../mocks/mockSavedEvents';
@@ -10,7 +10,7 @@ import { mockTagsForScreenshots } from '../../mocks/mockTagsForScreenshots';
 import { EventsContext, TagsContext } from '../../contexts';
 import { saveData } from '../../functions';
 
-const DevSettings: React.FC = () => {
+const DevTools: React.FC = () => {
   const [showSettings, setShowSettings] = React.useState<boolean>(false);
   const { setCurrentEvents } = React.useContext<EventsContextInterface>(
     EventsContext
@@ -83,4 +83,4 @@ const DevSettings: React.FC = () => {
   );
 };
 
-export default DevSettings;
+export default DevTools;

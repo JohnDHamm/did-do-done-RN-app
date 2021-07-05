@@ -13,7 +13,7 @@ import {
 } from './SearchScreen.styles';
 import {
   Button,
-  DevSettings,
+  DevTools,
   EventCard,
   Logo,
   RecurEventsBlock,
@@ -204,7 +204,7 @@ const SearchScreen: React.FC = () => {
 
   return (
     <Container isSearching={isSearching} hasEvents={hasSavedEvents}>
-      {/* <DevSettings /> */}
+      {process.env.NODE_ENV === 'development' && <DevTools />}
       {!isSearching && (
         <Logo color={theme.purple} width={width * LAYOUT.LOGO_WIDTH_SCALE} />
       )}

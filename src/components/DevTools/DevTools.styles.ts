@@ -7,6 +7,9 @@ export const Container = styled.View`
 
 export const Toggle = styled.Text<Theme>`
   color: ${(props) => props.theme.text};
+  border: 2px dotted red;
+  border-radius: 4px;
+  padding: 3px 10px;
 `;
 
 export const Block = styled.View`
