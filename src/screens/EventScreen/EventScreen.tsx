@@ -23,7 +23,7 @@ import {
   Tag,
   TagMgmtModal,
 } from '../../components';
-// import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { TagsContext } from '../../contexts';
 import { COLORS } from '../../styles';
 import {
@@ -213,11 +213,11 @@ const EventScreen: React.FC = () => {
       </Section>
       <Section>
         <Label>event date:</Label>
-        {/* <DateTimePicker
+        <DateTimePicker
           value={date}
           onChange={onDateChange}
           textColor={theme.text}
-        /> */}
+        />
       </Section>
       <Section>
         {notes.length > 0 && <NotesHeader>notes:</NotesHeader>}
