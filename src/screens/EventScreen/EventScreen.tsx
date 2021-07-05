@@ -98,16 +98,23 @@ const EventScreen: React.FC = () => {
     ));
   };
 
-  const updateRecurDisplay = ({ freq, metric }: RecurFreqData) => {
+  const updateRecurInfo = ({ freq, metric }: RecurFreqData) => {
     setRecurFreq(freq.toString() + ' ' + metric);
     setRecurDate(getRecurDateString(date, freq, metric));
     const nextDate = moment(date).add(freq, metric);
     setIsPastRecurDate(nextDate.isBefore(moment().startOf('day')));
+
+    setRecurInfo((recurInfo) => ({
+      nextdate: moment(date).add(freq, metric).valueOf(),
+      days: recurInfo?.days || null,
+      weeks: recurInfo?.weeks || null,
+      months: recurInfo?.months || null,
+    }));
   };
 
   const handleSubmitRecur = (newRecurData: RecurringInfo) => {
     setRecurInfo(newRecurData);
-    updateRecurDisplay(getRecurFreqData(newRecurData));
+    updateRecurInfo(getRecurFreqData(newRecurData));
   };
 
   const handleSubmitTag = () => {
@@ -139,11 +146,11 @@ const EventScreen: React.FC = () => {
       const updateEvents = Array.from(events);
       if (event.id) {
         const changedEvent = composeEvent(event.id);
-        const blah = updateEvents.filter(
+        const filteredEvents = updateEvents.filter(
           (event) => event.id !== changedEvent.id
         );
-        blah.push(changedEvent);
-        setCurrentEvents(blah);
+        filteredEvents.push(changedEvent);
+        saveData('EventsStore', filteredEvents, setCurrentEvents);
       } else {
         const newEvent = composeEvent(date.getTime());
         updateEvents.push(newEvent);
@@ -182,7 +189,7 @@ const EventScreen: React.FC = () => {
 
   React.useEffect(() => {
     if (recurInfo) {
-      updateRecurDisplay(getRecurFreqData(recurInfo));
+      updateRecurInfo(getRecurFreqData(recurInfo));
     }
   }, [date]);
 
@@ -214,6 +221,7 @@ const EventScreen: React.FC = () => {
       <Section>
         <Label>event date:</Label>
         <DateTimePicker
+          display="spinner"
           value={date}
           onChange={onDateChange}
           textColor={theme.text}
