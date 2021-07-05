@@ -47,10 +47,14 @@ const RecurEventCard: React.FC<SavedEvent> = ({
       const dayslate = moment().startOf('day').subtract(14, 'days');
 
       if (recurDate.isBefore(weekslate)) {
-        const months = moment().startOf('day').diff(recurDate, 'months', true);
+        const months = Math.floor(
+          moment().startOf('day').diff(recurDate, 'months', true)
+        );
         missedMsg = `over ${months} months`;
       } else if (recurDate.isBefore(dayslate)) {
-        const weeks = moment().startOf('day').diff(recurDate, 'weeks');
+        const weeks = Math.floor(
+          moment().startOf('day').diff(recurDate, 'weeks')
+        );
         missedMsg = `over ${weeks} weeks`;
       } else {
         const days = moment().startOf('day').diff(recurDate, 'days');
