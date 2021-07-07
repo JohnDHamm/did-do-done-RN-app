@@ -1,5 +1,5 @@
 import Button from './Button/Button';
-import DevSettings from './DevSettings/DevSettings';
+import DevTools from './DevTools/DevTools';
 import ErrorMessage from './ErrorMessage/ErrorMessage';
 import EventCard from './EventCard/EventCard';
 import Input from './Input/Input';
@@ -15,7 +15,7 @@ import TagMgmtModal from './TagMgmtModal/TagMgmtModal';
 
 export {
   Button,
-  DevSettings,
+  DevTools,
   ErrorMessage,
   EventCard,
   Input,
